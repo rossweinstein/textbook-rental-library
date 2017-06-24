@@ -1,16 +1,21 @@
+package patron;
 // SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
 import java.util.ArrayList;
+
+import fakeDatabase.FakeDB;
 
 public class Patron {
 
 	private String name;
 	private String patronID;
 	private ArrayList<Copy> copiesOut;
+	private ArrayList<Copy> unreturnedBooks;
 
 	public Patron(String id, String name) {
 		this.patronID = id;
 		this.name = name;
 		this.copiesOut = new ArrayList<>();
+		this.unreturnedBooks = new ArrayList<>();
 	}
 	
 	/***** GETTERS / SETTERS *******************************/
@@ -37,6 +42,14 @@ public class Patron {
 
 	public void setCopiesOut(ArrayList<Copy> copiesOut) {
 		this.copiesOut = copiesOut;
+	}
+	
+	public ArrayList<Copy> getUnreturnedBooked() {
+		return this.unreturnedBooks;
+	}
+	
+	public String showUnreturnedBooks() {
+		return this.unreturnedBooks.toString();
 	}
 	
 	/***** OVERRIDES ********************************************/
@@ -122,6 +135,20 @@ public class Patron {
 	
 	public int copiesCurrentlyCheckedOut() {
 		return this.copiesOut.size();
+	}
+	
+	/***** HOLDS MANAGER ************************/
+	
+	public boolean hasHoldsOnRecord() {
+		return this.unreturnedBooks.size() == 0;
+	}
+	
+	public void addUnreturnedCopy(Copy unreturnedCopy) {
+		this.unreturnedBooks.add(unreturnedCopy);
+	}
+	
+	public void retunredCopy(Copy returnedCopy) {
+		this.unreturnedBooks.remove(returnedCopy);
 	}
 
 	public static void main(String[] args) {

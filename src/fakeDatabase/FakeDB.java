@@ -1,7 +1,11 @@
+package fakeDatabase;
 // SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
 
 import java.util.HashMap;
 import java.util.Map;
+
+import patron.Copy;
+import patron.Patron;
 
 public class FakeDB {
 	private static Map<String, Patron> patronStore;

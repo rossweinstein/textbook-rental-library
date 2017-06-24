@@ -1,3 +1,6 @@
+package patron;
+import fakeDatabase.FakeDB;
+
 // SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
 
 public class Copy {
