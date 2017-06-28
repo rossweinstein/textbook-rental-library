@@ -1,6 +1,7 @@
 package patron;
 // SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
 import java.util.ArrayList;
+import java.util.List;
 
 import fakeDatabase.FakeDB;
 
@@ -9,13 +10,13 @@ public class Patron {
 	private String name;
 	private String patronID;
 	private ArrayList<Copy> copiesOut;
-	private ArrayList<Copy> unreturnedBooks;
+	private Hold holds;
 
 	public Patron(String id, String name) {
 		this.patronID = id;
 		this.name = name;
 		this.copiesOut = new ArrayList<>();
-		this.unreturnedBooks = new ArrayList<>();
+		this.holds = new Hold();
 	}
 	
 	/***** GETTERS / SETTERS *******************************/
@@ -44,12 +45,12 @@ public class Patron {
 		this.copiesOut = copiesOut;
 	}
 	
-	public ArrayList<Copy> getUnreturnedBooked() {
-		return this.unreturnedBooks;
+	public boolean hasHoldsOnRecord() {
+		return !this.holds.hasNoHolds();
 	}
 	
-	public String showUnreturnedBooks() {
-		return this.unreturnedBooks.toString();
+	public List<Copy> getUnreturnedBooked() {
+		return this.holds.getHolds();
 	}
 	
 	/***** OVERRIDES ********************************************/
@@ -135,20 +136,6 @@ public class Patron {
 	
 	public int copiesCurrentlyCheckedOut() {
 		return this.copiesOut.size();
-	}
-	
-	/***** HOLDS MANAGER ************************/
-	
-	public boolean hasHoldsOnRecord() {
-		return this.unreturnedBooks.size() == 0;
-	}
-	
-	public void addUnreturnedCopy(Copy unreturnedCopy) {
-		this.unreturnedBooks.add(unreturnedCopy);
-	}
-	
-	public void retunredCopy(Copy returnedCopy) {
-		this.unreturnedBooks.remove(returnedCopy);
 	}
 
 	public static void main(String[] args) {
