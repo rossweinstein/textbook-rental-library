@@ -1,7 +1,6 @@
 package patron;
 // SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
 import java.util.ArrayList;
-import java.util.List;
 
 import fakeDatabase.FakeDB;
 
@@ -10,13 +9,13 @@ public class Patron {
 	private String name;
 	private String patronID;
 	private ArrayList<Copy> copiesOut;
-	private Hold holds;
+	private boolean hasHolds;
 
 	public Patron(String id, String name) {
 		this.patronID = id;
 		this.name = name;
 		this.copiesOut = new ArrayList<>();
-		this.holds = new Hold();
+		this.hasHolds = false;
 	}
 	
 	/***** GETTERS / SETTERS *******************************/
@@ -46,11 +45,7 @@ public class Patron {
 	}
 	
 	public boolean hasHoldsOnRecord() {
-		return !this.holds.hasNoHolds();
-	}
-	
-	public List<Copy> getUnreturnedBooked() {
-		return this.holds.getHolds();
+		return this.hasHolds;
 	}
 	
 	/***** OVERRIDES ********************************************/
@@ -84,7 +79,7 @@ public class Patron {
 
 	@Override
 	public String toString() {
-		return "Name: " + this.name + "\nID: " + this.patronID + "\nCopies Out: " + this.showBookList();
+		return "Name: " + this.name + " | ID: " + this.patronID + " | Copies Out: " + this.showBookList();
 	}
 
 	// checks to see if the Patron has any books currently checked out; If they
@@ -136,6 +131,20 @@ public class Patron {
 	
 	public int copiesCurrentlyCheckedOut() {
 		return this.copiesOut.size();
+	}
+	
+	public void putHoldOnRecord() {
+		this.hasHolds = true;
+	}
+	
+	public void resolvedHolds() {
+		this.returnAllBooks();
+		this.hasHolds = false;
+	}
+	
+	private void returnAllBooks() {
+		this.copiesOut.stream().forEach(copy -> copy.holdReturned());
+		this.copiesOut = new ArrayList<>();
 	}
 
 	public static void main(String[] args) {

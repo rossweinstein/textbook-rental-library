@@ -41,6 +41,10 @@ public class Copy {
 		this.outTo = outTo;
 	}
 	
+	public void holdReturned() {
+		this.outTo = null;
+	}
+	
 	/***** OVERRIDES ********************************************/
 
 	@Override
