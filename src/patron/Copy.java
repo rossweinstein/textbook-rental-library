@@ -1,3 +1,6 @@
+package patron;
+import fakeDatabase.FakeDB;
+
 // SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
 
 public class Copy {
@@ -36,6 +39,10 @@ public class Copy {
 
 	public void setOutTo(Patron outTo) {
 		this.outTo = outTo;
+	}
+	
+	public void holdReturned() {
+		this.outTo = null;
 	}
 	
 	/***** OVERRIDES ********************************************/

@@ -1,7 +1,13 @@
+package fakeDatabase;
 // SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import patron.Copy;
+import patron.Patron;
 
 public class FakeDB {
 	private static Map<String, Patron> patronStore;
@@ -16,6 +22,14 @@ public class FakeDB {
 		patronStore.put("P2", new Patron("P2", "Ross"));
 		copyStore.put("C1", new Copy("C1", "Fun with Objects"));
 		copyStore.put("C2", new Copy("C2", "More Fun with Objects"));
+	}
+	
+	public static List<Patron> getAllPatrons() {
+		return patronStore.values().stream().collect(Collectors.toList());
+	}
+	
+	public static List<Copy> getAllCopies() {
+		return copyStore.values().stream().collect(Collectors.toList());
 	}
 
 	public static Patron getPatron(String patronID) {

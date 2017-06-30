@@ -1,6 +1,11 @@
-/.DS_Store
+/Holds.class
+/Copy/
 /Copy.class
-/CopyTest.class
-/FakeDB.class
-/Patron.class
-/PatronTest.class
+/MenuBuilder.class
+/InputHelper.class
+/helper/
+/fakeDatabase/
+/patron/
+/helpers/
+/textbookRentalLibrary/
+/manager/
