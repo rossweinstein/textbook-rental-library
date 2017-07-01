@@ -23,20 +23,10 @@ public class DBConnect {
 		this.input = new InputHelper();
 	}
 
-	/**
-	 * Returns all the Patrons within the FakeDB
-	 * 
-	 * @return List all the Patrons in the FakeDB
-	 */
 	public List<Patron> getAllPatrons() {
 		return FakeDB.getAllPatrons();
 	}
 
-	/**
-	 * Returns all the Copy objects within the FakeDB
-	 * 
-	 * @return List all the Copy objects in the FakeDB
-	 */
 	public List<Copy> getAllCopies() {
 		return FakeDB.getAllCopies();
 	}
@@ -103,11 +93,6 @@ public class DBConnect {
 		return theCopy;
 	}
 
-	/**
-	 * Prompts the user to see if they want to enter another ID
-	 * 
-	 * @return boolean true if they want to enter a new ID number; false otherwise
-	 */
 	private boolean enterAnotherIDNumber() {
 		return this.input.askBinaryQuestion("\nID NOT FOUND: Would you like to enter a differnt ID number? (y/n)", "y",
 				"n");

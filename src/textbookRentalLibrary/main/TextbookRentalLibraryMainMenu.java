@@ -1,11 +1,11 @@
-package textbookRentalLibrary;
+package textbookRentalLibrary.main;
 
 import helpers.InputHelper;
 import helpers.MenuBuilder;
 import textbookRentalLibrary.checkInAndOut.CheckInController;
 import textbookRentalLibrary.checkInAndOut.CheckOutController;
 import textbookRentalLibrary.checkInAndOut.TRLSession;
-import textbookRentalLibrary.manager.ManagerialMenu;
+import textbookRentalLibrary.managerFunctions.ManagerialMenu;
 
 /**
  * This class creates a command line menu which lists and calls all the
@@ -31,9 +31,6 @@ public class TextbookRentalLibraryMainMenu {
 				"Manager Functions", "Exit");
 	}
 
-	/**
-	 * Displays the TRL menu to the console
-	 */
 	public void startApp() {
 
 		boolean runApp = true;
@@ -45,14 +42,6 @@ public class TextbookRentalLibraryMainMenu {
 		System.out.println("\nEnd of Program...");
 	}
 
-	/**
-	 * Gets a selection and runs that TRL function
-	 * 
-	 * @param runApp
-	 *            boolean user still wants to run TRL functions
-	 * @return boolean continue running TRL menu until user wants to exit
-	 *         with a false
-	 */
 	private boolean getSelection(boolean runApp) {
 
 		int selection = this.input.askForSelection(this.mainMenu.getMenuItems());

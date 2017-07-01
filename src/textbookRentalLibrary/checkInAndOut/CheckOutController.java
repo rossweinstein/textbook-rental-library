@@ -10,7 +10,7 @@ import patron.Patron;
  * @author Ross Weinstein
  *
  */
-public class CheckOutController extends SessionVerification implements TRLSession {
+public class CheckOutController extends SessionController implements TRLSession {
 
 	private DBConnect db;
 
@@ -19,9 +19,7 @@ public class CheckOutController extends SessionVerification implements TRLSessio
 		this.db = new DBConnect();
 	}
 
-	/**
-	 * From TRLSession interface, starts the Check Out Session
-	 */
+	@Override
 	public boolean startSession() {
 
 		System.out.println("------------------BEGINNING CHECKOUT SESSION------------------");
@@ -42,20 +40,12 @@ public class CheckOutController extends SessionVerification implements TRLSessio
 
 	/******************* HOLD METHODS ********************************/
 
-	/**
-	 * Checks if a patron has any holds on their record.
-	 * 
-	 * @param thePatron
-	 *            Patron the Patron whose record will be checked
-	 * @return boolean true if they have no holds and can check out a book;
-	 *         false otherwise
-	 */
 	private boolean patronHasNoHoldsOnRecord(Patron thePatron) {
 
 		// check holds on record
 		if (thePatron.hasHoldsOnRecord()) {
 
-			this.holdAlertMessage(thePatron);
+			this.printHoldAlertMessage(thePatron);
 
 			// must resolve holds to continue
 			if (!this.isAbleToResolveHolds()) {
@@ -67,14 +57,7 @@ public class CheckOutController extends SessionVerification implements TRLSessio
 		return true;
 	}
 
-	/**
-	 * Prints an ALERT message which states the Patron has a hold on their
-	 * record
-	 * 
-	 * @param patron
-	 *            Patron the Patron who has holds on their record
-	 */
-	private void holdAlertMessage(Patron patron) {
+	private void printHoldAlertMessage(Patron patron) {
 		System.out.println("\nALERT: Patron has hold on record");
 		System.out.println(patron.getName() + " has yet to return and pay the fee for the following titles: ");
 		System.out.println(patron.getCopiesOut());
@@ -88,17 +71,11 @@ public class CheckOutController extends SessionVerification implements TRLSessio
 	 * @return boolean true if Patron can resolve holds; false otherwise
 	 */
 	private boolean isAbleToResolveHolds() {
-		return this.input.askBinaryQuestion("\nIs patron able to resolve holds? (y/n)", "y", "n");
+		return super.input.askBinaryQuestion("\nIs patron able to resolve holds? (y/n)", "y", "n");
 	}
 
 	/******************* CHECKOUT METHODS ********************************/
 
-	/**
-	 * Allows a Patron to check out as may books as they like
-	 * 
-	 * @param thePatron
-	 *            Patron the Patron who wants to check out copies
-	 */
 	private void checkOutCopies(Patron thePatron) {
 
 		boolean endSession = false;
@@ -131,13 +108,6 @@ public class CheckOutController extends SessionVerification implements TRLSessio
 		}
 	}
 
-	/**
-	 * Prints ALERT message that the book cannot be checked out because it is
-	 * already checked out by another Patron.
-	 * 
-	 * @param theCopy
-	 *            Copy the Copy the Patron wants to check out
-	 */
 	private void displayBookAlreadyCheckedOutMessage(Copy theCopy) {
 		System.out.println("\nALERT:" + " Cannot checkout " + theCopy.getTitle() + " [copyID:" + theCopy.getCopyID()
 				+ "] because that copyID is already associated with Patron " + theCopy.getOutTo().getPatronID()

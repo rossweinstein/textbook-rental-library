@@ -10,7 +10,7 @@ import patron.Patron;
  * @author Ross Weinstein
  *
  */
-public class CheckInController extends SessionVerification implements TRLSession {
+public class CheckInController extends SessionController implements TRLSession {
 
 	private DBConnect db;
 
@@ -19,9 +19,7 @@ public class CheckInController extends SessionVerification implements TRLSession
 		this.db = new DBConnect();
 	}
 
-	/**
-	 * From TRLSession interface, starts the Check In Session
-	 */
+	@Override
 	public boolean startSession() {
 		System.out.println("------------------BEGINNING CHECK IN SESSION------------------");
 
@@ -40,12 +38,7 @@ public class CheckInController extends SessionVerification implements TRLSession
 		return true;
 	}
 
-	/**
-	 * Allows a Patron to check in as may books as they have checked out
-	 * 
-	 * @param thePatron
-	 *            Patron the Patron who wants to check in copies
-	 */
+
 	private void checkInCopies(Patron thePatron) {
 
 		boolean endSession = false;
@@ -76,18 +69,8 @@ public class CheckInController extends SessionVerification implements TRLSession
 				this.displayCopyIsNotCheckedOutToPatronAlert(theCopy, thePatron);
 			}
 		}
-
 	}
 
-	/**
-	 * Alert message that states Patron is trying to check in a book that is not
-	 * currently checked out to them.
-	 * 
-	 * @param theCopy
-	 *            Copy the Copy the Patron wants to check in
-	 * @param thePatron
-	 *            Patron the Patron who wants to check the Copy in
-	 */
 	private void displayCopyIsNotCheckedOutToPatronAlert(Copy theCopy, Patron thePatron) {
 		System.out.println("\nALERT:" + " Cannot check in " + theCopy.getTitle() + " [copyID:" + theCopy.getCopyID()
 				+ "] because that copyID is not associated with Patron [ID:" + thePatron.getPatronID()

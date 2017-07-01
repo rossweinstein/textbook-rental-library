@@ -28,16 +28,8 @@ public class Copy {
 		return copyID;
 	}
 
-	public void setCopyID(String copyID) {
-		this.copyID = copyID;
-	}
-
 	public String getTitle() {
 		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public Patron getOutTo() {

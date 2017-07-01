@@ -1,10 +1,10 @@
-package textbookRentalLibrary;
+package textbookRentalLibrary.main;
 
 /**
  * Main entry into the Textbook Rental Library (TRL) where a user can check in,
  * check out, and do manager functions
  * 
- * @author Ross Weinstein
+ * @author Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
  *
  */
 public class TRLApp {

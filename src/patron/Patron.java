@@ -41,16 +41,8 @@ public class Patron {
 		return patronID;
 	}
 
-	public void setPatronID(String patronID) {
-		this.patronID = patronID;
-	}
-
 	public ArrayList<Copy> getCopiesOut() {
 		return copiesOut;
-	}
-
-	public void setCopiesOut(ArrayList<Copy> copiesOut) {
-		this.copiesOut = copiesOut;
 	}
 
 	public boolean hasHoldsOnRecord() {
@@ -117,7 +109,9 @@ public class Patron {
 	/***** CHECK IN AND OUT COPY METHODS ************************/
 
 	/**
-	 * Allows for a Patron to check out a particular Copy
+	 * Allows for a Patron to check out a particular Copy by first checking if
+	 * that Copy is available. If it is available, Patron is able to check it
+	 * out.
 	 * 
 	 * @param c
 	 *            the Copy the Patron wants to check out
@@ -136,7 +130,9 @@ public class Patron {
 	}
 
 	/**
-	 * Allows for a Patron to check in a particular Copy
+	 * Allows for a Patron to check in a particular Copy by first checking if
+	 * that Copy is associated with the Patron. If it is associated with the
+	 * Patron, the Patron is able to check that Copy back in.
 	 * 
 	 * @param c
 	 *            the Copy the Patron wants to check in

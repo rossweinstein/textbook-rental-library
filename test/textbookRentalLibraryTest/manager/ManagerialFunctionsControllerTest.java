@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import fakeDatabase.FakeDB;
 import patron.Patron;
-import textbookRentalLibrary.manager.ManagerialFunctionsController;
+import textbookRentalLibrary.managerFunctions.ManagerialFunctionsController;
 
 public class ManagerialFunctionsControllerTest {
 	

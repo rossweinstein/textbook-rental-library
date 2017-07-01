@@ -1,4 +1,4 @@
-package textbookRentalLibrary.manager;
+package textbookRentalLibrary.managerFunctions;
 
 import helpers.InputHelper;
 import helpers.MenuBuilder;
@@ -23,9 +23,6 @@ public class ManagerialMenu {
 		this.manage = new ManagerialFunctionsController();
 	}
 
-	/**
-	 * Displays the manager menu to the console
-	 */
 	public void managerMenu() {
 
 		boolean runApp = true;
@@ -36,14 +33,6 @@ public class ManagerialMenu {
 		}
 	}
 
-	/**
-	 * Gets a selection and runs that manager function
-	 * 
-	 * @param runApp
-	 *            boolean user still wants to run manager functions
-	 * @return boolean continue running manager menu until user wants to exit
-	 *         with a false
-	 */
 	private boolean getSelection(boolean runApp) {
 
 		int selection = this.input.askForSelection(this.menu.getMenuItems());
