@@ -1,8 +1,17 @@
 package patron;
-// SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
+
 import java.util.ArrayList;
 
 import fakeDatabase.FakeDB;
+
+/**
+ * 
+ * The Patron is the individual who can check in and out books, as well as have
+ * holds put on their record if the fail to return a copy on time.
+ * 
+ * @author Ross Weinstein
+ *
+ */
 
 public class Patron {
 
@@ -17,7 +26,7 @@ public class Patron {
 		this.copiesOut = new ArrayList<>();
 		this.hasHolds = false;
 	}
-	
+
 	/***** GETTERS / SETTERS *******************************/
 
 	public String getName() {
@@ -43,11 +52,11 @@ public class Patron {
 	public void setCopiesOut(ArrayList<Copy> copiesOut) {
 		this.copiesOut = copiesOut;
 	}
-	
+
 	public boolean hasHoldsOnRecord() {
 		return this.hasHolds;
 	}
-	
+
 	/***** OVERRIDES ********************************************/
 
 	@Override
@@ -67,7 +76,7 @@ public class Patron {
 		Patron otherPatron = (Patron) o;
 		return this.patronID.equals(otherPatron.patronID) && this.name.equals(otherPatron.name);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		int prime = 31;
@@ -104,9 +113,17 @@ public class Patron {
 		}
 		return theCopies;
 	}
-	
+
 	/***** CHECK IN AND OUT COPY METHODS ************************/
 
+	/**
+	 * Allows for a Patron to check out a particular Copy
+	 * 
+	 * @param c
+	 *            the Copy the Patron wants to check out
+	 * @return boolean true if the copyID entered is available to be checked
+	 *         out; false otherwise
+	 */
 	public boolean checkCopyOut(Copy c) {
 
 		// check if the copy is available before checking it out
@@ -118,6 +135,14 @@ public class Patron {
 		}
 	}
 
+	/**
+	 * Allows for a Patron to check in a particular Copy
+	 * 
+	 * @param c
+	 *            the Copy the Patron wants to check in
+	 * @return boolean true if the copyID entered is associated with the Patron
+	 *         and can be checked in; false otherwise
+	 */
 	public boolean checkCopyIn(Copy c) {
 
 		// make sure they have the book before they can return it
@@ -128,20 +153,35 @@ public class Patron {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * The number of Copy objects currently checked out by the Patron
+	 * 
+	 * @return int the number of Copy objects checked out
+	 */
 	public int copiesCurrentlyCheckedOut() {
 		return this.copiesOut.size();
 	}
-	
+
+	/**
+	 * Marks a hold on the Patron's record
+	 */
 	public void putHoldOnRecord() {
 		this.hasHolds = true;
 	}
-	
+
+	/**
+	 * Patron has resolved their holds and can check out book again. Books are
+	 * returned, or bought, and fine is paid.
+	 */
 	public void resolvedHolds() {
 		this.returnAllBooks();
 		this.hasHolds = false;
 	}
-	
+
+	/**
+	 * All Copy objects are removed from Patron's record
+	 */
 	private void returnAllBooks() {
 		this.copiesOut.stream().forEach(copy -> copy.holdReturned());
 		this.copiesOut = new ArrayList<>();

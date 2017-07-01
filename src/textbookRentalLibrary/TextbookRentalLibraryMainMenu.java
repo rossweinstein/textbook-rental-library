@@ -7,6 +7,13 @@ import textbookRentalLibrary.checkInAndOut.CheckOutController;
 import textbookRentalLibrary.checkInAndOut.TRLSession;
 import textbookRentalLibrary.manager.ManagerialMenu;
 
+/**
+ * This class creates a command line menu which lists and calls all the
+ * functions for the TRL application
+ * 
+ * @author Ross Weinstein
+ *
+ */
 public class TextbookRentalLibraryMainMenu {
 
 	private TRLSession checkOut;
@@ -24,23 +31,34 @@ public class TextbookRentalLibraryMainMenu {
 				"Manager Functions", "Exit");
 	}
 
+	/**
+	 * Displays the TRL menu to the console
+	 */
 	public void startApp() {
-		
+
 		boolean runApp = true;
 		while (runApp) {
-			
+
 			System.out.println(this.mainMenu.displayMenuWithoutBanner());
 			runApp = getSelection(runApp);
 		}
 		System.out.println("\nEnd of Program...");
 	}
 
+	/**
+	 * Gets a selection and runs that TRL function
+	 * 
+	 * @param runApp
+	 *            boolean user still wants to run TRL functions
+	 * @return boolean continue running TRL menu until user wants to exit
+	 *         with a false
+	 */
 	private boolean getSelection(boolean runApp) {
-		
+
 		int selection = this.input.askForSelection(this.mainMenu.getMenuItems());
-		
+
 		if (selection == 1) {
-			System.out.println();	
+			System.out.println();
 			this.checkOut.startSession();
 			System.out.println();
 		} else if (selection == 2) {

@@ -2,6 +2,13 @@ package helpers;
 
 import java.util.*;
 
+/**
+ * This class allows for the easy creation of Command Line menus. It allows for
+ * the creation of a menu with or without a menu.
+ * 
+ * @author Ross Weinstein
+ *
+ */
 public class MenuBuilder {
 
 	private String menuTitle;

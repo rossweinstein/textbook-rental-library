@@ -1,3 +1,4 @@
+package patronTest;
 // SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
 
 import static org.junit.Assert.*;
@@ -86,5 +87,26 @@ public class PatronTest {
 	public void TwoIdenticalButDifferentObjectsAreEqual() {
 		Patron samePatron = new Patron("1", "Linus");
 		assertTrue(this.firstPatron.equals(samePatron));
+	}
+	
+	@Test
+	public void patronDoesNotHaveHoldsOnRecord() {
+		assertFalse(this.firstPatron.hasHoldsOnRecord());
+	}
+	
+	@Test 
+	public void patronDoesHaveHoldsOnRecord() {
+		this.firstPatron.putHoldOnRecord();
+		assertTrue(this.firstPatron.hasHoldsOnRecord());
+	}
+	
+	@Test
+	public void patronResolvesHolds() {
+		this.firstPatron.checkCopyOut(bookOne);
+		this.firstPatron.checkCopyOut(bookTwo);
+		this.firstPatron.putHoldOnRecord();
+		this.firstPatron.resolvedHolds();
+		assertTrue(this.firstPatron.copiesCurrentlyCheckedOut() == 0);
+		assertFalse(this.firstPatron.hasHoldsOnRecord());
 	}
 }

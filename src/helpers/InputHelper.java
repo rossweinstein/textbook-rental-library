@@ -4,6 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+
+/**
+ * This class assists in handling all the input for this program.
+ * 
+ * @author Ross Weinstein
+ *
+ */
 public class InputHelper {
 
 	private Scanner input;

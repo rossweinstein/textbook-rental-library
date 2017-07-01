@@ -1,7 +1,14 @@
 package patron;
+
 import fakeDatabase.FakeDB;
 
-// SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
+/**
+ * The Copy class has all the basic functionality for the textbooks that can be
+ * check in and out in our TRL application.  
+ * 
+ * @author Ross Weinstein
+ *
+ */
 
 public class Copy {
 
@@ -40,11 +47,11 @@ public class Copy {
 	public void setOutTo(Patron outTo) {
 		this.outTo = outTo;
 	}
-	
+
 	public void holdReturned() {
 		this.outTo = null;
 	}
-	
+
 	/***** OVERRIDES ********************************************/
 
 	@Override
@@ -63,7 +70,7 @@ public class Copy {
 		Copy otherCopy = (Copy) o;
 		return this.copyID.equals(otherCopy.copyID) && this.title.equals(otherCopy.title);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		int prime = 29;
@@ -78,8 +85,13 @@ public class Copy {
 		return "CopyID: " + this.copyID + "\nTitle: " + this.title + "\nChecked Out By: " + this.checkedOutBy();
 	}
 
-	// checks to see if the copy is currently checked and prints the name and ID
-	// of the patron who has it; otherwise it says it's available
+	/**
+	 * Checks to see if the copy is currently checked and prints the name and ID
+	 * of the patron who has it; otherwise it says it's available
+	 * 
+	 * @return String the Patron and PatronID or a message saying that the copy
+	 *         is currently available
+	 */
 	private String checkedOutBy() {
 		if (this.outTo == null) {
 			return "Copy is Currently Available";
