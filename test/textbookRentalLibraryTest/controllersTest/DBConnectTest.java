@@ -1,4 +1,4 @@
-package fakeDatabaseTest;
+package textbookRentalLibraryTest.controllersTest;
 
 import org.junit.Before;
 import org.junit.Test;

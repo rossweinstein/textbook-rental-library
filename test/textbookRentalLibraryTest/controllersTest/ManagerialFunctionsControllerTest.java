@@ -1,4 +1,4 @@
-package textbookRentalLibraryTest.manager;
+package textbookRentalLibraryTest.controllersTest;
 
 import static org.junit.Assert.*;
 

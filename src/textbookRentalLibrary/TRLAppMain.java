@@ -1,4 +1,4 @@
-package textbookRentalLibrary.main;
+package textbookRentalLibrary;
 
 import textbookRentalLibrary.menus.TextbookRentalLibraryMainMenu;
 
@@ -9,7 +9,7 @@ import textbookRentalLibrary.menus.TextbookRentalLibraryMainMenu;
  * @author Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
  *
  */
-public class TRLApp {
+public class TRLAppMain {
 
 	public static void main(String[] args) {
 		TextbookRentalLibraryMainMenu trl = new TextbookRentalLibraryMainMenu();
