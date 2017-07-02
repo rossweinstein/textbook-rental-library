@@ -53,7 +53,7 @@ public class Patron {
 	public boolean hasNoHoldsOnRecord() {
 		return this.currentHolds.size() == 0;
 	}
-	
+
 	public List<Hold> getAllHolds() {
 		return this.currentHolds;
 	}
@@ -173,26 +173,26 @@ public class Patron {
 	public void placeHoldOnRecord(HoldType type, int fineAmount, Copy copy) {
 
 		Hold copyHold = HoldFactory.createHold(type, fineAmount, copy);
-		this.currentHolds.add(copyHold);
+
+		if (!this.currentHolds.contains(copyHold)) {
+			this.currentHolds.add(copyHold);
+		}
 	}
-	
+
 	public void placeLostAndFoundHold(String item, String location) {
 		this.currentHolds.add(new MiscHold(item, location));
 	}
-
-	
 
 	/**
 	 * Patron has resolved their holds and can check out book again. Books are
 	 * returned, or bought, and fine is paid.
 	 */
 	public void resolvedHold(Hold holdCopy) {
-		
-		
+
 		if (this.copiesOut.contains(holdCopy.getHoldCopy())) {
 			this.copiesOut.remove(holdCopy.getHoldCopy());
 		}
-		
+
 		this.currentHolds.remove(holdCopy);
 	}
 }

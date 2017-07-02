@@ -13,6 +13,11 @@ public class MenuBuilder {
 
 	private String menuTitle;
 	private List<String> menuItems;
+	
+	public MenuBuilder() {
+		this.menuTitle = "";
+		this.menuItems = null;
+	}
 
 	/**
 	 * Constructor asks for the menu title and all possible options as Strigs
@@ -29,6 +34,14 @@ public class MenuBuilder {
 		for (String eachOption : options) {
 			this.menuItems.add(eachOption);
 		}
+	}
+	
+	public void setMenuTitle(String title) {
+		this.menuTitle = title;
+	}
+	
+	public void setMenuItles(List<String> options) {
+		this.menuItems = options;
 	}
 
 	/** Returns the menu title and all options in order */

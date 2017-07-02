@@ -1,9 +1,12 @@
 package textbookRentalLibrary.menus;
 
+import java.util.Arrays;
+import java.util.List;
+
 import textbookRentalLibrary.controllers.checkInAndOutCopy.CheckInController;
 import textbookRentalLibrary.controllers.checkInAndOutCopy.CheckOutController;
 import textbookRentalLibrary.controllers.checkInAndOutCopy.TRLSession;
-import textbookRentalLibrary.userInput.InputHelper;
+import textbookRentalLibrary.menus.managerMenus.ManagerialMenuMain;
 
 /**
  * This class creates a command line menu which lists and calls all the
@@ -12,29 +15,37 @@ import textbookRentalLibrary.userInput.InputHelper;
  * @author Ross Weinstein
  *
  */
-public class TextbookRentalLibraryMainMenu {
+public class TextbookRentalLibraryMainMenu extends TRLMenu implements CommandLineMenu {
 
 	private TRLSession checkOut;
 	private TRLSession checkIn;
-	private ManagerialMenu managerFunc;
-	private InputHelper input;
-	private MenuBuilder mainMenu;
+	private CommandLineMenu managerFunc;
 
 	public TextbookRentalLibraryMainMenu() {
+		super();
 		this.checkOut = new CheckOutController();
 		this.checkIn = new CheckInController();
-		this.managerFunc = new ManagerialMenu();
-		this.input = new InputHelper();
-		this.mainMenu = new MenuBuilder("Textbook Rental Library", "Check-Out Book", "Check-In Book",
+		this.managerFunc = new ManagerialMenuMain();
+	}
+	
+	private MenuBuilder mainMenu() {
+		
+		super.buildMenu().setMenuTitle("Textbook Rental Library");
+		
+		List<String> options = Arrays.asList("Check-Out Book", "Check-In Book",
 				"Manager Functions", "Exit");
+		super.buildMenu().setMenuItles(options);
+		
+		return super.buildMenu();
 	}
 
-	public void startApp() {
+	@Override
+	public void displayMenu() {
 
 		boolean runApp = true;
 		while (runApp) {
 
-			System.out.println(this.mainMenu.displayMenuWithoutBanner());
+			System.out.println(this.mainMenu().displayMenuWithoutBanner());
 			runApp = getSelection(runApp);
 		}
 		System.out.println("\nEnd of Program...");
@@ -42,7 +53,7 @@ public class TextbookRentalLibraryMainMenu {
 
 	private boolean getSelection(boolean runApp) {
 
-		int selection = this.input.askForSelection(this.mainMenu.getMenuItems());
+		int selection = super.userInput().askForSelection(this.mainMenu().getMenuItems());
 
 		if (selection == 1) {
 			System.out.println();
@@ -54,7 +65,7 @@ public class TextbookRentalLibraryMainMenu {
 			System.out.println();
 		} else if (selection == 3) {
 			System.out.println();
-			this.managerFunc.managerMenu();
+			this.managerFunc.displayMenu();
 			System.out.println();
 		} else {
 			runApp = false;

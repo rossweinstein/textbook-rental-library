@@ -68,6 +68,8 @@ public class ManagerialFunctionsController {
 			List<Copy> unreturnedCopies = offendingPatron.getCopiesOut();
 			
 			for (Copy eachCopy : unreturnedCopies) {
+				
+				
 				offendingPatron.placeHoldOnRecord(HoldType.OVERDUE, fineAmount, eachCopy);
 			}
 		}
