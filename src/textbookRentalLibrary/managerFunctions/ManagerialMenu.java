@@ -44,31 +44,55 @@ public class ManagerialMenu {
 		int selection = this.input.askForSelection(this.menu.getMenuItems());
 
 		if (selection == 1) {
-			System.out.println();
-			this.manage.displayAllPatrons();
+			displayAllPatrons();
 		} else if (selection == 2) {
-			System.out.println();
-			this.manage.displayPatronsWithBooksUnreturned();
+			displayPatronsWithOverdueBooks();
 		} else if (selection == 3) {
-			int fineAmount = this.input.askForInteger("Fine Amount: ");
-			this.manage.applyOverdueHolds(fineAmount);
+			placeHoldsOnPatronsWithOverdueBooks();
 		} else if (selection == 4) {
-			Patron offendingPatron = this.db.locatePatronInDB();
-			Copy unshelvedCopy = this.db.locateCopyInDB();
-			int fineAmount = this.input.askForInteger("Fine Amount: ");
-			this.manage.applyUnshelvedHold(fineAmount, offendingPatron, unshelvedCopy);
+			placeHoldsOnPatronsWhoDidNotShelveTheirBooks();
 		} else if (selection == 5) {
-			System.out.println();
-			String itemDescription = this.input.askForString("Item Description: ");
-			String location = this.input.askForString("Where was the item found: ");
-			String patronID = this.input.askForString("Patron ID: ");
-			this.manage.applyMiscHold(itemDescription, location, FakeDB.getPatron(patronID));
+			placeHoldsOnPatronsMisc();
 		} else if (selection == 6) {
-			System.out.println();
-			this.manage.generateHoldNotices();
+			generatePatronHoldNotices();
 		} else {
 			runApp = false;
 		}
 		return runApp;
+	}
+
+	private void generatePatronHoldNotices() {
+		System.out.println();
+		this.manage.generateHoldNotices();
+	}
+
+	private void placeHoldsOnPatronsMisc() {
+		System.out.println();
+		String itemDescription = this.input.askForString("Item Description: ");
+		String location = this.input.askForString("Where was the item found: ");
+		String patronID = this.input.askForString("Patron ID: ");
+		this.manage.applyMiscHold(itemDescription, location, FakeDB.getPatron(patronID));
+	}
+
+	private void placeHoldsOnPatronsWhoDidNotShelveTheirBooks() {
+		Patron offendingPatron = this.db.locatePatronInDB();
+		Copy unshelvedCopy = this.db.locateCopyInDB();
+		int fineAmount = this.input.askForInteger("Fine Amount: ");
+		this.manage.applyUnshelvedHold(fineAmount, offendingPatron, unshelvedCopy);
+	}
+
+	private void placeHoldsOnPatronsWithOverdueBooks() {
+		int fineAmount = this.input.askForInteger("Fine Amount: ");
+		this.manage.applyOverdueHolds(fineAmount);
+	}
+
+	private void displayPatronsWithOverdueBooks() {
+		System.out.println();
+		this.manage.displayPatronsWithBooksUnreturned();
+	}
+
+	private void displayAllPatrons() {
+		System.out.println();
+		this.manage.displayAllPatrons();
 	}
 }

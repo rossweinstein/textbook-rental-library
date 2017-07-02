@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import fakeDatabase.DBConnect;
-import fakeDatabase.FakeDB;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.HoldType;
@@ -64,8 +63,17 @@ public class ManagerialFunctionsController {
 	}
 
 	public void applyOverdueHolds(int fineAmount) {
-		this.findPatronsWithUnreturnedCopies(this.db.getAllPatrons()).stream()
-				.forEach(patron -> patron.placeHoldOnRecord(HoldType.OVERDUE, fineAmount, FakeDB.getCopy("C1")));
+		
+		for (Patron offendingPatron : this.findPatronsWithUnreturnedCopies(this.db.getAllPatrons())) {
+			
+			List<Copy> unreturnedCopies = offendingPatron.getCopiesOut();
+			
+			for (Copy eachCopy : unreturnedCopies) {
+				offendingPatron.placeHoldOnRecord(HoldType.OVERDUE, fineAmount, eachCopy);
+			}
+		}
+		
+		
 		this.holdsApplied = true;
 		System.out.println("Holds marked...\n");
 	}

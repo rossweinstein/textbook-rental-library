@@ -31,7 +31,7 @@ public class CheckOutController extends SessionController implements TRLSession 
 			return false;
 		}
 
-		if (!this.patronHasNoHoldsOnRecord(thePatron)) {
+		if (this.patronHasHolds(thePatron)) {
 			return false;
 		}
 
@@ -41,35 +41,41 @@ public class CheckOutController extends SessionController implements TRLSession 
 
 	/******************* HOLD METHODS ********************************/
 
-	private boolean patronHasNoHoldsOnRecord(Patron thePatron) {
-		
-		return !thePatron.hasNoHoldsOnRecord() ? true : this.handleHolds(thePatron);
+	private boolean patronHasHolds(Patron thePatron) {
+
+		return thePatron.hasNoHoldsOnRecord() ? false : this.handleHolds(thePatron);
 	}
-	
+
 	private boolean handleHolds(Patron patron) {
 		this.printHoldAlertMessage(patron);
 		return this.dealWithEachHold(patron);
 	}
-	
+
 	private boolean dealWithEachHold(Patron patron) {
-		
-		for (Hold eachHold : patron.getAllHolds()) {
-			
-			eachHold.getHoldMessage();
-			
-			if(this.isAbleToResolveHolds()) {
-				patron.resolvedHold(eachHold);
-			}	
+
+		int currentHold = 0;
+
+		while (currentHold < patron.getAllHolds().size()) {
+
+			patron.getAllHolds().get(currentHold).getHoldMessage();
+
+			if (this.isAbleToResolveHolds()) {
+				patron.resolvedHold(patron.getAllHolds().get(currentHold));
+			} else {
+				currentHold++;
+			}
+
 		}
+
 		return patron.getAllHolds().size() == 0;
-		
+
 	}
 
 	private void printHoldAlertMessage(Patron patron) {
-		
+
 		System.out.println("---HOLD ALERT---");
 		System.out.println("Hold Amount: " + patron.getAllHolds().size());
-		
+
 		for (Hold eachHold : patron.getAllHolds()) {
 			System.out.println(eachHold.getHoldMessage());
 		}
