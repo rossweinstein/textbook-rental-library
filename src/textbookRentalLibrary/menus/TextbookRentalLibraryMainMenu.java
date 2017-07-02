@@ -33,7 +33,7 @@ public class TextbookRentalLibraryMainMenu extends TRLMenu implements CommandLin
 		super.buildMenu().setMenuTitle("Textbook Rental Library");
 		
 		List<String> options = Arrays.asList("Check-Out Book", "Check-In Book",
-				"Manager Functions", "Exit");
+				"Manager Functions", "Quit Program");
 		super.buildMenu().setMenuItles(options);
 		
 		return super.buildMenu();

@@ -30,7 +30,7 @@ public class ManagerialMenuMain extends TRLMenu implements CommandLineMenu {
 	private MenuBuilder managerMainMenu() {
 		super.buildMenu().setMenuTitle("Manager Functions");
 		
-		List<String> options = Arrays.asList("Display Patrons Menu", "Holds Menu", "Exit");
+		List<String> options = Arrays.asList("Display Patrons Menu", "Holds Menu", "Exit Manager Menu");
 		super.buildMenu().setMenuItles(options);
 		
 		return super.buildMenu();
