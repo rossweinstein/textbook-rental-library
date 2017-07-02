@@ -7,9 +7,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import fakeDatabase.FakeDB;
+import database.FakeDB;
 import model.patron.Patron;
-import textbookRentalLibrary.managerFunctions.ManagerialFunctionsController;
+import textbookRentalLibrary.controllers.ManagerialFunctionsController;
 
 public class ManagerialFunctionsControllerTest {
 	

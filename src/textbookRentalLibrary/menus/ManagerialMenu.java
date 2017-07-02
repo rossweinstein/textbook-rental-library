@@ -1,11 +1,11 @@
-package textbookRentalLibrary.managerFunctions;
+package textbookRentalLibrary.menus;
 
-import fakeDatabase.DBConnect;
-import fakeDatabase.FakeDB;
-import helpers.InputHelper;
-import helpers.MenuBuilder;
+import database.FakeDB;
 import model.copy.Copy;
 import model.patron.Patron;
+import textbookRentalLibrary.controllers.DatabaseController;
+import textbookRentalLibrary.controllers.ManagerialFunctionsController;
+import textbookRentalLibrary.userInput.InputHelper;
 
 /**
  * This class creates a command line menu which lists and calls all the
@@ -19,14 +19,14 @@ public class ManagerialMenu {
 	private InputHelper input;
 	private MenuBuilder menu;
 	private ManagerialFunctionsController manage;
-	private DBConnect db;
+	private DatabaseController db;
 
 	public ManagerialMenu() {
 		this.input = new InputHelper();
 		this.menu = new MenuBuilder("Manager Functions", "Display All Patrons", "Display Patrons With Overdue Notices",
 				"Mark Overdue Holds", "Mark Unshelved Holds", "Submit Misc Hold", "Generate Hold Notices", "Exit");
 		this.manage = new ManagerialFunctionsController();
-		this.db = new DBConnect();
+		this.db = new DatabaseController();
 	}
 
 	public void managerMenu() {

@@ -3,15 +3,15 @@ package fakeDatabaseTest;
 import org.junit.Before;
 import org.junit.Test;
 
-import fakeDatabase.DBConnect;
+import textbookRentalLibrary.controllers.DatabaseController;
 
 public class DBConnectTest {
 	
-	private DBConnect db;
+	private DatabaseController db;
 	
 	@Before
 	public void SetUp() {
-		this.db = new DBConnect();
+		this.db = new DatabaseController();
 	}
 	
 	@Test

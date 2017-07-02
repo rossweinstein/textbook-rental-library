@@ -1,9 +1,11 @@
-package fakeDatabase;
+package textbookRentalLibrary.controllers;
 
 import java.util.List;
-import helpers.InputHelper;
+
+import database.FakeDB;
 import model.copy.Copy;
 import model.patron.Patron;
+import textbookRentalLibrary.userInput.InputHelper;
 
 /**
  * 
@@ -15,11 +17,11 @@ import model.patron.Patron;
  *
  */
 
-public class DBConnect {
+public class DatabaseController {
 
 	private InputHelper input;
 
-	public DBConnect() {
+	public DatabaseController() {
 		this.input = new InputHelper();
 	}
 

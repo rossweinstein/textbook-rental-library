@@ -1,9 +1,8 @@
-package textbookRentalLibrary.managerFunctions;
+package textbookRentalLibrary.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import fakeDatabase.DBConnect;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.HoldType;
@@ -18,11 +17,11 @@ import model.patron.hold.HoldType;
 public class ManagerialFunctionsController {
 
 	private boolean holdsApplied;
-	private DBConnect db;
+	private DatabaseController db;
 
 	public ManagerialFunctionsController() {
 		this.holdsApplied = false;
-		this.db = new DBConnect();
+		this.db = new DatabaseController();
 	}
 	
 	public void displayAllPatrons() {

@@ -1,4 +1,4 @@
-package helpers;
+package textbookRentalLibrary.userInput;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,4 +1,4 @@
-package textbookRentalLibrary.checkInAndOut;
+package textbookRentalLibrary.controllers.checkInAndOutCopy;
 
 /**
  * Interface for our TRL session, makes check in and check out session have

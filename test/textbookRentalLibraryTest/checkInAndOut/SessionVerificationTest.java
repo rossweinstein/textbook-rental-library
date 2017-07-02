@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import fakeDatabase.FakeDB;
-import textbookRentalLibrary.checkInAndOut.SessionController;
+import database.FakeDB;
+import textbookRentalLibrary.controllers.checkInAndOutCopy.SessionController;
 
 public class SessionVerificationTest {
 	

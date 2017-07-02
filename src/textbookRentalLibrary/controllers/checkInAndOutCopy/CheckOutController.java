@@ -1,9 +1,9 @@
-package textbookRentalLibrary.checkInAndOut;
+package textbookRentalLibrary.controllers.checkInAndOutCopy;
 
-import fakeDatabase.DBConnect;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.Hold;
+import textbookRentalLibrary.controllers.DatabaseController;
 
 /**
  * This class handles the Check Out Sessions for the TRL application
@@ -13,11 +13,11 @@ import model.patron.hold.Hold;
  */
 public class CheckOutController extends SessionController implements TRLSession {
 
-	private DBConnect db;
+	private DatabaseController db;
 
 	public CheckOutController() {
 		super();
-		this.db = new DBConnect();
+		this.db = new DatabaseController();
 	}
 
 	@Override

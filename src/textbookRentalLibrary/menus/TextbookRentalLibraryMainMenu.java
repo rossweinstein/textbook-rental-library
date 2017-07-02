@@ -1,11 +1,9 @@
-package textbookRentalLibrary.main;
+package textbookRentalLibrary.menus;
 
-import helpers.InputHelper;
-import helpers.MenuBuilder;
-import textbookRentalLibrary.checkInAndOut.CheckInController;
-import textbookRentalLibrary.checkInAndOut.CheckOutController;
-import textbookRentalLibrary.checkInAndOut.TRLSession;
-import textbookRentalLibrary.managerFunctions.ManagerialMenu;
+import textbookRentalLibrary.controllers.checkInAndOutCopy.CheckInController;
+import textbookRentalLibrary.controllers.checkInAndOutCopy.CheckOutController;
+import textbookRentalLibrary.controllers.checkInAndOutCopy.TRLSession;
+import textbookRentalLibrary.userInput.InputHelper;
 
 /**
  * This class creates a command line menu which lists and calls all the

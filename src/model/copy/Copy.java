@@ -1,6 +1,6 @@
 package model.copy;
 
-import fakeDatabase.FakeDB;
+import database.FakeDB;
 import model.patron.Patron;
 
 /**
