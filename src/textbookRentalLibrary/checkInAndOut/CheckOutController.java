@@ -1,8 +1,9 @@
 package textbookRentalLibrary.checkInAndOut;
 
 import fakeDatabase.DBConnect;
-import patron.Copy;
-import patron.Patron;
+import model.copy.Copy;
+import model.patron.Patron;
+import model.patron.hold.Hold;
 
 /**
  * This class handles the Check Out Sessions for the TRL application
@@ -41,26 +42,37 @@ public class CheckOutController extends SessionController implements TRLSession 
 	/******************* HOLD METHODS ********************************/
 
 	private boolean patronHasNoHoldsOnRecord(Patron thePatron) {
-
-		// check holds on record
-		if (thePatron.hasHoldsOnRecord()) {
-
-			this.printHoldAlertMessage(thePatron);
-
-			// must resolve holds to continue
-			if (!this.isAbleToResolveHolds()) {
-				return false;
-			} else {
-				thePatron.resolvedHolds();
-			}
+		
+		return !thePatron.hasNoHoldsOnRecord() ? true : this.handleHolds(thePatron);
+	}
+	
+	private boolean handleHolds(Patron patron) {
+		this.printHoldAlertMessage(patron);
+		return this.dealWithEachHold(patron);
+	}
+	
+	private boolean dealWithEachHold(Patron patron) {
+		
+		for (Hold eachHold : patron.getAllHolds()) {
+			
+			eachHold.getHoldMessage();
+			
+			if(this.isAbleToResolveHolds()) {
+				patron.resolvedHold(eachHold);
+			}	
 		}
-		return true;
+		return patron.getAllHolds().size() == 0;
+		
 	}
 
 	private void printHoldAlertMessage(Patron patron) {
-		System.out.println("\nALERT: Patron has hold on record");
-		System.out.println(patron.getName() + " has yet to return and pay the fee for the following titles: ");
-		System.out.println(patron.getCopiesOut());
+		
+		System.out.println("---HOLD ALERT---");
+		System.out.println("Hold Amount: " + patron.getAllHolds().size());
+		
+		for (Hold eachHold : patron.getAllHolds()) {
+			System.out.println(eachHold.getHoldMessage());
+		}
 
 	}
 
@@ -71,7 +83,7 @@ public class CheckOutController extends SessionController implements TRLSession 
 	 * @return boolean true if Patron can resolve holds; false otherwise
 	 */
 	private boolean isAbleToResolveHolds() {
-		return super.input.askBinaryQuestion("\nIs patron able to resolve holds? (y/n)", "y", "n");
+		return super.input.askBinaryQuestion("\nIs patron able to resolve this hold? (y/n)", "y", "n");
 	}
 
 	/******************* CHECKOUT METHODS ********************************/

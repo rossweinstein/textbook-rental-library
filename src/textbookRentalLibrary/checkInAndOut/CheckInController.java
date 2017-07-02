@@ -1,8 +1,8 @@
 package textbookRentalLibrary.checkInAndOut;
 
 import fakeDatabase.DBConnect;
-import patron.Copy;
-import patron.Patron;
+import model.copy.Copy;
+import model.patron.Patron;
 
 /**
  * This class handles the Check In Sessions for the TRL application

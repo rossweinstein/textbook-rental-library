@@ -1,7 +1,7 @@
 package textbookRentalLibrary.checkInAndOut;
 
 import helpers.InputHelper;
-import patron.Patron;
+import model.patron.Patron;
 
 /**
  * This class does the basic Patron verification for TRL application. It checks

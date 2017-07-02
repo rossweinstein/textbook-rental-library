@@ -6,8 +6,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import patron.Copy;
-import patron.Patron;
+import model.copy.Copy;
+import model.patron.Patron;
+import model.patron.hold.HoldType;
 
 public class PatronTest {
 	
@@ -91,22 +92,29 @@ public class PatronTest {
 	
 	@Test
 	public void patronDoesNotHaveHoldsOnRecord() {
-		assertFalse(this.firstPatron.hasHoldsOnRecord());
+		assertTrue(this.firstPatron.hasNoHoldsOnRecord());
 	}
 	
 	@Test 
 	public void patronDoesHaveHoldsOnRecord() {
-		this.firstPatron.putHoldOnRecord();
-		assertTrue(this.firstPatron.hasHoldsOnRecord());
+		
+		this.firstPatron.checkCopyOut(bookOne);
+		this.firstPatron.placeHoldOnRecord(HoldType.OVERDUE, 50, bookOne);
+		assertFalse(this.firstPatron.hasNoHoldsOnRecord());
 	}
 	
 	@Test
 	public void patronResolvesHolds() {
 		this.firstPatron.checkCopyOut(bookOne);
 		this.firstPatron.checkCopyOut(bookTwo);
-		this.firstPatron.putHoldOnRecord();
-		this.firstPatron.resolvedHolds();
+		
+		this.firstPatron.placeHoldOnRecord(HoldType.OVERDUE, 50, bookOne);
+		this.firstPatron.placeHoldOnRecord(HoldType.OVERDUE, 50, bookTwo);
+		
+		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
+		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
+		
 		assertTrue(this.firstPatron.copiesCurrentlyCheckedOut() == 0);
-		assertFalse(this.firstPatron.hasHoldsOnRecord());
+		assertTrue(this.firstPatron.hasNoHoldsOnRecord());
 	}
 }

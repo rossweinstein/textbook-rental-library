@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fakeDatabase.FakeDB;
-import patron.Patron;
+import model.patron.Patron;
 import textbookRentalLibrary.managerFunctions.ManagerialFunctionsController;
 
 public class ManagerialFunctionsControllerTest {

@@ -2,8 +2,8 @@ package fakeDatabase;
 
 import java.util.List;
 import helpers.InputHelper;
-import patron.Copy;
-import patron.Patron;
+import model.copy.Copy;
+import model.patron.Patron;
 
 /**
  * 

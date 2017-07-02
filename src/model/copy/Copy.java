@@ -1,6 +1,7 @@
-package patron;
+package model.copy;
 
 import fakeDatabase.FakeDB;
+import model.patron.Patron;
 
 /**
  * The Copy class has all the basic functionality for the textbooks that can be

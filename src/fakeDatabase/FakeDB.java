@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import patron.Copy;
-import patron.Patron;
+import model.copy.Copy;
+import model.patron.Patron;
 
 public class FakeDB {
 	private static Map<String, Patron> patronStore;
@@ -20,6 +20,7 @@ public class FakeDB {
 
 		patronStore.put("P1", new Patron("P1", "Eric"));
 		patronStore.put("P2", new Patron("P2", "Ross"));
+		
 		copyStore.put("C1", new Copy("C1", "Fun with Objects"));
 		copyStore.put("C2", new Copy("C2", "More Fun with Objects"));
 	}

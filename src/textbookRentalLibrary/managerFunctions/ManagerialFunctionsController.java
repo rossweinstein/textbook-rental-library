@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import fakeDatabase.DBConnect;
-import patron.Patron;
+import fakeDatabase.FakeDB;
+import model.copy.Copy;
+import model.patron.Patron;
+import model.patron.hold.HoldType;
 
 /**
  * This class controls all the functions that a manager can do: See all records,
@@ -60,14 +63,22 @@ public class ManagerialFunctionsController {
 				.collect(Collectors.toList());
 	}
 
-	public void applyHolds() {
+	public void applyOverdueHolds(int fineAmount) {
 		this.findPatronsWithUnreturnedCopies(this.db.getAllPatrons()).stream()
-				.forEach(patron -> patron.putHoldOnRecord());
+				.forEach(patron -> patron.placeHoldOnRecord(HoldType.OVERDUE, fineAmount, FakeDB.getCopy("C1")));
 		this.holdsApplied = true;
 		System.out.println("Holds marked...\n");
 	}
+	
+	public void applyMiscHold(String item, String location, Patron patron) {
+		patron.placeLostAndFoundHold(item, location);
+	}
+	
+	public void applyUnshelvedHold(int fineAmount, Patron patron, Copy copy) {
+		patron.placeHoldOnRecord(HoldType.UNSHELEVED, fineAmount, copy);
+	}
 
-	public void generateOverdueNotices() {
+	public void generateHoldNotices() {
 
 		if (this.holdsApplied) {
 			System.out.println("Overdue notices generated...\n");

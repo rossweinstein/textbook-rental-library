@@ -1,8 +1,13 @@
-package patron;
+package model.patron;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import fakeDatabase.FakeDB;
+import model.copy.Copy;
+import model.patron.hold.Hold;
+import model.patron.hold.HoldFactory;
+import model.patron.hold.HoldType;
+import model.patron.hold.MiscHold;
 
 /**
  * 
@@ -18,13 +23,13 @@ public class Patron {
 	private String name;
 	private String patronID;
 	private ArrayList<Copy> copiesOut;
-	private boolean hasHolds;
+	private List<Hold> currentHolds;
 
 	public Patron(String id, String name) {
 		this.patronID = id;
 		this.name = name;
 		this.copiesOut = new ArrayList<>();
-		this.hasHolds = false;
+		this.currentHolds = new ArrayList<>();
 	}
 
 	/***** GETTERS / SETTERS *******************************/
@@ -45,8 +50,12 @@ public class Patron {
 		return copiesOut;
 	}
 
-	public boolean hasHoldsOnRecord() {
-		return this.hasHolds;
+	public boolean hasNoHoldsOnRecord() {
+		return this.currentHolds.size() == 0;
+	}
+	
+	public List<Hold> getAllHolds() {
+		return this.currentHolds;
 	}
 
 	/***** OVERRIDES ********************************************/
@@ -159,67 +168,31 @@ public class Patron {
 		return this.copiesOut.size();
 	}
 
-	/**
-	 * Marks a hold on the Patron's record
-	 */
-	public void putHoldOnRecord() {
-		this.hasHolds = true;
+	/***** HOLD METHODS ************************/
+
+	public void placeHoldOnRecord(HoldType type, int fineAmount, Copy copy) {
+
+		Hold copyHold = HoldFactory.createHold(type, fineAmount, copy);
+		this.currentHolds.add(copyHold);
 	}
+	
+	public void placeLostAndFoundHold(String item, String location) {
+		this.currentHolds.add(new MiscHold(item, location));
+	}
+
+	
 
 	/**
 	 * Patron has resolved their holds and can check out book again. Books are
 	 * returned, or bought, and fine is paid.
 	 */
-	public void resolvedHolds() {
-		this.returnAllBooks();
-		this.hasHolds = false;
-	}
-
-	/**
-	 * All Copy objects are removed from Patron's record
-	 */
-	private void returnAllBooks() {
-		this.copiesOut.stream().forEach(copy -> copy.holdReturned());
-		this.copiesOut = new ArrayList<>();
-	}
-
-	public static void main(String[] args) {
-
-		Copy bookOne = FakeDB.getCopy("C1");
-		Copy bookTwo = FakeDB.getCopy("C2");
-
-		Patron firstPatron = FakeDB.getPatron("P1");
-		Patron secondPatron = FakeDB.getPatron("P2");
-
-		System.out.println("----TEST: CHECK IN AND OUT----");
-		System.out.println("\nPatron With No Books Checked Out--");
-		System.out.println(firstPatron);
-
-		System.out.println("\nPatron With One Book Checked Out--");
-		firstPatron.checkCopyOut(bookOne);
-		System.out.println(firstPatron);
-
-		System.out.println("\nPatron With Two Books Checked Out--");
-		firstPatron.checkCopyOut(bookTwo);
-		System.out.println(firstPatron);
-
-		System.out.println("\nPatron After One Book Returned--");
-		firstPatron.checkCopyIn(bookOne);
-		System.out.println(firstPatron);
-
-		System.out.println("\nPatron After Second Book Returned--");
-		firstPatron.checkCopyIn(bookTwo);
-		System.out.println(firstPatron);
-
-		System.out.println("\n---TEST: CANNOT CHECK OUT A BOOK THAT IS ALREADY CHECKED OUT----");
-		System.out.print("\nPatron Two Is Able To Check Out A Book Held By Patron One: ");
-		firstPatron.checkCopyOut(bookOne);
-		System.out.println(secondPatron.checkCopyOut(bookOne));
-
-		System.out.println("\n----TEST: PATRON EQUALS----");
-		System.out.print("\nPatron one equals Patron one: ");
-		System.out.println(firstPatron.equals(firstPatron));
-		System.out.print("Patron one equals Patron two: ");
-		System.out.println(firstPatron.equals(secondPatron));
+	public void resolvedHold(Hold holdCopy) {
+		
+		
+		if (this.copiesOut.contains(holdCopy.getHoldCopy())) {
+			this.copiesOut.remove(holdCopy.getHoldCopy());
+		}
+		
+		this.currentHolds.remove(holdCopy);
 	}
 }
