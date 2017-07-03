@@ -3,6 +3,7 @@ package textbookRentalLibrary.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import database.FakeDB;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.HoldType;
@@ -17,26 +18,24 @@ import model.patron.hold.HoldType;
 public class ManagerialFunctionsController {
 
 	private boolean holdsApplied;
-	private DatabaseController db;
 
 	public ManagerialFunctionsController() {
 		this.holdsApplied = false;
-		this.db = new DatabaseController();
 	}
 	
 	public void displayAllPatrons() {
 		
-		if (this.db.getAllPatrons().size() == 0) {
+		if (FakeDB.getAllPatrons().size() == 0) {
 			System.out.println("There are no patrons in the system");
 		} else {
-			this.printDesiredPatrons(this.db.getAllPatrons());
+			this.printDesiredPatrons(FakeDB.getAllPatrons());
 		}
 		System.out.println();
 	}
 
 	public void displayPatronsWithUnreturnedTextbooks() {
 
-		List<Patron> patronsWithUnreturnedBooks = this.findPatronsWithUnreturnedCopies(this.db.getAllPatrons());
+		List<Patron> patronsWithUnreturnedBooks = this.findPatronsWithUnreturnedCopies(FakeDB.getAllPatrons());
 
 		if (patronsWithUnreturnedBooks == null || patronsWithUnreturnedBooks.size() == 0) {
 			System.out.println("There are no patrons with unreturned books");
@@ -63,7 +62,7 @@ public class ManagerialFunctionsController {
 
 	public void applyOverdueHolds(int fineAmount) {
 		
-		for (Patron offendingPatron : this.findPatronsWithUnreturnedCopies(this.db.getAllPatrons())) {
+		for (Patron offendingPatron : this.findPatronsWithUnreturnedCopies(FakeDB.getAllPatrons())) {
 			
 			List<Copy> unreturnedCopies = offendingPatron.getCopiesOut();
 			

@@ -89,14 +89,14 @@ public class Patron {
 
 	@Override
 	public String toString() {
-		return "Name: " + this.name + " | ID: " + this.patronID + " | Copies Out: " + this.showBookList();
+		return "Name: " + this.name + " [ID: " + this.patronID + "]";
 	}
 
 	// checks to see if the Patron has any books currently checked out; If they
 	// do, it'll list all of them with title and ID number in a comma separated
 	// list; if no books are checked out, it'll state no book are currently
 	// checked out
-	private String showBookList() {
+	public String showBookList() {
 
 		if (this.copiesOut.isEmpty()) {
 			return "No Books Currently Checked Out";
@@ -170,13 +170,15 @@ public class Patron {
 
 	/***** HOLD METHODS ************************/
 
-	public void placeHoldOnRecord(HoldType type, int fineAmount, Copy copy) {
+	public boolean placeHoldOnRecord(HoldType type, int fineAmount, Copy copy) {
 
 		Hold copyHold = HoldFactory.createHold(type, fineAmount, copy);
 
 		if (!this.currentHolds.contains(copyHold)) {
-			this.currentHolds.add(copyHold);
+			return this.currentHolds.add(copyHold);
 		}
+		
+		return false;
 	}
 
 	public void placeLostAndFoundHold(String item, String location) {

@@ -75,7 +75,7 @@ public class Copy {
 
 	@Override
 	public String toString() {
-		return "CopyID: " + this.copyID + "\nTitle: " + this.title + "\nChecked Out By: " + this.checkedOutBy();
+		return "Title: " + this.title + " [ID: " + this.copyID +"]";
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Copy {
 	 * @return String the Patron and PatronID or a message saying that the copy
 	 *         is currently available
 	 */
-	private String checkedOutBy() {
+	public String checkedOutBy() {
 		if (this.outTo == null) {
 			return "Copy is Currently Available";
 		} else {

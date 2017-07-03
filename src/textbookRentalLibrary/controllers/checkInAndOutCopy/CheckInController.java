@@ -2,7 +2,7 @@ package textbookRentalLibrary.controllers.checkInAndOutCopy;
 
 import model.copy.Copy;
 import model.patron.Patron;
-import textbookRentalLibrary.controllers.DatabaseController;
+import textbookRentalLibrary.controllers.DatabaseSearch;
 
 /**
  * This class handles the Check In Sessions for the TRL application
@@ -12,11 +12,11 @@ import textbookRentalLibrary.controllers.DatabaseController;
  */
 public class CheckInController extends SessionController implements TRLSession {
 
-	private DatabaseController db;
+	private DatabaseSearch db;
 
 	public CheckInController() {
 		super();
-		this.db = new DatabaseController();
+		this.db = new DatabaseSearch();
 	}
 
 	@Override

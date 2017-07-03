@@ -1,6 +1,5 @@
 package textbookRentalLibrary.controllers;
 
-import java.util.List;
 
 import database.FakeDB;
 import model.copy.Copy;
@@ -17,20 +16,12 @@ import textbookRentalLibrary.userInput.InputHelper;
  *
  */
 
-public class DatabaseController {
+public class DatabaseSearch {
 
 	private InputHelper input;
 
-	public DatabaseController() {
+	public DatabaseSearch() {
 		this.input = new InputHelper();
-	}
-
-	public List<Patron> getAllPatrons() {
-		return FakeDB.getAllPatrons();
-	}
-
-	public List<Copy> getAllCopies() {
-		return FakeDB.getAllCopies();
 	}
 
 	/**
