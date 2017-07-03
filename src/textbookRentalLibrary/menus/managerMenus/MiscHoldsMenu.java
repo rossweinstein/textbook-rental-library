@@ -45,13 +45,13 @@ public class MiscHoldsMenu extends ManagerMenu {
 
 	private void displayAllPatronsWithMiscHolds() {
 		System.out.println();
-		
+		this.managerFunc().displayPatronsWithMiscHolds();
 		System.out.println();
 	}
 	
 	private void markAllMiscHolds() {
 		System.out.println();
-		
+		this.managerFunc().markMiscHold();
 		System.out.println();
 	}
 

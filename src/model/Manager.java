@@ -16,6 +16,8 @@ public class Manager {
 
 	public Manager() {
 	}
+	
+	/********** GENERAL MANAGER **************************************/
 
 	public List<Patron> getAllPatronsInTRL() {
 		return FakeDB.getAllPatrons();
@@ -25,14 +27,16 @@ public class Manager {
 		return this.getAllPatronsInTRL().stream().filter(patron -> !patron.hasNoHoldsOnRecord())
 				.collect(Collectors.toList());
 	}
-
-	private int getHoldTotal() {
-		return this.getAllPatronsWithHolds().stream().map(patron -> patron.getAllHolds().size()).mapToInt(i -> i).sum();
-	}
-
+	
 	public boolean canGenerateHoldNotices() {
 		return this.getAllPatronsWithHolds().size() > 0;
 	}
+	
+	public int getHoldTotal() {
+		return this.getAllPatronsWithHolds().stream().map(patron -> patron.getAllHolds().size()).mapToInt(i -> i).sum();
+	}
+	
+	/********** OVERDUE HOLDS **************************************/
 
 	public List<Patron> getAllPatronsWithUnreturnedTextBooks() {
 		return this.getAllPatronsInTRL().stream().filter(patron -> patron.copiesCurrentlyCheckedOut() > 0)
@@ -63,10 +67,8 @@ public class Manager {
 
 		return this.holdsUpdatedCorrectly(holdTally);
 	}
-
-	private boolean holdsUpdatedCorrectly(int tally) {
-		return this.getHoldTotal() == tally;
-	}
+	
+	/********** UNSHELVED HOLDS **************************************/
 
 	public List<Patron> getAllPatronsWithUnshelvedHolds() {
 		return this.getSpecificHold("UNSHELVED");
@@ -84,15 +86,13 @@ public class Manager {
 
 		return this.holdsUpdatedCorrectly(++holdTally);
 	}
+	
+	/********** DAMAGED HOLDS **************************************/
 
 	public List<Patron> getAllPatronsWithDamageHolds() {
 		return this.getSpecificHold("DAMAGED");
 	}
 	
-	private boolean patronLastToCheckOutCopy(Patron patron, Copy copy) {
-		return patron.equals(copy.getLastPersonToCheckOut());
-	}
-
 	public boolean markDamageHold(Patron offendingPatron, Copy damagedCopy, int fineAmount) {
 		
 		int holdTally = this.getHoldTotal();
@@ -105,6 +105,8 @@ public class Manager {
 
 		return this.holdsUpdatedCorrectly(++holdTally);
 	}
+	
+	/********** MISC HOLDS **************************************/
 
 	public List<Patron> getAllPatronsWithMiscHolds() {
 		return this.getSpecificHold("found");
@@ -116,7 +118,17 @@ public class Manager {
 		thePatron.placeLostAndFoundHold(item, location);
 		return this.holdsUpdatedCorrectly(++holdTally);
 	}
-
+	
+	/********** HELPER METHODS **************************************/
+	
+	private boolean holdsUpdatedCorrectly(int tally) {
+		return this.getHoldTotal() == tally;
+	}
+	
+	private boolean patronLastToCheckOutCopy(Patron patron, Copy copy) {
+		return patron.equals(copy.getLastPersonToCheckOut());
+	}
+	
 	private List<Patron> getSpecificHold(String holdType) {
 
 		List<Patron> matchingPatrons = new ArrayList<>();

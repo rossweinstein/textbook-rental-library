@@ -38,7 +38,7 @@ public class managerTest {
 	}
 
 	@Test
-	public void addedOneHold() {
+	public void addedTwoHolds() {
 
 		Patron ross = this.patrons.get(1);
 		Copy textbook = this.copies.get(0);
@@ -47,11 +47,12 @@ public class managerTest {
 		ross.checkCopyIn(textbook);
 
 		this.manage.markDamageHold(ross, textbook, 10);
-
-		assertTrue(this.manage.getAllPatronsWithHolds().size() == 1);
-
+		this.manage.markUnshelevedHold(ross, textbook, 5);
+		
+		assertTrue(this.manage.getHoldTotal() == 2);
+		
 		ross.resolvedHold(ross.getAllHolds().get(0));
-		textbook.setLastPersonToCheckOut(null);
+		ross.resolvedHold(ross.getAllHolds().get(0));
 	}
 
 	@Test

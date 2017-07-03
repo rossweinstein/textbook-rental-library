@@ -45,13 +45,13 @@ public class UnshelvedHoldsMenu extends ManagerialMenuMain {
 
 	private void displayAllPatronsWithUnshelvedHolds() {
 		System.out.println();
-		
+		this.managerFunc().displayPatronsWithUnshelvedHolds();
 		System.out.println();
 	}
 	
 	private void markAllUnshelvedHolds() {
 		System.out.println();
-		
+		this.managerFunc().markUnshelvedHold();
 		System.out.println();
 	}
 

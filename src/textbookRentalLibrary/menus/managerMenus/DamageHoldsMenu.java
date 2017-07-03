@@ -45,13 +45,13 @@ public class DamageHoldsMenu extends ManagerMenu {
 
 	private void displayAllPatronsWithDamageHolds() {
 		System.out.println();
-		
+		this.managerFunc().displayPatronsWithDamageHolds();
 		System.out.println();
 	}
 	
 	private void markAllDamageHold() {
 		System.out.println();
-		
+		this.managerFunc().markDamageHold();
 		System.out.println();
 	}
 

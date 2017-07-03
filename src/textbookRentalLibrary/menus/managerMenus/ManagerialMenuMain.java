@@ -3,6 +3,7 @@ package textbookRentalLibrary.menus.managerMenus;
 import java.util.Arrays;
 import java.util.List;
 
+import textbookRentalLibrary.menus.CommandLineMenu;
 import textbookRentalLibrary.menus.MenuBuilder;
 
 /**
@@ -22,7 +23,7 @@ public class ManagerialMenuMain extends ManagerMenu {
 		super.buildMenu().setMenuTitle("-----MANAGER FUNCTIONS MENU-----");
 
 		List<String> options = Arrays.asList("Display All Patrons", "Display All Holds", "Overdue Holds Menu",
-				"Unshelved Holds Menu", "Damange Holds Menu", "Misc. Holds Menu", "Generate Hold Notices",
+				"Unshelved Holds Menu", "Damage Holds Menu", "Misc. Holds Menu", "Generate Hold Notices",
 				"Exit Manager Menu");
 		super.buildMenu().setMenuItles(options);
 
@@ -46,16 +47,20 @@ public class ManagerialMenuMain extends ManagerMenu {
 			this.displayAllHolds();
 
 		} else if (selection == 3) {
-			// Overdue Holds Menu
+			CommandLineMenu overdueHolds = new OverdueHoldsMenu();
+			overdueHolds.displayMenu();
 
 		} else if (selection == 4) {
-			// Unshelved Holds Menu
+			CommandLineMenu unshelvedHolds = new UnshelvedHoldsMenu();
+			unshelvedHolds.displayMenu();
 
 		} else if (selection == 5) {
-			// Damage Holds Menu
+			CommandLineMenu damageHolds = new DamageHoldsMenu();
+			damageHolds.displayMenu();
 
 		} else if (selection == 6) {
-			// Misc. Holds Menu
+			CommandLineMenu miscHolds = new MiscHoldsMenu();
+			miscHolds.displayMenu();
 
 		} else if (selection == 7) {
 			this.generateHoldNotices();

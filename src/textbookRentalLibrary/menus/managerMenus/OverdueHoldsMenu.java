@@ -14,8 +14,8 @@ public class OverdueHoldsMenu extends ManagerialMenuMain {
 	private MenuBuilder overdueHolds() {
 		super.buildMenu().setMenuTitle("-----MANAGER: OVERDUE HOLDS MENU-----");
 
-		List<String> options = Arrays.asList("Display All Overdue Holds", "Mark All Overdue Holds",
-				"Exit Overdue Holds Menu");
+		List<String> options = Arrays.asList("Display All Patrons With Unreturned Textbooks",
+				"Display All Overdue Holds", "Mark All Overdue Holds", "Exit Overdue Holds Menu");
 		super.buildMenu().setMenuItles(options);
 
 		return super.buildMenu();
@@ -32,9 +32,12 @@ public class OverdueHoldsMenu extends ManagerialMenuMain {
 		int selection = super.userInput().askForSelection(this.overdueHolds().getMenuItems());
 
 		if (selection == 1) {
-			this.displayAllPatronsWithOverdueHolds();
+			this.displayAllPatronsWithUnreturnedTextbooks();
 
 		} else if (selection == 2) {
+			this.displayAllPatronsWithOverdueHolds();
+			
+		} else if (selection == 3) {
 			this.markAllOverdueHolds();
 
 		} else {
@@ -42,16 +45,22 @@ public class OverdueHoldsMenu extends ManagerialMenuMain {
 		}
 		return true;
 	}
-
-	private void displayAllPatronsWithOverdueHolds() {
+	
+	private void displayAllPatronsWithUnreturnedTextbooks() {
 		System.out.println();
 		this.managerFunc().displayPatronsWithUnreturnedTextbooks();
 		System.out.println();
 	}
-	
+
+	private void displayAllPatronsWithOverdueHolds() {
+		System.out.println();
+		this.managerFunc().displayPatronsWithOverdueHolds();
+		System.out.println();
+	}
+
 	private void markAllOverdueHolds() {
 		System.out.println();
-		this.managerFunc().applyOverdueHolds(5);
+		this.managerFunc().markOverdueHolds();
 		System.out.println();
 	}
 }
