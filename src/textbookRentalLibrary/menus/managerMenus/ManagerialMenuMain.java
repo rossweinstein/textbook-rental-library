@@ -3,10 +3,7 @@ package textbookRentalLibrary.menus.managerMenus;
 import java.util.Arrays;
 import java.util.List;
 
-import textbookRentalLibrary.menus.CommandLineMenu;
 import textbookRentalLibrary.menus.MenuBuilder;
-import textbookRentalLibrary.menus.TRLMenu;
-
 
 /**
  * This class creates a command line menu which lists and calls all the
@@ -15,49 +12,76 @@ import textbookRentalLibrary.menus.TRLMenu;
  * @author Ross Weinstein
  *
  */
-public class ManagerialMenuMain extends TRLMenu implements CommandLineMenu {
-
-	private CommandLineMenu patronDisplayMenu;
-	private CommandLineMenu holdsMenu;
+public class ManagerialMenuMain extends ManagerMenu {
 
 	public ManagerialMenuMain() {
 		super();
-		this.patronDisplayMenu = new ManagerMenuDisplayPatrons();
-		this.holdsMenu = new ManagerMenuHolds();
-		
 	}
-	
+
 	private MenuBuilder managerMainMenu() {
-		super.buildMenu().setMenuTitle("Manager Functions");
-		
-		List<String> options = Arrays.asList("Display Patrons Menu", "Holds Menu", "Exit Manager Menu");
+		super.buildMenu().setMenuTitle("-----MANAGER FUNCTIONS MENU-----");
+
+		List<String> options = Arrays.asList("Display All Patrons", "Display All Holds", "Overdue Holds Menu",
+				"Unshelved Holds Menu", "Damange Holds Menu", "Misc. Holds Menu", "Generate Hold Notices",
+				"Exit Manager Menu");
 		super.buildMenu().setMenuItles(options);
-		
+
 		return super.buildMenu();
 	}
-	
+
 	@Override
 	public void displayMenu() {
-
-		boolean stayOnMenu = true;
-		while (stayOnMenu) {
-
-			System.out.println(this.managerMainMenu().displayMenuWithoutBanner());
-			stayOnMenu = continueMakingSelections();
-		}
+		super.printMenuToConsole(this.managerMainMenu());
 	}
 
-	private boolean continueMakingSelections() {
+	@Override
+	protected boolean continueMakingSelections() {
 
 		int selection = super.userInput().askForSelection(this.managerMainMenu().getMenuItems());
 
 		if (selection == 1) {
-			this.patronDisplayMenu.displayMenu();
+			this.displayAllPatrons();
+
 		} else if (selection == 2) {
-			this.holdsMenu.displayMenu();
+			this.displayAllHolds();
+
+		} else if (selection == 3) {
+			// Overdue Holds Menu
+
+		} else if (selection == 4) {
+			// Unshelved Holds Menu
+
+		} else if (selection == 5) {
+			// Damage Holds Menu
+
+		} else if (selection == 6) {
+			// Misc. Holds Menu
+
+		} else if (selection == 7) {
+			this.generateHoldNotices();
+
 		} else {
 			return false;
 		}
 		return true;
 	}
+
+	private void displayAllHolds() {
+		System.out.println();
+		this.managerFunc().displayPatronsWithUnreturnedTextbooks();
+		System.out.println();
+	}
+
+	private void displayAllPatrons() {
+		System.out.println();
+		this.managerFunc().displayAllPatrons();
+		System.out.println();
+	}
+	
+	private void generateHoldNotices() {
+		System.out.println();
+		this.managerFunc().generateHoldNotices();
+		System.out.println();
+	}
+
 }

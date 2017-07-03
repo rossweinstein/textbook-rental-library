@@ -34,7 +34,7 @@ public class ManagerialFunctionsController {
 		System.out.println();
 	}
 
-	public void displayPatronsWithBooksUnreturned() {
+	public void displayPatronsWithUnreturnedTextbooks() {
 
 		List<Patron> patronsWithUnreturnedBooks = this.findPatronsWithUnreturnedCopies(this.db.getAllPatrons());
 
