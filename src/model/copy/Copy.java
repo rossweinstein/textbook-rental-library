@@ -16,11 +16,13 @@ public class Copy {
 	private String copyID;
 	private String title;
 	private Patron outTo;
+	private Patron lastPersonToCheckOut;
 
 	public Copy(String copyID, String title) {
 		this.copyID = copyID;
 		this.title = title;
 		this.outTo = null;
+		this.lastPersonToCheckOut = null;
 	}
 
 	/***** GETTERS / SETTERS *******************************/
@@ -43,6 +45,14 @@ public class Copy {
 
 	public void holdReturned() {
 		this.outTo = null;
+	}
+	
+	public Patron getLastPersonToCheckOut() {
+		return this.lastPersonToCheckOut;
+	}
+	
+	public void setLastPersonToCheckOut(Patron patron) {
+		this.lastPersonToCheckOut = patron;
 	}
 
 	/***** OVERRIDES ********************************************/
@@ -89,7 +99,7 @@ public class Copy {
 		if (this.outTo == null) {
 			return "Copy is Currently Available";
 		} else {
-			return this.outTo.getName() + " [ID: " + this.outTo.getPatronID() + "]";
+			return this.outTo.toString();
 		}
 	}
 

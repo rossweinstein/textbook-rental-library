@@ -153,6 +153,7 @@ public class Patron {
 		// make sure they have the book before they can return it
 		if (this.equals(c.getOutTo())) {
 			c.setOutTo(null);
+			c.setLastPersonToCheckOut(this);
 			return this.copiesOut.remove(c);
 		} else {
 			return false;
