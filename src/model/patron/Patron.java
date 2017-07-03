@@ -151,7 +151,7 @@ public class Patron {
 	public boolean checkCopyIn(Copy c) {
 
 		// make sure they have the book before they can return it
-		if (this.equals(c.getOutTo())) {
+		if (this.copiesOut.contains(c)) {
 			c.setOutTo(null);
 			c.setLastPersonToCheckOut(this);
 			return this.copiesOut.remove(c);
