@@ -24,6 +24,8 @@ public class managerTest {
 		this.patrons = FakeDB.getAllPatrons();
 		this.copies = FakeDB.getAllCopies();
 	}
+	
+	/************** GENERAL HOLDS TEST ******************************************************************/
 
 	@Test
 	public void doesGetAllPatrons() {
@@ -31,7 +33,7 @@ public class managerTest {
 	}
 
 	@Test
-	public void getAllHoldsWhenThereAreNoHolds() {
+	public void getsNoHoldsWhenThereAreNoHolds() {
 		assertTrue(this.manage.getAllPatronsWithHolds().isEmpty());
 	}
 
@@ -53,7 +55,7 @@ public class managerTest {
 	}
 
 	@Test
-	public void thereAreHolds() {
+	public void thereAreHoldsInGeneral() {
 
 		Patron ross = this.patrons.get(1);
 		Copy textbook = this.copies.get(0);
@@ -68,7 +70,62 @@ public class managerTest {
 		ross.resolvedHold(ross.getAllHolds().get(0));
 		textbook.setLastPersonToCheckOut(null);
 	}
+	
+	/************** OVERDUE HOLDS TEST ******************************************************************/
 
+	@Test
+	public void seeHowManyPatronsHaveUnreturnedBooks() {
+
+		Patron ross = this.patrons.get(1);
+		Copy textbook = this.copies.get(0);
+
+		ross.checkCopyOut(textbook);
+		
+		Patron mowlid = this.patrons.get(2);
+		Copy textbook2 = this.copies.get(1);
+
+		mowlid.checkCopyOut(textbook2);
+		
+		Patron neera = this.patrons.get(3);
+		Copy textbook3 = this.copies.get(2);
+
+		neera.checkCopyOut(textbook3);
+
+		assertTrue(this.manage.getAllPatronsWithUnreturnedTextBooks().size() == 3);
+	}
+	
+	@Test
+	public void seeHowManyPatronsHaveOverdueHolds() {
+
+		Patron ross = this.patrons.get(1);
+		Copy textbook = this.copies.get(0);
+
+		ross.checkCopyOut(textbook);
+		
+		Patron mowlid = this.patrons.get(2);
+		Copy textbook2 = this.copies.get(1);
+
+		mowlid.checkCopyOut(textbook2);
+		
+		Patron neera = this.patrons.get(3);
+		Copy textbook3 = this.copies.get(2);
+
+		neera.checkCopyOut(textbook3);
+
+		assertTrue(this.manage.markOverdueHolds(10));
+		assertTrue(this.manage.getAllPatronsWithOverdueHolds().size() == 3);
+		assertTrue(this.manage.getAllPatronsWithHolds().size() == 3);
+		
+		ross.resolvedHold(ross.getAllHolds().get(0));
+		textbook.setLastPersonToCheckOut(null);
+		
+		mowlid.resolvedHold(mowlid.getAllHolds().get(0));
+		textbook2.setLastPersonToCheckOut(null);
+		
+		neera.resolvedHold(neera.getAllHolds().get(0));
+		textbook3.setLastPersonToCheckOut(null);
+	}
+	
 	
 	/************** DAMAGE HOLDS TEST ******************************************************************/
 

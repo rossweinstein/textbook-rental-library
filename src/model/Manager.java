@@ -26,7 +26,7 @@ public class Manager {
 				.collect(Collectors.toList());
 	}
 
-	public int getHoldTotal() {
+	private int getHoldTotal() {
 		return this.getAllPatronsWithHolds().stream().map(patron -> patron.getAllHolds().size()).mapToInt(i -> i).sum();
 	}
 

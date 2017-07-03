@@ -193,7 +193,7 @@ public class Patron {
 	public void resolvedHold(Hold holdCopy) {
 
 		if (this.copiesOut.contains(holdCopy.getHoldCopy())) {
-			this.copiesOut.remove(holdCopy.getHoldCopy());
+			this.checkCopyIn(holdCopy.getHoldCopy());
 		}
 
 		this.currentHolds.remove(holdCopy);
