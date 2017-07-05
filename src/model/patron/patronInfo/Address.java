@@ -9,7 +9,7 @@ public class Address {
 	public Address() {
 		this.addressLineOne = "";
 		this.addressLineTwo = "";
-		
+		this.state = "";
 	}
 
 	public void setAddressLineOne(String lineOne) {
