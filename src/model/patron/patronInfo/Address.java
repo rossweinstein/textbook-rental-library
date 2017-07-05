@@ -89,7 +89,7 @@ public class Address {
 	}
 
 	private boolean validCity(String city) {
-		return city.chars().allMatch(Character::isLetter);
+		return city.matches("[A-Za-z\\. ]+");
 	}
 
 	public String getZipCode() {
@@ -113,7 +113,7 @@ public class Address {
 	}
 
 	private String lineTwoIfExists() {
-		if (this.addressLineTwo.isEmpty()) {
+		if (this.addressLineTwo.equals("")) {
 			return "";
 		} else {
 			return this.addressLineTwo + "\n";

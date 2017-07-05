@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import database.FakeDB;
 import model.patron.patronInfo.Address;
 
 public class AddressTest {
@@ -84,9 +85,14 @@ public class AddressTest {
 	
 	@Test
 	public void correctlyFormattedAddress() {
-		
 		String compareAddress = "123 Main Street" + "\nApt 12C" + "\nMinneapolis, MN 55410";
-		assertEquals(compareAddress, this.address.getFormattedAddress());
+		assertEquals(compareAddress, this.address.toString());
+	}
+	
+	@Test
+	public void correctlyFormattedAddress2() {
+		String compareAddress = "876 East Street" + "\nSt. Paul, MN 55116";
+		assertEquals(compareAddress, this.addressTwo.toString());
 	}
 	
 	@Test
@@ -103,7 +109,23 @@ public class AddressTest {
 	}
 	
 	@Test
+	public void correctCompare2() {
+		
+		assertTrue(this.address.equals(this.address));
+	}
+	
+	@Test
 	public void falseCompare() {
 		assertFalse(this.address.equals(addressTwo));
+	}
+	
+	@Test
+	public void falseCompare2() {
+		assertFalse(this.address.equals(null));
+	}
+	
+	@Test
+	public void falseCompare3() {
+		assertFalse(this.address.equals(FakeDB.getCopy("C1")));
 	}
 }
