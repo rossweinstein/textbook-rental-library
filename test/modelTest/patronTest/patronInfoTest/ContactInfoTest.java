@@ -71,6 +71,28 @@ public class ContactInfoTest {
 	
 	@Test
 	public void allContactInfoSet() {
+		this.contact.setFirstName("Ross");
+		this.contact.setLastName("Weinstein");
+		this.contact.setPhoneNumber("6121234567");
+		
+		Address address = new Address();
+		address.setAddressLineOne("123 Main Street");
+		address.setAddressLineTwo("Apt 12C");
+		address.setCity("Minneapolis");
+		address.setState("MN");
+		address.setZipCode("55410");
+		
+		this.contact.setLocalAddress(address);
+		
+		Address addressTwo = new Address();
+		addressTwo.setAddressLineOne("876 East Street");
+		addressTwo.setCity("St. Paul");
+		addressTwo.setState("MN");
+		addressTwo.setZipCode("55116");
+		
+		this.contact.setPermanentAddress(addressTwo);
+		
+		
 		assertTrue(this.contact.allContactInfoSet());
 	}
 }

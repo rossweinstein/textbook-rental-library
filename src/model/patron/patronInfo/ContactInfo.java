@@ -1,13 +1,13 @@
 package model.patron.patronInfo;
 
 public class ContactInfo {
-	
+
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
 	private Address localAddress;
 	private Address permanentAddress;
-	
+
 	public ContactInfo() {
 		this.firstName = "";
 		this.lastName = "";
@@ -41,7 +41,7 @@ public class ContactInfo {
 			this.phoneNumber = phoneNumber;
 		}
 	}
-	
+
 	private boolean validPhoneNumber(String number) {
 		return number.length() == 10 && number.chars().allMatch(Character::isDigit);
 	}
@@ -60,5 +60,10 @@ public class ContactInfo {
 
 	public void setPermanentAddress(Address permanentAddress) {
 		this.permanentAddress = permanentAddress;
+	}
+
+	public boolean allContactInfoSet() {
+		return !this.firstName.isEmpty() && !this.lastName.isEmpty() && !this.phoneNumber.isEmpty()
+				&& this.localAddress != null && this.permanentAddress != null;
 	}
 }
