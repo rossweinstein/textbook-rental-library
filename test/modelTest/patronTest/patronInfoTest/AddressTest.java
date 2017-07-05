@@ -26,5 +26,10 @@ public class AddressTest {
 	public void setAddressLineTwo() {
 		this.address.setAddressLineTwo("Apt. 18B");
 	}
+	
+	@Test
+	public void setState() {
+		this.address.setState("MN");
+	}
 
 }
