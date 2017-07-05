@@ -28,7 +28,10 @@ public class ContactInfoTest {
 	
 	@Test
 	public void printFormattedTelephone() {
-		assertTrue(this.contact.getFormattedTelephoneNumber.equals("612.123.4567"));
+		
+		System.out.println(this.contact.getFormattedTelephoneNumber());
+		
+		assertTrue(this.contact.getFormattedTelephoneNumber().equals("612.123.4567"));
 	}
 
 	@Test

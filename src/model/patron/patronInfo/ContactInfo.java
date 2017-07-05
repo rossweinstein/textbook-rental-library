@@ -19,7 +19,8 @@ public class ContactInfo {
 	@Override
 	public String toString() {
 		return "Name: " + this.firstName + " " + this.lastName + "\nTelephone Number: " + this.phoneNumber
-				+ "\nLocal Address:\n" + this.localAddress.toString() + "\nPermanent Address:\n" + this.permanentAddress.toString();
+				+ "\nLocal Address:\n" + this.localAddress.toString() + "\nPermanent Address:\n"
+				+ this.permanentAddress.toString();
 	}
 
 	@Override
@@ -60,6 +61,18 @@ public class ContactInfo {
 
 	public String getPhoneNumber() {
 		return phoneNumber;
+	}
+
+	public String getFormattedTelephoneNumber() {
+
+		String formattedNumber = "";
+
+		if (!this.phoneNumber.isEmpty()) {
+
+			formattedNumber = this.phoneNumber.substring(0, 3) + "." + this.phoneNumber.substring(3, 6) + "."
+					+ this.phoneNumber.substring(6);
+		}
+		return formattedNumber;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
