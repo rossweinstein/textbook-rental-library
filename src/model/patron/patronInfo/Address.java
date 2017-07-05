@@ -6,11 +6,13 @@ public class Address {
 	
 	private String addressLineOne;
 	private String addressLineTwo;
+	private String city;
 	private String state;
 	
 	public Address() {
 		this.addressLineOne = "";
 		this.addressLineTwo = "";
+		this.city = "";
 		this.state = "";
 	}
 	
@@ -45,5 +47,9 @@ public class Address {
 	
 	public boolean validState(String state) {
 		return Arrays.stream(USStates.values()).anyMatch(usStates -> usStates.equals(state));
+	}
+	
+	public void setCity(String city) {
+		this.city = city;
 	}
 }
