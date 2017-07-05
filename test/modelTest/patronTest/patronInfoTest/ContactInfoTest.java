@@ -25,7 +25,8 @@ public class ContactInfoTest {
 
 	@Test
 	public void getLastName() {
-		this.contact.getLastName();
+		this.contact.setLastName("Weinstein");
+		assertTrue(this.contact.getLastName().equals("Weinstein"));
 	}
 
 }
