@@ -49,6 +49,10 @@ public class Address {
 		return Arrays.stream(USStates.values()).anyMatch(usStates -> usStates.equals(state));
 	}
 	
+	public String getCity() {
+		return this.city;
+	}
+	
 	public void setCity(String city) {
 		this.city = city;
 	}
