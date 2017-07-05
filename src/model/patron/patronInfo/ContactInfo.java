@@ -33,7 +33,13 @@ public class ContactInfo {
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+		if (this.validPhoneNumber(phoneNumber)) {
+			this.phoneNumber = phoneNumber;
+		}
+	}
+	
+	private boolean validPhoneNumber(String number) {
+		return number.length() == 10 && number.chars().allMatch(Character::isDigit);
 	}
 
 	
