@@ -55,4 +55,9 @@ public class ContactInfoTest {
 		this.contact.setLocalAddress(address);
 		assertTrue(this.contact.getLocalAddress().equals(address));
 	}
+	
+	@Test
+	public void getTheirPermanentAddress() {
+		this.contact.getPermanentAddress();
+	}
 }
