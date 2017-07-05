@@ -58,6 +58,14 @@ public class ContactInfoTest {
 	
 	@Test
 	public void getTheirPermanentAddress() {
-		this.contact.getPermanentAddress();
+		
+		Address addressTwo = new Address();
+		addressTwo.setAddressLineOne("876 East Street");
+		addressTwo.setCity("St. Paul");
+		addressTwo.setState("MN");
+		addressTwo.setZipCode("55116");
+		
+		this.contact.setPermanentAddress(addressTwo);
+		assertTrue(this.contact.getPermanentAddress().equals(addressTwo));
 	}
 }
