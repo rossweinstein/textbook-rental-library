@@ -34,7 +34,7 @@ public class AddressTest {
 	
 	@Test
 	public void setInvalidState() {
-		assertFalase(this.address.setState("123"));
+		assertFalse(this.address.validState("123"));
 	}
 
 }

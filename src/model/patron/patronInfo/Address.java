@@ -21,6 +21,15 @@ public class Address {
 	}
 	
 	public void setState(String state) {
-		this.state = state;
+		
+		if (this.validState(state)) {
+			this.state = state;
+		} else {
+			this.state = "";
+		}
+	}
+	
+	public boolean validState(String state) {
+		return state.length() == 2;
 	}
 }
