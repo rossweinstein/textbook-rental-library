@@ -17,6 +17,12 @@ public class ContactInfo {
 	}
 
 	@Override
+	public String toString() {
+		return "Name: " + this.firstName + " " + this.lastName + "\nTelephone Number: " + this.phoneNumber
+				+ "\nLocal Address:\n" + this.localAddress.toString() + "\nPermanent Address:\n" + this.permanentAddress.toString();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		// self check
 		if (this == obj) {
