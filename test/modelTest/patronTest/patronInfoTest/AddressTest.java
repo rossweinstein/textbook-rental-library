@@ -36,5 +36,10 @@ public class AddressTest {
 	public void setInvalidState() {
 		assertFalse(this.address.validState("123"));
 	}
+	
+	@Test
+	public void cannotSetFakeStateMustBeInUSA() {
+		assertFalse(this.address.validState("MX"));
+	}
 
 }
