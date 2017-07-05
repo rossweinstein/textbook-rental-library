@@ -20,6 +20,7 @@ public class OverdueHold extends Hold {
 		if (o == null || !(o instanceof OverdueHold)) {
 			return false;
 		}
+		
 		// cast and comparisons
 		OverdueHold otherOverdueCopy = (OverdueHold) o;
 		return super.getFineAmount() == otherOverdueCopy.getFineAmount()

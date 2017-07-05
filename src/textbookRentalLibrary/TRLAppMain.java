@@ -16,5 +16,4 @@ public class TRLAppMain {
 		TextbookRentalLibraryMainMenu trl = new TextbookRentalLibraryMainMenu();
 		trl.displayMenu();
 	}
-
 }

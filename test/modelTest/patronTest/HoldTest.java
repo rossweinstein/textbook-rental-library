@@ -41,17 +41,48 @@ public class HoldTest {
 
 	@Test
 	public void overdueTest1() {
-		assertFalse(this.patronHolds.get(0).equals(null));
+		assertFalse(this.patronHolds.get(3).equals(null));
 	}
 	
 	@Test
 	public void overdueTest2() {
-		assertTrue(this.patronHolds.get(0).equals(this.patronHolds.get(0)));
+		assertTrue(this.patronHolds.get(3).equals(this.patronHolds.get(3)));
 	}
 	
 	@Test
 	public void overdueTest3() {
-		assertFalse(this.patronHolds.get(0).equals(this.patronHolds.get(4)));
+		assertFalse(this.patronHolds.get(3).equals(this.patronHolds.get(0)));
+	}
+	
+	@Test
+	public void overdueTest4() {
+	
+		Hold overdue = HoldFactory.createHold(HoldType.OVERDUE, 10, FakeDB.getCopy("C3"));
+		
+		assertTrue(this.patronHolds.get(2).equals(overdue));
+	}
+	
+	@Test
+	public void damageTest1() {
+		assertFalse(this.patronHolds.get(0).equals(null));
+	}
+	
+	@Test
+	public void damageTest2() {
+		assertTrue(this.patronHolds.get(0).equals(this.patronHolds.get(0)));
+	}
+	
+	@Test
+	public void damageTest3() {
+		assertFalse(this.patronHolds.get(0).equals(this.patronHolds.get(7)));
+	}
+	
+	@Test
+	public void damageTest4() {
+	
+		Hold damage = HoldFactory.createHold(HoldType.DAMAGED, 10, FakeDB.getCopy("C2"));
+		
+		assertTrue(this.patronHolds.get(1).equals(damage));
 	}
 	
 	@Test
