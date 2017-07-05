@@ -18,6 +18,26 @@ public class Address {
 		this.zipCode = "";
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		// self check
+		if (this == obj) {
+			return true;
+		}
+
+		// null check and type check
+		if (obj == null || !(obj instanceof Address)) {
+			return false;
+		}
+
+		// cast and comparisons
+		Address otherAddress = (Address) obj;
+		return this.addressLineOne.equals(otherAddress.addressLineOne)
+				&& this.addressLineTwo.equals(otherAddress.addressLineTwo) && this.city.equals(otherAddress.city)
+				&& this.state.equals(otherAddress.state) && this.zipCode.equals(otherAddress.zipCode);
+
+	}
+
 	public String getAddressLineOne() {
 		return this.addressLineOne;
 	}
