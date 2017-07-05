@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import database.FakeDB;
 import model.patron.patronInfo.Address;
 import model.patron.patronInfo.ContactInfo;
 
@@ -140,8 +141,84 @@ public class ContactInfoTest {
 		addressTwo.setZipCode("55116");
 
 		compareContact.setPermanentAddress(addressTwo);
-		
+
 		assertTrue(this.contact.equals(compareContact));
+
+	}
+
+	@Test
+	public void canCompareTwoContactsFalse() {
+
+		ContactInfo compareContact = new ContactInfo();
+
+		compareContact.setFirstName("Ross");
+		compareContact.setLastName("Weinstein");
+		compareContact.setPhoneNumber("6121234567");
+
+		Address address = new Address();
+		address.setAddressLineOne("123 Main Street");
+		address.setAddressLineTwo("Apt 12C");
+		address.setCity("Minneapolis");
+		address.setState("MN");
+		address.setZipCode("55410");
+
+		compareContact.setLocalAddress(address);
+
+		assertFalse(this.contact.equals(compareContact));
+
+	}
+
+	@Test
+	public void canCompareTwoContacts2() {
+
+		assertTrue(this.contact.equals(this.contact));
+
+	}
+
+	@Test
+	public void canCompareTwoContactsFalse2() {
+
+		assertFalse(this.contact.equals(null));
+
+	}
+
+	@Test
+	public void canCompareTwoContactsFalse3() {
+
+		assertFalse(this.contact.equals(FakeDB.getAllPatrons()));
+	}
+
+	@Test
+	public void correctPrint() {
+
+		ContactInfo printContact = new ContactInfo();
+
+		printContact.setFirstName("Ross");
+		printContact.setLastName("Weinstein");
+		printContact.setPhoneNumber("6121234567");
+
+		Address address = new Address();
+		address.setAddressLineOne("123 Main Street");
+		address.setAddressLineTwo("Apt 12C");
+		address.setCity("Minneapolis");
+		address.setState("MN");
+		address.setZipCode("55410");
+
+		printContact.setLocalAddress(address);
+
+		Address addressTwo = new Address();
+		addressTwo.setAddressLineOne("876 East Street");
+		addressTwo.setCity("St. Paul");
+		addressTwo.setState("MN");
+		addressTwo.setZipCode("55116");
+
+		printContact.setPermanentAddress(addressTwo);
+
+		String formattedContact = "Name: " + printContact.getFirstName() + " " + printContact.getLastName()
+				+ "\nTelephone Number: " + printContact.getPhoneNumber() + "\nLocal Address:\n" + printContact.getLocalAddress().toString()
+				+ "\nPermanent Address:\n" + printContact.getPermanentAddress().toString();
+		
+		assertEquals(this.contact.toString(), formattedContact);
 
 	}
 }
