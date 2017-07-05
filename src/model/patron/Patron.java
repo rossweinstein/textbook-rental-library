@@ -8,6 +8,7 @@ import model.patron.hold.Hold;
 import model.patron.hold.HoldFactory;
 import model.patron.hold.HoldType;
 import model.patron.hold.MiscHold;
+import model.patron.patronInfo.ContactInfo;
 
 /**
  * 
@@ -20,26 +21,26 @@ import model.patron.hold.MiscHold;
 
 public class Patron {
 
-	private String name;
+	private ContactInfo contactInfo;
 	private String patronID;
 	private ArrayList<Copy> copiesOut;
 	private List<Hold> currentHolds;
 
-	public Patron(String id, String name) {
+	public Patron(String id, ContactInfo contactInfo) {
 		this.patronID = id;
-		this.name = name;
+		this.contactInfo = contactInfo;
 		this.copiesOut = new ArrayList<>();
 		this.currentHolds = new ArrayList<>();
 	}
 
 	/***** GETTERS / SETTERS *******************************/
 
-	public String getName() {
-		return name;
+	public ContactInfo getContactInfo() {
+		return contactInfo;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setContactInfo(ContactInfo contact) {
+		this.contactInfo = contact;
 	}
 
 	public String getPatronID() {
@@ -75,7 +76,7 @@ public class Patron {
 
 		// cast and comparisons
 		Patron otherPatron = (Patron) o;
-		return this.patronID.equals(otherPatron.patronID) && this.name.equals(otherPatron.name);
+		return this.patronID.equals(otherPatron.patronID) && this.contactInfo.equals(otherPatron.contactInfo);
 	}
 
 	@Override
@@ -83,13 +84,14 @@ public class Patron {
 		int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.patronID == null) ? 0 : this.patronID.hashCode());
-		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+		result = prime * result + ((this.contactInfo.getLastName() == null) ? 0 : this.contactInfo.getLastName().hashCode());
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "Name: " + this.name + " [ID: " + this.patronID + "]";
+		return "ID: " + this.patronID + "\nName: " + this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() +
+				"\nPhone Numeber: " + this.contactInfo.getFormattedTelephoneNumber() + "\n\n" + this.contactInfo.getAddresses();
 	}
 
 	// checks to see if the Patron has any books currently checked out; If they
@@ -178,7 +180,7 @@ public class Patron {
 		if (!this.currentHolds.contains(copyHold)) {
 			return this.currentHolds.add(copyHold);
 		}
-		
+
 		return false;
 	}
 

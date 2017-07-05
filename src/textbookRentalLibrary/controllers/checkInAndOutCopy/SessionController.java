@@ -1,6 +1,9 @@
 package textbookRentalLibrary.controllers.checkInAndOutCopy;
 
+
 import model.patron.Patron;
+import textbookRentalLibrary.menus.CommandLineMenu;
+import textbookRentalLibrary.menus.PatronInfoUpdateMenu;
 import textbookRentalLibrary.userInput.InputHelper;
 
 /**
@@ -36,23 +39,19 @@ public class SessionController {
 		if (!this.patronInfoVerified(patron)) {
 
 			if (this.input.askBinaryQuestion(
-					"\nIs this the wrong patron or do they have a mispelled name? (wrong/name)", "wrong", "name")) {
+					"\nIs this the wrong patron or do they have incorrect information? (patron/info)", "patron",
+					"info")) {
 				return false;
 			} else {
-				this.updatePatronName(patron);
+				CommandLineMenu patronInfoUpdate = new PatronInfoUpdateMenu(patron);
+				patronInfoUpdate.displayMenu();
 			}
 		}
 		return true;
 	}
 
-
-	private void updatePatronName(Patron patron) {
-		String correctName = this.input.askForString("\nWhat is the correct spelling of your name?");
-		patron.setName(correctName);
-	}
-
 	private boolean patronInfoVerified(Patron patron) {
-		System.out.println("\nName: " + patron.getName());
+		System.out.println("\n----------VERIFY CONTACT INFORMATION----------\n" + patron.toString());
 		return this.input.askBinaryQuestion("\nIs this information correct? (y/n)", "y", "n");
 	}
 }

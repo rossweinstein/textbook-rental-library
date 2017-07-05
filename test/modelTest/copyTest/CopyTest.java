@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.patronInfo.Address;
+import model.patron.patronInfo.ContactInfo;
 
 public class CopyTest {
 
@@ -17,15 +19,41 @@ public class CopyTest {
 
 	@Before
 	public void setUp() {
-		this.firstPatron = new Patron("1", "Linus");
+		this.firstPatron = this.setUpPatronOne();
 		this.bookOne = new Copy("123", "Book One");
 		this.bookTwo = new Copy("456", "Book Two");
+	}
+	
+	private Patron setUpPatronOne() {
+
+		ContactInfo rossContact = new ContactInfo();
+		rossContact.setFirstName("Ross");
+		rossContact.setLastName("Weinstein");
+		rossContact.setPhoneNumber("3038516529");
+
+		Address localAddress = new Address();
+		localAddress.setAddressLineOne("9513 Market Street");
+		localAddress.setCity("St. Paul");
+		localAddress.setState("MN");
+		localAddress.setZipCode("55115");
+
+		Address permanentAddress = new Address();
+		permanentAddress.setAddressLineOne("9513 Market Street");
+		permanentAddress.setAddressLineTwo("Unit 203");
+		permanentAddress.setCity("St. Paul");
+		permanentAddress.setState("MN");
+		permanentAddress.setZipCode("55115");
+
+		rossContact.setPermanentAddress(permanentAddress);
+
+		return new Patron("P2", rossContact);
+
 	}
 	
 	@Test
 	public void CopyRegistersPatronName() {
 		this.firstPatron.checkCopyOut(bookOne);
-		assertEquals(this.bookOne.getOutTo().getName(), "Linus");	
+		assertEquals(this.bookOne.getOutTo().getContactInfo().getFirstName(), "Ross");	
 	}
 	
 	@Test

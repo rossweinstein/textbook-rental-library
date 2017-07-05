@@ -125,8 +125,6 @@ public class Manager {
 		return this.holdsUpdatedCorrectly(++holdTally);
 	}
 	
-	
-	
 	/********** MISC HOLDS **************************************/
 
 	public List<Patron> getAllPatronsWithMiscHolds() {
