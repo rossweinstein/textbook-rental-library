@@ -101,4 +101,9 @@ public class AddressTest {
 		
 		assertTrue(this.address.equals(compareAddress));
 	}
+	
+	@Test
+	public void falseCompare() {
+		assertFalse(this.address.equals(addressTwo));
+	}
 }
