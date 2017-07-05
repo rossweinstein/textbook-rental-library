@@ -41,5 +41,10 @@ public class AddressTest {
 	public void cannotSetFakeStateMustBeInUSA() {
 		assertFalse(this.address.validState("MX"));
 	}
+	
+	@Test
+	public void setCity() {
+		this.address.setCity("Minneapolis");
+	}
 
 }
