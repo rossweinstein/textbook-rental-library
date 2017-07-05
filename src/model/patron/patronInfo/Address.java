@@ -8,6 +8,7 @@ public class Address {
 	private String addressLineTwo;
 	private String city;
 	private String state;
+	
 
 	public Address() {
 		this.addressLineOne = "";
