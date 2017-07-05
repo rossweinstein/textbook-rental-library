@@ -15,31 +15,49 @@ public class ContactInfoTest {
 	@Before
 	public void createNewContactInfo() {
 		this.contact = new ContactInfo();
+		
+		this.contact.setFirstName("Ross");
+		this.contact.setLastName("Weinstein");
+		this.contact.setPhoneNumber("6121234567");
+		
+		Address address = new Address();
+		address.setAddressLineOne("123 Main Street");
+		address.setAddressLineTwo("Apt 12C");
+		address.setCity("Minneapolis");
+		address.setState("MN");
+		address.setZipCode("55410");
+		
+		this.contact.setLocalAddress(address);
+		
+		Address addressTwo = new Address();
+		addressTwo.setAddressLineOne("876 East Street");
+		addressTwo.setCity("St. Paul");
+		addressTwo.setState("MN");
+		addressTwo.setZipCode("55116");
+		
+		this.contact.setPermanentAddress(addressTwo);
 	}
 	
 	@Test
 	public void getFirstName() {
-		this.contact.setFirstName("Ross");
 		assertTrue(this.contact.getFirstName().equals("Ross"));
 	}
 	
 
 	@Test
 	public void getLastName() {
-		this.contact.setLastName("Weinstein");
 		assertTrue(this.contact.getLastName().equals("Weinstein"));
 	}
 	
 	@Test
 	public void getTelephoneNumber() {
-		this.contact.setPhoneNumber("6121234567");
 		assertTrue(this.contact.getPhoneNumber().equals("6121234567"));
 	}
 	
 	@Test
 	public void cannotGetInvalidTelephoneNumber() {
-		this.contact.setPhoneNumber("61212347");
-		assertTrue(this.contact.getPhoneNumber().equals(""));
+		this.contact.setPhoneNumber("1234");
+		assertTrue(this.contact.getPhoneNumber().equals("6121234567"));
 	}
 	
 	@Test
@@ -52,7 +70,6 @@ public class ContactInfoTest {
 		address.setState("MN");
 		address.setZipCode("55410");
 		
-		this.contact.setLocalAddress(address);
 		assertTrue(this.contact.getLocalAddress().equals(address));
 	}
 	
@@ -65,34 +82,17 @@ public class ContactInfoTest {
 		addressTwo.setState("MN");
 		addressTwo.setZipCode("55116");
 		
-		this.contact.setPermanentAddress(addressTwo);
 		assertTrue(this.contact.getPermanentAddress().equals(addressTwo));
 	}
 	
 	@Test
 	public void allContactInfoSet() {
-		this.contact.setFirstName("Ross");
-		this.contact.setLastName("Weinstein");
-		this.contact.setPhoneNumber("6121234567");
-		
-		Address address = new Address();
-		address.setAddressLineOne("123 Main Street");
-		address.setAddressLineTwo("Apt 12C");
-		address.setCity("Minneapolis");
-		address.setState("MN");
-		address.setZipCode("55410");
-		
-		this.contact.setLocalAddress(address);
-		
-		Address addressTwo = new Address();
-		addressTwo.setAddressLineOne("876 East Street");
-		addressTwo.setCity("St. Paul");
-		addressTwo.setState("MN");
-		addressTwo.setZipCode("55116");
-		
-		this.contact.setPermanentAddress(addressTwo);
-		
-		
 		assertTrue(this.contact.allContactInfoSet());
+	}
+	
+	@Test
+	public void AllContactNotSet() {
+		this.contact.setPermanentAddress(null);
+		assertFalse(this.contact.allContactInfoSet());
 	}
 }
