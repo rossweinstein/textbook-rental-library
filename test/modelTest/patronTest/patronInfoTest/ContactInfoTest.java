@@ -40,7 +40,7 @@ public class ContactInfoTest {
 		
 		someContact.setLocalAddress(addressTwo);
 		
-		String comparisonString = "Address:\n\n" + addressTwo.toString();
+		String comparisonString = "Address:\n" + addressTwo.toString();
 
 		assertTrue(someContact.getAddresses().equals(comparisonString));
 	}
@@ -59,7 +59,7 @@ public class ContactInfoTest {
 		someContact.setLocalAddress(addressTwo);
 		someContact.setPermanentAsLocalAddress();
 		
-		String comparisonString = "Address:\n\n" + addressTwo.toString();
+		String comparisonString = "Address:\n" + addressTwo.toString();
 
 		assertTrue(someContact.getAddresses().equals(comparisonString));
 	}
@@ -67,8 +67,8 @@ public class ContactInfoTest {
 	@Test
 	public void getAddresses() {
 
-		String formattedString = "Local Address:" + "\n\n" + this.contact.getLocalAddress().toString()
-				+ "\n\nPermanent Address" + "\n\n" + this.contact.getPermanentAddress().toString();
+		String formattedString = "Local Address:" + "\n" + this.contact.getLocalAddress().toString()
+				+ "\n\nPermanent Address" + "\n" + this.contact.getPermanentAddress().toString();
 
 		assertTrue(this.contact.getAddresses().equals(formattedString));
 	}

@@ -92,7 +92,7 @@ public class Patron {
 	@Override
 	public String toString() {
 		return "ID: " + this.patronID + "\nName: " + this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() +
-				"\nPhone Numeber: " + this.contactInfo.getFormattedTelephoneNumber() + "\n";
+				"\nPhone Numeber: " + this.contactInfo.getFormattedTelephoneNumber() + "\n\n" + this.contactInfo.getAddresses();
 	}
 
 	// checks to see if the Patron has any books currently checked out; If they
@@ -203,6 +203,6 @@ public class Patron {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(FakeDB.getPatron("P1").toString());
+		System.out.println(FakeDB.getPatron("P2").toString());
 	}
 }

@@ -124,11 +124,11 @@ public class ContactInfo {
 		} else if (this.oneAddressIsBlank() || this.localAddressSameAsPermanentAddress()) {
 
 			Address address = !this.localAddress.isEmpty() ? this.localAddress : this.permanentAddress;
-			addresses = "Address:\n\n" + address.toString();
+			addresses = "Address:\n" + address.toString();
 
 		} else {
 
-			addresses = "Local Address:\n\n" + this.localAddress.toString() + "\n\nPermanent Address" + "\n\n"
+			addresses = "Local Address:\n" + this.localAddress.toString() + "\n\nPermanent Address" + "\n"
 					+ this.permanentAddress.toString();
 		}
 
