@@ -16,26 +16,68 @@ public class ContactInfoTest {
 	@Before
 	public void createNewContactInfo() {
 		this.contact = this.basicContact();
-
+	}
+	
+	@Test
+	public void getAddressesBlankAddresses() {
+		
+		ContactInfo someContact = new ContactInfo();
+		
+		
+		assertTrue(someContact.getAddresses().equals("This Patron Currently Has No Addresses On File"));
+	}
+	
+	@Test
+	public void getAddressWithOnlyOneAddress1() {
+		
+		ContactInfo someContact = new ContactInfo();
+		
 		Address addressTwo = new Address();
 		addressTwo.setAddressLineOne("876 East Street");
 		addressTwo.setCity("St. Paul");
 		addressTwo.setState("MN");
 		addressTwo.setZipCode("55116");
+		
+		someContact.setLocalAddress(addressTwo);
+		
+		String comparisonString = "Address:\n\n" + addressTwo.toString();
 
-		this.contact.setPermanentAddress(addressTwo);
+		assertTrue(someContact.getAddresses().equals(comparisonString));
 	}
 	
 	@Test
-	public void getAddresses() {
-		this.contact.getAddresses();
+	public void getAddressWithOnlyOneAddress2() {
+		
+		ContactInfo someContact = new ContactInfo();
+		
+		Address addressTwo = new Address();
+		addressTwo.setAddressLineOne("876 East Street");
+		addressTwo.setCity("St. Paul");
+		addressTwo.setState("MN");
+		addressTwo.setZipCode("55116");
+		
+		someContact.setLocalAddress(addressTwo);
+		someContact.setPermanentAsLocalAddress();
+		
+		String comparisonString = "Address:\n\n" + addressTwo.toString();
+
+		assertTrue(someContact.getAddresses().equals(comparisonString));
 	}
-	
+
+	@Test
+	public void getAddresses() {
+
+		String formattedString = "Local Address:" + "\n\n" + this.contact.getLocalAddress().toString()
+				+ "\n\nPermanent Address" + "\n\n" + this.contact.getPermanentAddress().toString();
+
+		assertTrue(this.contact.getAddresses().equals(formattedString));
+	}
+
 	@Test
 	public void printFormattedTelephone() {
 		assertTrue(this.contact.getFormattedTelephoneNumber().equals("612.123.4567"));
 	}
-	
+
 	@Test
 	public void printFormattedTelephoneWithNoNumber() {
 		ContactInfo badContact = new ContactInfo();
@@ -164,13 +206,14 @@ public class ContactInfoTest {
 		ContactInfo printContact = this.basicContact();
 
 		String formattedContact = "Name: " + printContact.getFirstName() + " " + printContact.getLastName()
-				+ "\nTelephone Number: " + printContact.getPhoneNumber() + "\nLocal Address:\n" + printContact.getLocalAddress().toString()
-				+ "\nPermanent Address:\n" + printContact.getPermanentAddress().toString();
-		
+				+ "\nTelephone Number: " + printContact.getFormattedTelephoneNumber() + "\nLocal Address:\n"
+				+ printContact.getLocalAddress().toString() + "\nPermanent Address:\n"
+				+ printContact.getPermanentAddress().toString();
+
 		assertEquals(this.contact.toString(), formattedContact);
 
 	}
-	
+
 	private ContactInfo basicContact() {
 		ContactInfo basicContactInfo = new ContactInfo();
 
