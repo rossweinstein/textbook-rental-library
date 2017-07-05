@@ -28,5 +28,10 @@ public class ContactInfoTest {
 		this.contact.setLastName("Weinstein");
 		assertTrue(this.contact.getLastName().equals("Weinstein"));
 	}
+	
+	@Test
+	public void getTelephoneNumber() {
+		this.contact.getPhoneNumber();
+	}
 
 }
