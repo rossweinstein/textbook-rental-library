@@ -6,12 +6,14 @@ public class ContactInfo {
 	private String lastName;
 	private String phoneNumber;
 	private Address localAddress;
+	private Address permanentAddress;
 	
 	public ContactInfo() {
 		this.firstName = "";
 		this.lastName = "";
 		this.phoneNumber = "";
 		this.localAddress = null;
+		this.permanentAddress = null;
 	}
 
 	public String getFirstName() {
@@ -52,6 +54,11 @@ public class ContactInfo {
 		this.localAddress = localAddress;
 	}
 
-	
-	
+	public Address getPermanentAddress() {
+		return permanentAddress;
+	}
+
+	public void setPermanentAddress(Address permanentAddress) {
+		this.permanentAddress = permanentAddress;
+	}
 }
