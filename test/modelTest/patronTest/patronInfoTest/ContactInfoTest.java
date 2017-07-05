@@ -28,10 +28,13 @@ public class ContactInfoTest {
 	
 	@Test
 	public void printFormattedTelephone() {
-		
-		System.out.println(this.contact.getFormattedTelephoneNumber());
-		
 		assertTrue(this.contact.getFormattedTelephoneNumber().equals("612.123.4567"));
+	}
+	
+	@Test
+	public void printFormattedTelephoneWithNoNumber() {
+		ContactInfo badContact = new ContactInfo();
+		assertTrue(badContact.getFormattedTelephoneNumber().equals(""));
 	}
 
 	@Test

@@ -18,7 +18,7 @@ public class ContactInfo {
 
 	@Override
 	public String toString() {
-		return "Name: " + this.firstName + " " + this.lastName + "\nTelephone Number: " + this.phoneNumber
+		return "Name: " + this.firstName + " " + this.lastName + "\nTelephone Number: " + this.getFormattedTelephoneNumber()
 				+ "\nLocal Address:\n" + this.localAddress.toString() + "\nPermanent Address:\n"
 				+ this.permanentAddress.toString();
 	}
