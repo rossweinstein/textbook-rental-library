@@ -47,7 +47,7 @@ public class Address {
 		}
 	}
 
-	public boolean validState(String state) {
+	private boolean validState(String state) {
 		return Arrays.stream(USStates.values()).anyMatch(usStates -> usStates.toString().equals(state));
 	}
 
@@ -63,7 +63,7 @@ public class Address {
 		}
 	}
 
-	public boolean validCity(String city) {
+	private boolean validCity(String city) {
 		return city.chars().allMatch(Character::isLetter);
 	}
 
@@ -79,7 +79,7 @@ public class Address {
 		}
 	}
 
-	public boolean validZipCode(String zip) {
+	private boolean validZipCode(String zip) {
 		return zip.length() == 5 || zip.length() == 9 && zip.chars().allMatch(Character::isDigit);
 	}
 
