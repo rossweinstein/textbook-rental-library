@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.patron.patronInfo.Address;
 import model.patron.patronInfo.ContactInfo;
 
 public class ContactInfoTest {
@@ -43,6 +44,15 @@ public class ContactInfoTest {
 	
 	@Test
 	public void getTheirLocalAddress() {
-		this.contact.getLocalAddress();
+		
+		Address address = new Address();
+		address.setAddressLineOne("123 Main Street");
+		address.setAddressLineTwo("Apt 12C");
+		address.setCity("Minneapolis");
+		address.setState("MN");
+		address.setZipCode("55410");
+		
+		this.contact.setLocalAddress(address);
+		assertTrue(this.contact.getLocalAddress().equals(address));
 	}
 }
