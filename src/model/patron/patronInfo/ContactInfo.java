@@ -5,11 +5,13 @@ public class ContactInfo {
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
+	private Address localAddress;
 	
 	public ContactInfo() {
 		this.firstName = "";
 		this.lastName = "";
 		this.phoneNumber = "";
+		this.localAddress = null;
 	}
 
 	public String getFirstName() {
@@ -42,5 +44,14 @@ public class ContactInfo {
 		return number.length() == 10 && number.chars().allMatch(Character::isDigit);
 	}
 
+	public Address getLocalAddress() {
+		return localAddress;
+	}
+
+	public void setLocalAddress(Address localAddress) {
+		this.localAddress = localAddress;
+	}
+
+	
 	
 }
