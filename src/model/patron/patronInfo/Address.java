@@ -49,7 +49,7 @@ public class Address {
 	}
 
 	public boolean validState(String state) {
-		return Arrays.stream(USStates.values()).anyMatch(usStates -> usStates.equals(state));
+		return Arrays.stream(USStates.values()).anyMatch(usStates -> usStates.toString().equals(state));
 	}
 
 	public String getCity() {
@@ -68,8 +68,16 @@ public class Address {
 		return city.chars().allMatch(Character::isLetter);
 	}
 	
+	public String getZipCode() {
+		return this.zipCode;
+	}
+	
 	public void setZipCode(String zip) {
-		this.zipCode = zip;
+		if (this.validZipCode(zip)) {
+			this.zipCode = zip;
+		} else {
+			this.zipCode = "";
+		}
 	}
 	
 	public boolean validZipCode(String zip) {
