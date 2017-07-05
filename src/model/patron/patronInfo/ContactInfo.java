@@ -16,6 +16,26 @@ public class ContactInfo {
 		this.permanentAddress = null;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		// self check
+		if (this == obj) {
+			return true;
+		}
+
+		// null check and type check
+		if (obj == null || !(obj instanceof ContactInfo)) {
+			return false;
+		}
+
+		// cast and comparisons
+		ContactInfo otherContact = (ContactInfo) obj;
+		return this.firstName.equals(otherContact.firstName) && this.lastName.equals(otherContact.lastName)
+				&& this.phoneNumber.equals(otherContact.phoneNumber)
+				&& this.localAddress.equals(otherContact.localAddress)
+				&& this.permanentAddress.equals(otherContact.permanentAddress);
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
