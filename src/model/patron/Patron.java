@@ -8,6 +8,7 @@ import model.patron.hold.Hold;
 import model.patron.hold.HoldFactory;
 import model.patron.hold.HoldType;
 import model.patron.hold.MiscHold;
+import model.patron.patronInfo.ContactInfo;
 
 /**
  * 
@@ -21,12 +22,14 @@ import model.patron.hold.MiscHold;
 public class Patron {
 
 	private String name;
+	private ContactInfo contactInfo;
 	private String patronID;
 	private ArrayList<Copy> copiesOut;
 	private List<Hold> currentHolds;
 
 	public Patron(String id, String name) {
 		this.patronID = id;
+		this.contactInfo = new ContactInfo();
 		this.name = name;
 		this.copiesOut = new ArrayList<>();
 		this.currentHolds = new ArrayList<>();
@@ -40,6 +43,14 @@ public class Patron {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public ContactInfo getContactInfo() {
+		return contactInfo;
+	}
+
+	public void setContactInfo(ContactInfo contact) {
+		this.contactInfo = contact;
 	}
 
 	public String getPatronID() {
