@@ -32,7 +32,7 @@ public class CheckInController extends SessionController implements TRLSession {
 		if (thePatron.copiesCurrentlyCheckedOut() > 0) {
 			this.checkInCopies(thePatron);
 		} else {
-			System.out.println("\n" + thePatron.getName() + " [ID:" + thePatron.getPatronID()
+			System.out.println("\n" + thePatron.getContactInfo().getFirstName() + " [ID:" + thePatron.getPatronID()
 					+ "]  does not have any copies currently checked out");
 		}
 		return true;

@@ -9,6 +9,8 @@ import org.junit.Test;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.HoldType;
+import model.patron.patronInfo.Address;
+import model.patron.patronInfo.ContactInfo;
 
 public class PatronTest {
 
@@ -19,12 +21,57 @@ public class PatronTest {
 
 	@Before
 	public void setUp() {
-		this.firstPatron = new Patron("1", "Linus");
-		this.secondPatron = new Patron("2", "Newt");
+		this.firstPatron = this.setUpPatronOne();
+		this.secondPatron = this.setUpPatronTwo();
 		this.bookOne = new Copy("123", "Book One");
 		this.bookTwo = new Copy("456", "Book Two");
 	}
+
+	private Patron setUpPatronOne() {
+
+		ContactInfo rossContact = new ContactInfo();
+		rossContact.setFirstName("Ross");
+		rossContact.setLastName("Weinstein");
+		rossContact.setPhoneNumber("3038516529");
+
+		Address localAddress = new Address();
+		localAddress.setAddressLineOne("9513 Market Street");
+		localAddress.setCity("St. Paul");
+		localAddress.setState("MN");
+		localAddress.setZipCode("55115");
+		
+		rossContact.setLocalAddress(localAddress);
+
+		Address permanentAddress = new Address();
+		permanentAddress.setAddressLineOne("9513 Market Street");
+		permanentAddress.setAddressLineTwo("Unit 203");
+		permanentAddress.setCity("St. Paul");
+		permanentAddress.setState("MN");
+		permanentAddress.setZipCode("55115");
+		
+		rossContact.setPermanentAddress(permanentAddress);
+
+		return new Patron("P2", rossContact);
+
+	}
 	
+	private Patron setUpPatronTwo() {
+		ContactInfo ericContact = new ContactInfo();
+		ericContact.setFirstName("Eric");
+		ericContact.setLastName("Level");
+		ericContact.setPhoneNumber("8673254837");
+
+		Address localAddress = new Address();
+		localAddress.setAddressLineOne("3324 Lake Street");
+		localAddress.setCity("Minneapolis");
+		localAddress.setState("MN");
+		localAddress.setZipCode("55418");
+
+		ericContact.setPermanentAsLocalAddress();
+
+		return new Patron("P1", ericContact);
+	}
+
 	@Test
 	public void getPatronContactInfo() {
 		this.firstPatron.getContactInfo();
@@ -91,7 +138,7 @@ public class PatronTest {
 
 	@Test
 	public void TwoIdenticalButDifferentObjectsAreEqual() {
-		Patron samePatron = new Patron("1", "Linus");
+		Patron samePatron = this.setUpPatronOne();
 		assertTrue(this.firstPatron.equals(samePatron));
 	}
 
@@ -136,13 +183,13 @@ public class PatronTest {
 
 	@Test
 	public void resetPatronName() {
-		this.firstPatron.setName("Newt");
-		assertTrue(this.firstPatron.getName().equals("Newt"));
+		this.firstPatron.getContactInfo().setFirstName("Newt");
+		assertTrue(this.firstPatron.getContactInfo().getFirstName().equals("Newt"));
 	}
 
 	@Test
 	public void resetPatronID() {
-		assertTrue(this.firstPatron.getPatronID().equals("1"));
+		assertTrue(this.firstPatron.getPatronID().equals("P2"));
 	}
 
 	@Test
@@ -161,15 +208,15 @@ public class PatronTest {
 		assertTrue(this.firstPatron.showBookList().equals(bookList));
 
 	}
-	
+
 	@Test
 	public void correctHashCode() {
-		
-		int hashCode = this.hashCode(this.firstPatron.getPatronID(), this.firstPatron.getName());
-		
+
+		int hashCode = this.hashCode(this.firstPatron.getPatronID(), this.firstPatron.getContactInfo().getLastName());
+
 		assertTrue(this.firstPatron.hashCode() == hashCode);
 	}
-	
+
 	private int hashCode(String patronID, String name) {
 		int prime = 31;
 		int result = 1;

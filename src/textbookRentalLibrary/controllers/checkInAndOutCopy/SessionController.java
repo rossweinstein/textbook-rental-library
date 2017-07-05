@@ -48,11 +48,11 @@ public class SessionController {
 
 	private void updatePatronName(Patron patron) {
 		String correctName = this.input.askForString("\nWhat is the correct spelling of your name?");
-		patron.setName(correctName);
+		patron.getContactInfo().setFirstName(correctName);
 	}
 
 	private boolean patronInfoVerified(Patron patron) {
-		System.out.println("\nName: " + patron.getName());
+		System.out.println("\nName: " + patron.getContactInfo().getFirstName());
 		return this.input.askBinaryQuestion("\nIs this information correct? (y/n)", "y", "n");
 	}
 }

@@ -12,8 +12,8 @@ public class ContactInfo {
 		this.firstName = "";
 		this.lastName = "";
 		this.phoneNumber = "";
-		this.localAddress = null;
-		this.permanentAddress = null;
+		this.localAddress = new Address();
+		this.permanentAddress = new Address();
 	}
 
 	@Override
