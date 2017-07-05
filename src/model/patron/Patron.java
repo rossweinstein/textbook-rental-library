@@ -92,7 +92,7 @@ public class Patron {
 	@Override
 	public String toString() {
 		return "ID: " + this.patronID + "\nName: " + this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() +
-				"\nPhone Numeber: " + this.contactInfo.getPhoneNumber() + "\n";
+				"\nPhone Numeber: " + this.contactInfo.getFormattedTelephoneNumber() + "\n";
 	}
 
 	// checks to see if the Patron has any books currently checked out; If they
