@@ -1,4 +1,4 @@
-package modelTest.patronTest;
+package modelTest.patronTest.holdTest;
 
 import static org.junit.Assert.*;
 
