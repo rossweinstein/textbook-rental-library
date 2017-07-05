@@ -9,7 +9,6 @@ public class Address {
 	private String city;
 	private String state;
 	private String zipCode;
-	
 
 	public Address() {
 		this.addressLineOne = "";
@@ -67,11 +66,11 @@ public class Address {
 	public boolean validCity(String city) {
 		return city.chars().allMatch(Character::isLetter);
 	}
-	
+
 	public String getZipCode() {
 		return this.zipCode;
 	}
-	
+
 	public void setZipCode(String zip) {
 		if (this.validZipCode(zip)) {
 			this.zipCode = zip;
@@ -79,8 +78,21 @@ public class Address {
 			this.zipCode = "";
 		}
 	}
-	
+
 	public boolean validZipCode(String zip) {
 		return zip.length() == 5 || zip.length() == 9 && zip.chars().allMatch(Character::isDigit);
+	}
+
+	public String getFormattedAddress() {
+
+		return this.addressLineOne + "\n" + this.lineTwoIfExists() + this.city + ", " + this.state + " " + this.zipCode;
+	}
+
+	private String lineTwoIfExists() {
+		if (this.addressLineTwo.isEmpty()) {
+			return "";
+		} else {
+			return this.addressLineTwo + "\n";
+		}
 	}
 }
