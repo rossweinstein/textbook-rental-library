@@ -18,9 +18,9 @@ public class ContactInfo {
 
 	@Override
 	public String toString() {
-		return "Name: " + this.firstName + " " + this.lastName + "\nTelephone Number: " + this.getFormattedTelephoneNumber()
-				+ "\nLocal Address:\n" + this.localAddress.toString() + "\nPermanent Address:\n"
-				+ this.permanentAddress.toString();
+		return "Name: " + this.firstName + " " + this.lastName + "\nTelephone Number: "
+				+ this.getFormattedTelephoneNumber() + "\nLocal Address:\n" + this.localAddress.toString()
+				+ "\nPermanent Address:\n" + this.permanentAddress.toString();
 	}
 
 	@Override
@@ -112,5 +112,38 @@ public class ContactInfo {
 
 	public void setLocalAsPermanentAddress() {
 		this.setLocalAddress(this.permanentAddress);
+	}
+
+	public String getAddresses() {
+
+		String addresses = "";
+
+		if (this.bothAddressesAreBlank()) {
+			addresses = "This Patron Currently Has No Addresses On File";
+
+		} else if (this.oneAddressIsBlank() || this.localAddressSameAsPermanentAddress()) {
+
+			Address address = !this.localAddress.isEmpty() ? this.localAddress : this.permanentAddress;
+			addresses = "Address: " + "\n" + address.toString();
+
+		} else {
+
+			addresses = "Local Address:" + "\n\n" + this.localAddress.toString() + "\n\nPermanent Address" + "\n\n"
+					+ this.permanentAddress.toString();
+		}
+
+		return addresses;
+	}
+
+	private boolean localAddressSameAsPermanentAddress() {
+		return this.localAddress.equals(this.permanentAddress);
+	}
+
+	private boolean oneAddressIsBlank() {
+		return this.localAddress.isEmpty() || this.permanentAddress.isEmpty();
+	}
+
+	private boolean bothAddressesAreBlank() {
+		return this.localAddress.isEmpty() && this.permanentAddress.isEmpty();
 	}
 }

@@ -17,7 +17,7 @@ public class Address {
 		this.state = "";
 		this.zipCode = "";
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.getFormattedAddress();
@@ -41,6 +41,11 @@ public class Address {
 				&& this.addressLineTwo.equals(otherAddress.addressLineTwo) && this.city.equals(otherAddress.city)
 				&& this.state.equals(otherAddress.state) && this.zipCode.equals(otherAddress.zipCode);
 
+	}
+
+	public boolean isEmpty() {
+		return this.addressLineOne.isEmpty() && this.addressLineTwo.isEmpty() && this.city.isEmpty()
+				&& this.state.isEmpty() && this.zipCode.isEmpty();
 	}
 
 	public String getAddressLineOne() {
@@ -67,7 +72,7 @@ public class Address {
 
 		if (this.validState(state)) {
 			this.state = state;
-		} 
+		}
 	}
 
 	private boolean validState(String state) {
@@ -81,7 +86,7 @@ public class Address {
 	public void setCity(String city) {
 		if (this.validCity(city)) {
 			this.city = city;
-		} 
+		}
 	}
 
 	private boolean validCity(String city) {
@@ -95,7 +100,7 @@ public class Address {
 	public void setZipCode(String zip) {
 		if (this.validZipCode(zip)) {
 			this.zipCode = zip;
-		} 
+		}
 	}
 
 	private boolean validZipCode(String zip) {
