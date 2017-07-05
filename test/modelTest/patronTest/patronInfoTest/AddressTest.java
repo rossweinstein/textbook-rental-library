@@ -56,5 +56,10 @@ public class AddressTest {
 	public void setZipCode() {
 		this.address.setZipCode("12345");
 	}
+	
+	@Test
+	public void cannotSetInvalidZipCode() {
+		assertFalse(this.address.validZipCode("123"));
+	}
 
 }
