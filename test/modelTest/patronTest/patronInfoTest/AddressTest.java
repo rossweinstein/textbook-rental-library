@@ -30,36 +30,48 @@ public class AddressTest {
 	@Test
 	public void setState() {
 		this.address.setState("MN");
+		assertTrue(this.address.getState().equals("MN"));
 	}
 	
 	@Test
 	public void setInvalidState() {
 		assertFalse(this.address.validState("123"));
+		assertTrue(this.address.getState().equals(""));
 	}
 	
 	@Test
 	public void cannotSetFakeStateMustBeInUSA() {
 		assertFalse(this.address.validState("MX"));
+		assertTrue(this.address.getState().equals(""));
 	}
 	
 	@Test
 	public void setCity() {
 		this.address.setCity("Minneapolis");
+		assertTrue(this.address.getCity().equals("Minneapolis"));
 	}
 	
 	@Test
 	public void cannotSetInvalidCity() {
 		assertFalse(this.address.validCity("Min3ahde3"));
+		assertTrue(this.address.getCity().equals(""));
 	}
 	
 	@Test
 	public void setZipCode() {
 		this.address.setZipCode("12345");
+		assertTrue(this.address.getZipCode().equals("12345"));
 	}
 	
 	@Test
 	public void cannotSetInvalidZipCode() {
 		assertFalse(this.address.validZipCode("123"));
+		assertTrue(this.address.getZipCode().equals(""));
+	}
+	
+	@Test
+	public void getFormattedAddress() {
+		this.address.getFormattedAddress();
 	}
 
 }
