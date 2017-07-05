@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import model.patron.patronInfo.ContactInfo;
+
 public class ContactInfoTest {
 
 	@Test
