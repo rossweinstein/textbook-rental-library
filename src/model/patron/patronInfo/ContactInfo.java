@@ -66,4 +66,8 @@ public class ContactInfo {
 		return !this.firstName.isEmpty() && !this.lastName.isEmpty() && !this.phoneNumber.isEmpty()
 				&& this.localAddress != null && this.permanentAddress != null;
 	}
+
+	public void setPermanentAsLocalAddress() {
+		this.setPermanentAddress(this.localAddress);
+	}
 }
