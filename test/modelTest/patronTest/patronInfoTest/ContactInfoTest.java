@@ -15,20 +15,7 @@ public class ContactInfoTest {
 
 	@Before
 	public void createNewContactInfo() {
-		this.contact = new ContactInfo();
-
-		this.contact.setFirstName("Ross");
-		this.contact.setLastName("Weinstein");
-		this.contact.setPhoneNumber("6121234567");
-
-		Address address = new Address();
-		address.setAddressLineOne("123 Main Street");
-		address.setAddressLineTwo("Apt 12C");
-		address.setCity("Minneapolis");
-		address.setState("MN");
-		address.setZipCode("55410");
-
-		this.contact.setLocalAddress(address);
+		this.contact = this.basicContact();
 
 		Address addressTwo = new Address();
 		addressTwo.setAddressLineOne("876 East Street");
@@ -119,28 +106,7 @@ public class ContactInfoTest {
 	@Test
 	public void canCompareTwoContacts() {
 
-		ContactInfo compareContact = new ContactInfo();
-
-		compareContact.setFirstName("Ross");
-		compareContact.setLastName("Weinstein");
-		compareContact.setPhoneNumber("6121234567");
-
-		Address address = new Address();
-		address.setAddressLineOne("123 Main Street");
-		address.setAddressLineTwo("Apt 12C");
-		address.setCity("Minneapolis");
-		address.setState("MN");
-		address.setZipCode("55410");
-
-		compareContact.setLocalAddress(address);
-
-		Address addressTwo = new Address();
-		addressTwo.setAddressLineOne("876 East Street");
-		addressTwo.setCity("St. Paul");
-		addressTwo.setState("MN");
-		addressTwo.setZipCode("55116");
-
-		compareContact.setPermanentAddress(addressTwo);
+		ContactInfo compareContact = this.basicContact();
 
 		assertTrue(this.contact.equals(compareContact));
 
@@ -149,20 +115,8 @@ public class ContactInfoTest {
 	@Test
 	public void canCompareTwoContactsFalse() {
 
-		ContactInfo compareContact = new ContactInfo();
-
-		compareContact.setFirstName("Ross");
-		compareContact.setLastName("Weinstein");
-		compareContact.setPhoneNumber("6121234567");
-
-		Address address = new Address();
-		address.setAddressLineOne("123 Main Street");
-		address.setAddressLineTwo("Apt 12C");
-		address.setCity("Minneapolis");
-		address.setState("MN");
-		address.setZipCode("55410");
-
-		compareContact.setLocalAddress(address);
+		ContactInfo compareContact = this.basicContact();
+		compareContact.setPermanentAddress(null);
 
 		assertFalse(this.contact.equals(compareContact));
 
@@ -191,11 +145,22 @@ public class ContactInfoTest {
 	@Test
 	public void correctPrint() {
 
-		ContactInfo printContact = new ContactInfo();
+		ContactInfo printContact = this.basicContact();
 
-		printContact.setFirstName("Ross");
-		printContact.setLastName("Weinstein");
-		printContact.setPhoneNumber("6121234567");
+		String formattedContact = "Name: " + printContact.getFirstName() + " " + printContact.getLastName()
+				+ "\nTelephone Number: " + printContact.getPhoneNumber() + "\nLocal Address:\n" + printContact.getLocalAddress().toString()
+				+ "\nPermanent Address:\n" + printContact.getPermanentAddress().toString();
+		
+		assertEquals(this.contact.toString(), formattedContact);
+
+	}
+	
+	private ContactInfo basicContact() {
+		ContactInfo basicContactInfo = new ContactInfo();
+
+		basicContactInfo.setFirstName("Ross");
+		basicContactInfo.setLastName("Weinstein");
+		basicContactInfo.setPhoneNumber("6121234567");
 
 		Address address = new Address();
 		address.setAddressLineOne("123 Main Street");
@@ -204,7 +169,7 @@ public class ContactInfoTest {
 		address.setState("MN");
 		address.setZipCode("55410");
 
-		printContact.setLocalAddress(address);
+		basicContactInfo.setLocalAddress(address);
 
 		Address addressTwo = new Address();
 		addressTwo.setAddressLineOne("876 East Street");
@@ -212,13 +177,7 @@ public class ContactInfoTest {
 		addressTwo.setState("MN");
 		addressTwo.setZipCode("55116");
 
-		printContact.setPermanentAddress(addressTwo);
-
-		String formattedContact = "Name: " + printContact.getFirstName() + " " + printContact.getLastName()
-				+ "\nTelephone Number: " + printContact.getPhoneNumber() + "\nLocal Address:\n" + printContact.getLocalAddress().toString()
-				+ "\nPermanent Address:\n" + printContact.getPermanentAddress().toString();
-		
-		assertEquals(this.contact.toString(), formattedContact);
-
+		basicContactInfo.setPermanentAddress(addressTwo);
+		return basicContactInfo;
 	}
 }
