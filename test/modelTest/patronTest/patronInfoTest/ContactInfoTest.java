@@ -34,5 +34,11 @@ public class ContactInfoTest {
 		this.contact.setPhoneNumber("6121234567");
 		assertTrue(this.contact.getPhoneNumber().equals("6121234567"));
 	}
+	
+	@Test
+	public void cannotGetInvalidTelephoneNumber() {
+		this.contact.setPhoneNumber("61212347");
+		assertTrue(this.contact.getPhoneNumber().equals(""));
+	}
 
 }
