@@ -51,7 +51,7 @@ public class SessionController {
 	}
 
 	private boolean patronInfoVerified(Patron patron) {
-		System.out.println(patron.getContactInfo().toString());
+		System.out.println("\n----------VERIFY CONTACT INFORMATION----------\n" + patron.toString());
 		return this.input.askBinaryQuestion("\nIs this information correct? (y/n)", "y", "n");
 	}
 }

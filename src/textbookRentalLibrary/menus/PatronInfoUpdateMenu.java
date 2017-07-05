@@ -16,7 +16,7 @@ public class PatronInfoUpdateMenu extends TRLMenu {
 	
 	private MenuBuilder patronInfoMenu() {
 		
-		super.buildMenu().setMenuTitle("Update Patron Information");
+		super.buildMenu().setMenuTitle("\nUpdate Patron Information");
 		super.buildMenu().setMenuItems(Arrays.asList("First Name", "Last Name", "Phone Number", "Local Address",
 				"Permanent Address", "Finished"));
 		return super.buildMenu();
@@ -25,7 +25,6 @@ public class PatronInfoUpdateMenu extends TRLMenu {
 	@Override
 	public void displayMenu() {
 		super.printMenuToConsole(this.patronInfoMenu());
-		
 	}
 
 	@Override
@@ -49,7 +48,10 @@ public class PatronInfoUpdateMenu extends TRLMenu {
 			this.updatePatronsPermanentAddress();
 			
 		} else {
-			return false;
+			
+			System.out.println(this.patronToModify.toString());
+			
+			return super.userInput().askBinaryQuestion("Correct? (y/n)", "n", "y");
 		}
 		return true;
 	}
@@ -57,67 +59,42 @@ public class PatronInfoUpdateMenu extends TRLMenu {
 	private void updatePatronsFirstName() {
 		String correctName = super.userInput().askForString("\nWhat is the correct spelling of your first name?");
 		patronToModify.getContactInfo().setFirstName(correctName);
-		System.out.println();
 	}
 
 	private void updatePatronsLastName() {
 		String correctName = super.userInput().askForString("\nWhat is the correct spelling of your last name?");
 		patronToModify.getContactInfo().setFirstName(correctName);
-		System.out.println();
 	}
 
 	private void updatePatronsPhoneNumber() {
 		String correctNumber = super.userInput().askForString("\nWhat is your new phone number?");
 		patronToModify.getContactInfo().setFirstName(correctNumber);
-		System.out.println();
 	}
 
 	private void updatePatronsLocalAddress() {
 		
-		Address correctedAddress = new Address();
-
-		boolean correctAddress = false;
-		while(!correctAddress) {
-			
-			correctedAddress = this.updateAddress();
-			System.out.println(correctedAddress.toString());
-			
-			correctAddress = super.userInput().askBinaryQuestion("Correct? (y/n)", "y", "n");
-		}
-		
-		this.patronToModify.getContactInfo().setLocalAddress(correctedAddress);
+		this.patronToModify.getContactInfo().setLocalAddress(this.updateAddress());
 		
 	}
 
 	private void updatePatronsPermanentAddress() {
 
-		Address correctedAddress = new Address();
-
-		boolean correctAddress = false;
-		while(!correctAddress) {
-			
-			correctedAddress = this.updateAddress();
-			System.out.println(correctedAddress.toString());
-			
-			correctAddress = super.userInput().askBinaryQuestion("Correct? (y/n)", "y", "n");
-		}
-		
-		this.patronToModify.getContactInfo().setPermanentAddress(correctedAddress);
+		this.patronToModify.getContactInfo().setPermanentAddress(this.updateAddress());
 	}
 	
 	private Address updateAddress() {
 		
 		Address updatedAddress = new Address();
 		
-		updatedAddress.setAddressLineOne(super.userInput().askForString("What is the street address?"));
+		updatedAddress.setAddressLineOne(super.userInput().askForString("What is the street address: "));
 		
 		if (super.userInput().askBinaryQuestion("Apt or unit number? (y/n)", "y", "n")) {
 			updatedAddress.setAddressLineTwo(super.userInput().askForString("Apt or unit number?"));
 		}
 		
-		updatedAddress.setCity(super.userInput().askForString("City?"));
-		updatedAddress.setState(super.userInput().askForString("State (2 letter abbrev.)?"));
-		updatedAddress.setZipCode(super.userInput().askForString("Zip Code?"));
+		updatedAddress.setCity(super.userInput().askForString("City: "));
+		updatedAddress.setState(super.userInput().askForString("State (2 letter code): "));
+		updatedAddress.setZipCode(super.userInput().askForString("Zip Code: "));
 		return updatedAddress;
 	}
 }

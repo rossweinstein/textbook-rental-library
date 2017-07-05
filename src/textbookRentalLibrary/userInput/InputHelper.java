@@ -24,7 +24,7 @@ public class InputHelper {
 	public String askForString(String question) {
 
 		System.out.print(question);
-		String answer = this.input.next();
+		String answer = this.input.nextLine();
 		return answer;
 
 	}
@@ -109,7 +109,7 @@ public class InputHelper {
 		while (questionUnanswered) {
 
 			System.out.print(question + ": ");
-			answer = this.input.next();
+			answer = this.input.nextLine();
 
 			if (answer.equalsIgnoreCase(yes)) {
 				result = true;
@@ -138,12 +138,5 @@ public class InputHelper {
 			}
 		}
 		return theChoices;
-	}
-
-	public static void main(String[] args) {
-		InputHelper input = new InputHelper();
-
-		input.askQuestion("Yes or No", "y", "n");
-
 	}
 }
