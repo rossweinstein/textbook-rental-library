@@ -17,6 +17,11 @@ public class Address {
 		this.state = "";
 		this.zipCode = "";
 	}
+	
+	@Override
+	public String toString() {
+		return this.getFormattedAddress();
+	}
 
 	@Override
 	public boolean equals(Object obj) {
