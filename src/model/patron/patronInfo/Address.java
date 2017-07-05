@@ -71,4 +71,8 @@ public class Address {
 	public void setZipCode(String zip) {
 		this.zipCode = zip;
 	}
+	
+	public boolean validZipCode(String zip) {
+		return zip.length() == 5 || zip.length() == 9 && zip.chars().allMatch(Character::isDigit);
+	}
 }
