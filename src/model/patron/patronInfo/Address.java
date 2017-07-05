@@ -84,7 +84,6 @@ public class Address {
 	}
 
 	public String getFormattedAddress() {
-
 		return this.addressLineOne + "\n" + this.lineTwoIfExists() + this.city + ", " + this.state + " " + this.zipCode;
 	}
 
