@@ -102,7 +102,7 @@ public class Address {
 		return zip.length() == 5 || zip.length() == 9 && zip.chars().allMatch(Character::isDigit);
 	}
 
-	public String getFormattedAddress() {
+	private String getFormattedAddress() {
 		return this.addressLineOne + "\n" + this.lineTwoIfExists() + this.city + ", " + this.state + " " + this.zipCode;
 	}
 

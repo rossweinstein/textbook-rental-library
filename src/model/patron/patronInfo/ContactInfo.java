@@ -70,4 +70,8 @@ public class ContactInfo {
 	public void setPermanentAsLocalAddress() {
 		this.setPermanentAddress(this.localAddress);
 	}
+
+	public void setLocalAsPermanentAddress() {
+		this.setLocalAddress(this.permanentAddress);
+	}
 }
