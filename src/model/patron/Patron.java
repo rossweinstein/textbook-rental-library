@@ -3,7 +3,6 @@ package model.patron;
 import java.util.ArrayList;
 import java.util.List;
 
-import database.FakeDB;
 import model.copy.Copy;
 import model.patron.hold.Hold;
 import model.patron.hold.HoldFactory;
@@ -200,9 +199,5 @@ public class Patron {
 		}
 
 		this.currentHolds.remove(holdCopy);
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(FakeDB.getPatron("P2").toString());
 	}
 }

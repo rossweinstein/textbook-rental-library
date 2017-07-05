@@ -106,6 +106,25 @@ public class Manager {
 		return this.holdsUpdatedCorrectly(++holdTally);
 	}
 	
+	/********** LOST HOLDS **************************************/
+
+	public List<Patron> getAllPatronsWithLostHolds() {
+		return this.getSpecificHold("LOST");
+	}
+	
+	public boolean markLostHold(Patron offendingPatron, Copy damagedCopy, int fineAmount) {
+		
+		int holdTally = this.getHoldTotal();
+
+		if (!this.patronLastToCheckOutCopy(offendingPatron, damagedCopy)) {
+			return false;
+		}
+
+		offendingPatron.placeHoldOnRecord(HoldType.LOST, fineAmount, damagedCopy);
+
+		return this.holdsUpdatedCorrectly(++holdTally);
+	}
+	
 	/********** MISC HOLDS **************************************/
 
 	public List<Patron> getAllPatronsWithMiscHolds() {
