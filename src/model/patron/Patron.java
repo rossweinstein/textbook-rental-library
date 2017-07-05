@@ -190,12 +190,13 @@ public class Patron {
 	 * Patron has resolved their holds and can check out book again. Books are
 	 * returned, or bought, and fine is paid.
 	 */
-	public void resolvedHold(Hold holdCopy) {
+	public boolean resolvedHold(Hold holdCopy) {
 
 		if (this.copiesOut.contains(holdCopy.getHoldCopy())) {
 			this.checkCopyIn(holdCopy.getHoldCopy());
 		}
 
-		this.currentHolds.remove(holdCopy);
+		return this.currentHolds.remove(holdCopy);
 	}
+	
 }

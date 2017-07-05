@@ -12,8 +12,8 @@ import textbookRentalLibrary.menus.TextbookRentalLibraryMainMenu;
 public class TRLAppMain {
 
 	public static void main(String[] args) {
+		
 		TextbookRentalLibraryMainMenu trl = new TextbookRentalLibraryMainMenu();
 		trl.displayMenu();
 	}
-
 }

@@ -10,6 +10,23 @@ public class MiscHold extends Hold {
 		this.foundItem = foundItem;
 		this.location = location;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+
+		// self check
+		if (this == o) {
+			return true;
+		}
+
+		// null check and type check
+		if (o == null || !(o instanceof MiscHold)) {
+			return false;
+		}
+		// cast and comparisons
+		MiscHold otherMiscHold = (MiscHold) o;
+		return this.foundItem.equals(otherMiscHold.foundItem) && this.location.equals(otherMiscHold.location);
+	}
 
 	@Override
 	public String getHoldMessage() {

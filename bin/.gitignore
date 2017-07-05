@@ -1,19 +1,6 @@
-/Holds.class
-/Copy/
-/Copy.class
-/MenuBuilder.class
-/InputHelper.class
-/helper/
-/fakeDatabase/
-/patron/
-/helpers/
-/textbookRentalLibrary/
-/manager/
-/patronTest/
-/fakeDatabaseTest/
-/textbookRentalLibraryTest/
-/model/
-/model 2/
+/.DS_Store
 /database/
-/mode/
+/model/
 /modelTest/
+/textbookRentalLibrary/
+/textbookRentalLibraryTest/

@@ -61,4 +61,54 @@ public class CopyTest {
 		Copy sameCopy = new Copy("123", "Book One");
 		assertTrue(this.bookOne.equals(sameCopy));
 	}
+	
+	@Test
+	public void holdCopyHasBeenReturned() {
+		this.firstPatron.checkCopyOut(bookOne);
+		this.firstPatron.checkCopyIn(bookOne);
+		this.bookOne.holdReturned();
+		
+		assertTrue(this.bookOne.getOutTo() == null);
+	}
+	
+	@Test
+	public void testGetOutTo() {
+		this.firstPatron.checkCopyOut(bookOne);
+		
+		assertTrue(this.bookOne.getOutTo().equals(firstPatron));
+	}
+	
+	@Test
+	public void holdCopyIsNotCheckedOutByAnyone() {
+		assertTrue(this.bookOne.checkedOutBy().equals("Copy is Currently Available"));
+	}
+	
+	@Test
+	public void holdCopyIsCheckedOutBySomeone() {
+		
+		this.firstPatron.checkCopyOut(this.bookOne);
+		
+		assertTrue(this.bookOne.checkedOutBy().equals(this.firstPatron.toString()));
+	}
+	
+	@Test
+	public void correctToString() {
+		assertTrue(this.bookOne.toString().equals("Title: Book One [ID: 123]"));
+	}
+	
+	@Test
+	public void correctHashCode() {
+		
+		int bookHash = this.hashCode(this.bookOne.getCopyID(), this.bookOne.getTitle());
+		
+		assertTrue(this.bookOne.hashCode() == bookHash);
+	}
+	
+	private int hashCode(String copyID, String title) {
+		int prime = 29;
+		int result = 1;
+		result = prime * result + ((copyID == null) ? 0 : copyID.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
 }

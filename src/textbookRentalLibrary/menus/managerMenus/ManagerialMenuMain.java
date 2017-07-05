@@ -22,10 +22,8 @@ public class ManagerialMenuMain extends ManagerMenu {
 	private MenuBuilder managerMainMenu() {
 		super.buildMenu().setMenuTitle("-----MANAGER FUNCTIONS MENU-----");
 
-		List<String> options = Arrays.asList("Display All Patrons", "Display All Holds", "Overdue Holds Menu",
-				"Unshelved Holds Menu", "Damage Holds Menu", "Misc. Holds Menu", "Generate Hold Notices",
-				"Exit Manager Menu");
-		super.buildMenu().setMenuItles(options);
+		List<String> options = Arrays.asList("View Records", "Add Hold", "Resolve Hold", "Exit Manager Menu");
+		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
 	}
@@ -41,29 +39,15 @@ public class ManagerialMenuMain extends ManagerMenu {
 		int selection = super.userInput().askForSelection(this.managerMainMenu().getMenuItems());
 
 		if (selection == 1) {
-			this.displayAllPatrons();
+			CommandLineMenu recordsMenu = new ManagerViewRecordsMenu();
+			recordsMenu.displayMenu();
 
 		} else if (selection == 2) {
-			this.displayAllHolds();
+			CommandLineMenu holdMenu = new ManagerAddHoldMenu();
+			holdMenu.displayMenu();
 
 		} else if (selection == 3) {
-			CommandLineMenu overdueHolds = new OverdueHoldsMenu();
-			overdueHolds.displayMenu();
-
-		} else if (selection == 4) {
-			CommandLineMenu unshelvedHolds = new UnshelvedHoldsMenu();
-			unshelvedHolds.displayMenu();
-
-		} else if (selection == 5) {
-			CommandLineMenu damageHolds = new DamageHoldsMenu();
-			damageHolds.displayMenu();
-
-		} else if (selection == 6) {
-			CommandLineMenu miscHolds = new MiscHoldsMenu();
-			miscHolds.displayMenu();
-
-		} else if (selection == 7) {
-			this.generateHoldNotices();
+			this.resolvePatronHolds();
 
 		} else {
 			return false;
@@ -71,22 +55,9 @@ public class ManagerialMenuMain extends ManagerMenu {
 		return true;
 	}
 
-	private void displayAllHolds() {
+	private void resolvePatronHolds() {
 		System.out.println();
-		this.managerFunc().displayPatronsWithUnreturnedTextbooks();
-		System.out.println();
-	}
-
-	private void displayAllPatrons() {
-		System.out.println();
-		this.managerFunc().displayAllPatrons();
+		super.managerFunc().resolvePatronHold();
 		System.out.println();
 	}
-	
-	private void generateHoldNotices() {
-		System.out.println();
-		this.managerFunc().generateHoldNotices();
-		System.out.println();
-	}
-
 }

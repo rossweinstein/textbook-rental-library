@@ -1,10 +1,12 @@
 package textbookRentalLibrary.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import model.Manager;
 import model.copy.Copy;
 import model.patron.Patron;
+import textbookRentalLibrary.menus.MenuBuilder;
 import textbookRentalLibrary.userInput.InputHelper;
 
 /**
@@ -39,6 +41,63 @@ public class ManagerialFunctionsController {
 
 	public void displayAllPatrons() {
 		this.displayPatronsWith(" ", this.manage.getAllPatronsInTRL());
+	}
+
+	public void displayAllPatronsWithHolds() {
+		this.displayPatronsWith(" with holds ", this.manage.getAllPatronsWithHolds());
+	}
+
+	public void resolvePatronHold() {
+
+		Patron offendingPatron = this.findPatronInDB();
+
+		if (offendingPatron == null || offendingPatron.getAllHolds().size() == 0) {
+			System.out.println("Patron has no holds on record");
+			
+		} else {
+
+			boolean canResolveMoreHolds = true;
+			while (canResolveMoreHolds) {
+
+				MenuBuilder resolveMenu = this.buildResolveHoldMenu(offendingPatron);
+				resolveMenu.displayMenuWithoutBanner();
+
+				int selection = this.input.askForSelection(resolveMenu.getMenuItems());
+
+				if (selectsValidHold(resolveMenu, selection)) {
+
+					if (resolveHoldConfirmation()) {
+						offendingPatron.resolvedHold(offendingPatron.getAllHolds().get(selection - 1));
+					}
+
+				} else {
+					
+					canResolveMoreHolds = false;
+				}
+			}
+		}
+	}
+
+	private boolean resolveHoldConfirmation() {
+		return this.input.askBinaryQuestion("Hold can be resolved? (y/n)", "y", "n");
+	}
+
+	private boolean selectsValidHold(MenuBuilder resolveMenu, int selection) {
+		return selection >= 1 && selection <= resolveMenu.getMenuItems().size() - 1;
+	}
+
+	private MenuBuilder buildResolveHoldMenu(Patron offendingPatron) {
+		
+		MenuBuilder selectHoldMenu = new MenuBuilder();
+
+		List<String> outstandingHolds = offendingPatron.getAllHolds().stream().map(hold -> hold.toString())
+				.collect(Collectors.toList());
+		outstandingHolds.add("Exit");
+
+		selectHoldMenu.setMenuTitle("Select Hold:");
+		selectHoldMenu.setMenuItems(outstandingHolds);
+		
+		return selectHoldMenu;
 	}
 
 	/********** OVERDUE HOLDS **************************************/
@@ -124,6 +183,37 @@ public class ManagerialFunctionsController {
 		return false;
 	}
 
+	/********** LOST HOLDS **************************************/
+
+	public void displayPatronsWithLostHolds() {
+		this.displayPatronsWith(" with lost textbook holds ", this.manage.getAllPatronsWithLostHolds());
+	}
+
+	public boolean markLostHold() {
+
+		boolean markHold = this.input.askBinaryQuestion("Mark Lost Hold? (y/n)", "y", "n");
+
+		if (markHold) {
+
+			Patron offendingPatron = this.findPatronInDB();
+
+			if (offendingPatron == null) {
+				return false;
+			}
+
+			Copy lostCopy = this.findCopyInDB();
+
+			if (lostCopy == null) {
+				return false;
+			}
+
+			int fineAmount = this.input.askForInteger("Fine Amount: ");
+			return this.manage.markLostHold(offendingPatron, lostCopy, fineAmount);
+
+		}
+		return false;
+	}
+
 	/********** MISC HOLDS **************************************/
 
 	public void displayPatronsWithMiscHolds() {
@@ -151,6 +241,8 @@ public class ManagerialFunctionsController {
 		return false;
 	}
 
+	/********** HELPER METHODS **************************************/
+
 	private void displayPatronsWith(String holdType, List<Patron> holdList) {
 
 		if (holdList.size() == 0) {
@@ -159,8 +251,6 @@ public class ManagerialFunctionsController {
 			this.printDesiredPatrons(holdList);
 		}
 	}
-
-	/********** HELPER METHODS **************************************/
 
 	private void printDesiredPatrons(List<Patron> thePatrons) {
 		for (int i = 0; i < thePatrons.size(); i++) {
