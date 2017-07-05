@@ -31,7 +31,7 @@ public class Address {
 	}
 
 	public void setAddressLineTwo(String lineTwo) {
-		this.addressLineOne = lineTwo;
+		this.addressLineTwo = lineTwo;
 	}
 
 	public String getState() {

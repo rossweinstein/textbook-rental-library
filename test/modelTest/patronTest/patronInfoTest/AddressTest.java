@@ -20,11 +20,13 @@ public class AddressTest {
 	@Test
 	public void setAddressLineOne() {
 		this.address.setAddressLineOne("123 Main St.");
+		assertTrue(this.address.getAddressLineOne().equals("123 Main St."));
 	}
 	
 	@Test
 	public void setAddressLineTwo() {
 		this.address.setAddressLineTwo("Apt. 18B");
+		assertTrue(this.address.getAddressLineTwo().equals("Apt. 18B"));
 	}
 	
 	@Test
@@ -70,7 +72,15 @@ public class AddressTest {
 	}
 	
 	@Test
-	public void getFormattedAddress() {
-		this.address.getFormattedAddress();
+	public void correctlyFormattedAddress() {
+		this.address.setAddressLineOne("123 Main Street");
+		this.address.setAddressLineTwo("Apt 12C");
+		this.address.setCity("Minneapolis");
+		this.address.setState("MN");
+		this.address.setZipCode("55410");
+		
+		String compareAddress = "123 Main Street" + "\nApt 12C" + "\nMinneapolis, MN 55410";
+		
+		assertEquals(compareAddress, this.address.getFormattedAddress());
 	}
 }
