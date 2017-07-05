@@ -1,5 +1,7 @@
 package model.patron.patronInfo;
 
+import java.util.Arrays;
+
 public class Address {
 	
 	private String addressLineOne;
@@ -30,6 +32,6 @@ public class Address {
 	}
 	
 	public boolean validState(String state) {
-		return state.length() == 2;
+		return Arrays.stream(USStates.values()).anyMatch(usStates -> usStates.equals(state));
 	}
 }
