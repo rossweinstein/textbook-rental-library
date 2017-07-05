@@ -97,11 +97,21 @@ public class ContactInfoTest {
 	}
 	
 	@Test
-	public void setLocalSameAsPermanentAddress() {
+	public void setPermanentAsLocalAddress() {
 		
 		assertNotEquals(this.contact.getPermanentAddress(), this.contact.getLocalAddress());
 		
 		this.contact.setPermanentAsLocalAddress();
+		
+		assertEquals(this.contact.getPermanentAddress(), this.contact.getLocalAddress());
+	}
+	
+	@Test
+	public void setLocalAsPermanentAddress() {
+		
+		assertNotEquals(this.contact.getPermanentAddress(), this.contact.getLocalAddress());
+		
+		this.contact.setLocalAsPermanentAddress();
 		
 		assertEquals(this.contact.getPermanentAddress(), this.contact.getLocalAddress());
 	}
