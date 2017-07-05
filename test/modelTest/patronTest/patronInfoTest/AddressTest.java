@@ -54,7 +54,7 @@ public class AddressTest {
 	
 	@Test
 	public void setZipCode() {
-		this.address.setZip("12345");
+		this.address.setZipCode("12345");
 	}
 
 }

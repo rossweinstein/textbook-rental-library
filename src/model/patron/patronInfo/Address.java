@@ -8,6 +8,7 @@ public class Address {
 	private String addressLineTwo;
 	private String city;
 	private String state;
+	private String zipCode;
 	
 
 	public Address() {
@@ -15,6 +16,7 @@ public class Address {
 		this.addressLineTwo = "";
 		this.city = "";
 		this.state = "";
+		this.zipCode = "";
 	}
 
 	public String getAddressLineOne() {
@@ -64,5 +66,9 @@ public class Address {
 
 	public boolean validCity(String city) {
 		return city.chars().allMatch(Character::isLetter);
+	}
+	
+	public void setZipCode(String zip) {
+		this.zipCode = zip;
 	}
 }
