@@ -18,7 +18,8 @@ public class ContactInfoTest {
 	
 	@Test
 	public void getFirstName() {
-		this.contact.getFirstName();
+		this.contact.setFirstName("Ross");
+		assertTrue(this.contact.getFirstName().equals("Ross"));
 	}
 
 }
