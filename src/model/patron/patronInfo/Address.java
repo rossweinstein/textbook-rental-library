@@ -13,13 +13,25 @@ public class Address {
 		this.addressLineTwo = "";
 		this.state = "";
 	}
+	
+	public String getAddressLineOne() {
+		return this.addressLineOne;
+	}
 
 	public void setAddressLineOne(String lineOne) {
 		this.addressLineOne = lineOne;
 	}
 	
+	public String getAddressLineTwo() {
+		return this.addressLineTwo;
+	}
+	
 	public void setAddressLineTwo(String lineTwo) {
 		this.addressLineOne = lineTwo;
+	}
+	
+	public String getState() {
+		return this.state;
 	}
 	
 	public void setState(String state) {
