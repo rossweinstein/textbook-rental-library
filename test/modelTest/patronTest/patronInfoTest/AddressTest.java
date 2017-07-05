@@ -46,5 +46,10 @@ public class AddressTest {
 	public void setCity() {
 		this.address.setCity("Minneapolis");
 	}
+	
+	@Test
+	public void cannotSetInvalidCity() {
+		assertFalse(this.address.validCity("Min3ahde3"));
+	}
 
 }
