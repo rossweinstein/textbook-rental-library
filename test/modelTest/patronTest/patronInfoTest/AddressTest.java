@@ -9,12 +9,23 @@ import model.patron.patronInfo.Address;
 
 public class AddressTest {
 
-	
 	private Address address;
+	private Address addressTwo;
 	
 	@Before
 	public void createNewAddressClass() {
 		this.address = new Address();
+		this.address.setAddressLineOne("123 Main Street");
+		this.address.setAddressLineTwo("Apt 12C");
+		this.address.setCity("Minneapolis");
+		this.address.setState("MN");
+		this.address.setZipCode("55410");
+		
+		this.addressTwo = new Address();
+		this.addressTwo.setAddressLineOne("876 East Street");
+		this.addressTwo.setCity("St. Paul");
+		this.addressTwo.setState("MN");
+		this.addressTwo.setZipCode("55116");
 	}
 	
 	@Test
@@ -73,14 +84,21 @@ public class AddressTest {
 	
 	@Test
 	public void correctlyFormattedAddress() {
-		this.address.setAddressLineOne("123 Main Street");
-		this.address.setAddressLineTwo("Apt 12C");
-		this.address.setCity("Minneapolis");
-		this.address.setState("MN");
-		this.address.setZipCode("55410");
 		
 		String compareAddress = "123 Main Street" + "\nApt 12C" + "\nMinneapolis, MN 55410";
-		
 		assertEquals(compareAddress, this.address.getFormattedAddress());
+	}
+	
+	@Test
+	public void correctCompare() {
+		
+		Address compareAddress = new Address();
+		compareAddress.setAddressLineOne("123 Main Street");
+		compareAddress.setAddressLineTwo("Apt 12C");
+		compareAddress.setCity("Minneapolis");
+		compareAddress.setState("MN");
+		compareAddress.setZipCode("55410");
+		
+		assertTrue(this.address.equals(compareAddress));
 	}
 }
