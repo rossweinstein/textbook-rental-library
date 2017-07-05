@@ -25,7 +25,7 @@ public class ManagerialMenuMain extends ManagerMenu {
 		List<String> options = Arrays.asList("Display All Patrons", "Display All Holds", "Overdue Holds Menu",
 				"Unshelved Holds Menu", "Damage Holds Menu", "Misc. Holds Menu", "Generate Hold Notices",
 				"Exit Manager Menu");
-		super.buildMenu().setMenuItles(options);
+		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
 	}

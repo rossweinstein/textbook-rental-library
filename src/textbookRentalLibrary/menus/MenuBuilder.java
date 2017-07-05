@@ -20,7 +20,7 @@ public class MenuBuilder {
 	}
 
 	/**
-	 * Constructor asks for the menu title and all possible options as Strigs
+	 * Constructor asks for the menu title and all possible options as Strings
 	 */
 	public MenuBuilder(String title, String... options) {
 
@@ -40,7 +40,7 @@ public class MenuBuilder {
 		this.menuTitle = title;
 	}
 	
-	public void setMenuItles(List<String> options) {
+	public void setMenuItems(List<String> options) {
 		this.menuItems = options;
 	}
 
@@ -53,8 +53,7 @@ public class MenuBuilder {
 	 * Returns the menu title inside a border of '*' and all options in order
 	 */
 	public String displayMenuWithBanner() {
-		this.banner(menuTitle, 1);
-		return "\n" + this.getOrderedListOfMenuItems();
+		return this.banner(menuTitle, 1) + "\n" + this.getOrderedListOfMenuItems();
 	}
 
 	/** Returns the menu title */
@@ -94,7 +93,9 @@ public class MenuBuilder {
 	 * Creates a banner of '*' around a given String. Padding determines the
 	 * spacing within the border.
 	 */
-	private void banner(String title, int paddingAmount) {
+	private String banner(String title, int paddingAmount) {
+		
+		String banner = "";
 
 		int totalNumberOfRows = paddingAmount * 2 + 3;
 		int totalNumberOfCols = title.length() * 2 + paddingAmount * 2 + 2;
@@ -106,25 +107,19 @@ public class MenuBuilder {
 			while (currentCol != totalNumberOfCols) {
 
 				if (currentRow == paddingAmount + 1 && currentCol == paddingAmount + 1 + title.length() / 2) {
-					System.out.print(title);
+					banner += title;
 					currentCol += title.length();
 				} else {
 					if (currentRow == 0 || currentRow == totalNumberOfRows - 1 || currentCol == 0
 							|| currentCol == totalNumberOfCols - 1)
-						System.out.print("*");
+						banner += "*";
 					else
-						System.out.print(" ");
+						banner += " ";
 					++currentCol;
 				}
 			}
-			System.out.print("\n");
+			banner += "\n";
 		}
-	}
-
-	public static void main(String[] args) {
-
-		MenuBuilder menu = new MenuBuilder("Blackjack", "Play Game", "Game Statistics", "Game Rules", "Exit");
-		System.out.println(menu.displayMenuWithBanner());
-
+		return banner;
 	}
 }

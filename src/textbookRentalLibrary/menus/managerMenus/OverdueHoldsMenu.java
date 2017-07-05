@@ -16,7 +16,7 @@ public class OverdueHoldsMenu extends ManagerialMenuMain {
 
 		List<String> options = Arrays.asList("Display All Patrons With Unreturned Textbooks",
 				"Display All Overdue Holds", "Mark All Overdue Holds", "Exit Overdue Holds Menu");
-		super.buildMenu().setMenuItles(options);
+		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
 	}

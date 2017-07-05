@@ -1,6 +1,5 @@
 package model.copy;
 
-import database.FakeDB;
 import model.patron.Patron;
 
 /**
@@ -101,32 +100,5 @@ public class Copy {
 		} else {
 			return this.outTo.toString();
 		}
-	}
-
-	public static void main(String[] args) {
-
-		Copy firstCopy = FakeDB.getCopy("C1");
-		Copy secondCopy = FakeDB.getCopy("C2");
-		Patron thePatron = FakeDB.getPatron("P1");
-
-		System.out.println("Information For First Book--");
-		System.out.println(firstCopy);
-		System.out.println();
-		System.out.println("Information For Second Book--");
-		System.out.println(secondCopy);
-
-		System.out.println("\n----TEST: COPY AND PATRONS----");
-		thePatron.checkCopyOut(firstCopy);
-		System.out.println("\nBook One Checked Out--");
-		System.out.println(firstCopy);
-		System.out.println("\nBook One Returned--");
-		thePatron.checkCopyIn(firstCopy);
-		System.out.println(firstCopy);
-
-		System.out.println("\n----TEST: EQUALITY OF TWO BOOKS----");
-		System.out.print("\nBook One Equals Book One: ");
-		System.out.println(firstCopy.equals(firstCopy));
-		System.out.print("Book One Equals Book Two: ");
-		System.out.println(firstCopy.equals(secondCopy));
 	}
 }

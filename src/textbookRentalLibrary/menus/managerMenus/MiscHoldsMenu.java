@@ -16,7 +16,7 @@ public class MiscHoldsMenu extends ManagerMenu {
 
 		List<String> options = Arrays.asList("Display All Misc. Holds", "Mark All Misc. Holds",
 				"Exit Misc. Holds Menu");
-		super.buildMenu().setMenuItles(options);
+		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
 	}

@@ -49,7 +49,4 @@ public class FakeDB {
 	public static Copy getCopy(String copyID) {
 		return copyStore.get(copyID);
 	}
-
-	public static void main(String[] args) {}
-
 }

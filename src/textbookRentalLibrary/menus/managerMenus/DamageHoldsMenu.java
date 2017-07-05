@@ -16,7 +16,7 @@ public class DamageHoldsMenu extends ManagerMenu {
 
 		List<String> options = Arrays.asList("Display All Damage Holds", "Mark All Damage Holds",
 				"Exit Damage Holds Menu");
-		super.buildMenu().setMenuItles(options);
+		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
 	}

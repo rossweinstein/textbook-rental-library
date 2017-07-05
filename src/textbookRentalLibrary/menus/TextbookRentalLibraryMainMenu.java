@@ -34,7 +34,7 @@ public class TextbookRentalLibraryMainMenu extends TRLMenu {
 
 		List<String> options = Arrays.asList("Start Check-Out Session", "Start Check-In Session", "Manager Functions",
 				"Quit Program");
-		super.buildMenu().setMenuItles(options);
+		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
 	}

@@ -12,8 +12,8 @@ public class HoldFactory {
 			createdHold = new OverdueHold(fineAmount, copy);
 		} else if (type == HoldType.DAMAGED) {
 			createdHold = new CopyDamagedHold(fineAmount, copy);
-		} else if (type == HoldType.UNSHELEVED) {
-			createdHold = new UnshelevedCopyHold(fineAmount, copy);
+		} else {
+			createdHold = new UnshelvedCopyHold(fineAmount, copy);
 		} 
 		
 		return createdHold;

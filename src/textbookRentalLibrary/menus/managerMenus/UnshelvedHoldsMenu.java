@@ -16,7 +16,7 @@ public class UnshelvedHoldsMenu extends ManagerialMenuMain {
 
 		List<String> options = Arrays.asList("Display All Unshelved Holds", "Mark New Unshelved Hold",
 				"Exit Unshelved Holds Menu");
-		super.buildMenu().setMenuItles(options);
+		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
 	}
