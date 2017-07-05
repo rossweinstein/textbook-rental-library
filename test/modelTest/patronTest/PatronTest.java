@@ -24,6 +24,11 @@ public class PatronTest {
 		this.bookOne = new Copy("123", "Book One");
 		this.bookTwo = new Copy("456", "Book Two");
 	}
+	
+	@Test
+	public void getPatronContactInfo() {
+		this.firstPatron.getContactInfo();
+	}
 
 	@Test
 	public void PatronStartsWithEmptyLibrary() {
