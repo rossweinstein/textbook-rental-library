@@ -40,5 +40,9 @@ public class ContactInfoTest {
 		this.contact.setPhoneNumber("61212347");
 		assertTrue(this.contact.getPhoneNumber().equals(""));
 	}
-
+	
+	@Test
+	public void getTheirLocalAddress() {
+		this.contact.getLocalAddress();
+	}
 }

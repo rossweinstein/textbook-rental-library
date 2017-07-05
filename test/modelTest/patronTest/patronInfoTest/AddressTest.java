@@ -50,13 +50,13 @@ public class AddressTest {
 	@Test
 	public void setInvalidState() {
 		this.address.setState("123");
-		assertTrue(this.address.getState().equals(""));
+		assertTrue(this.address.getState().equals("MN"));
 	}
 	
 	@Test
 	public void cannotSetFakeStateMustBeInUSA() {
 		this.address.setState("MX");
-		assertTrue(this.address.getState().equals(""));
+		assertTrue(this.address.getState().equals("MN"));
 	}
 	
 	@Test
@@ -68,7 +68,7 @@ public class AddressTest {
 	@Test
 	public void cannotSetInvalidCity() {
 		this.address.setCity("Min3ahde3");
-		assertTrue(this.address.getCity().equals(""));
+		assertTrue(this.address.getCity().equals("Minneapolis"));
 	}
 	
 	@Test
@@ -80,7 +80,7 @@ public class AddressTest {
 	@Test
 	public void cannotSetInvalidZipCode() {
 		this.address.setZipCode("123");
-		assertTrue(this.address.getZipCode().equals(""));
+		assertTrue(this.address.getZipCode().equals("55410"));
 	}
 	
 	@Test

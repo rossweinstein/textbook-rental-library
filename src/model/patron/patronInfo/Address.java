@@ -67,9 +67,7 @@ public class Address {
 
 		if (this.validState(state)) {
 			this.state = state;
-		} else {
-			this.state = "";
-		}
+		} 
 	}
 
 	private boolean validState(String state) {
@@ -83,9 +81,7 @@ public class Address {
 	public void setCity(String city) {
 		if (this.validCity(city)) {
 			this.city = city;
-		} else {
-			this.city = "";
-		}
+		} 
 	}
 
 	private boolean validCity(String city) {
@@ -99,9 +95,7 @@ public class Address {
 	public void setZipCode(String zip) {
 		if (this.validZipCode(zip)) {
 			this.zipCode = zip;
-		} else {
-			this.zipCode = "";
-		}
+		} 
 	}
 
 	private boolean validZipCode(String zip) {
