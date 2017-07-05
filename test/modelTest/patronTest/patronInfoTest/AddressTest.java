@@ -51,5 +51,10 @@ public class AddressTest {
 	public void cannotSetInvalidCity() {
 		assertFalse(this.address.validCity("Min3ahde3"));
 	}
+	
+	@Test
+	public void setZipCode() {
+		this.address.setZip("12345");
+	}
 
 }
