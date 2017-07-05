@@ -34,6 +34,8 @@ public class HoldTest {
 		theHolds.add(HoldFactory.createHold(HoldType.UNSHELEVED, 10, FakeDB.getCopy("C6")));
 		theHolds.add(new MiscHold("backpack", "history"));
 		theHolds.add(new MiscHold("notebook", "computer lab"));
+		theHolds.add(HoldFactory.createHold(HoldType.LOST, 10, FakeDB.getCopy("C7")));
+		theHolds.add(HoldFactory.createHold(HoldType.LOST, 10, FakeDB.getCopy("C8")));
 		return theHolds;
 	}
 
@@ -96,6 +98,29 @@ public class HoldTest {
 		Hold misc = HoldFactory.createHold(HoldType.UNSHELEVED, 10, FakeDB.getCopy("C6"));
 		
 		assertTrue(this.patronHolds.get(5).equals(misc));
+	}
+	
+	@Test
+	public void lostTest1() {
+		assertFalse(this.patronHolds.get(8).equals(null));
+	}
+	
+	@Test
+	public void lostTest2() {
+		assertTrue(this.patronHolds.get(8).equals(this.patronHolds.get(8)));
+	}
+	
+	@Test
+	public void lostTest3() {
+		assertFalse(this.patronHolds.get(8).equals(this.patronHolds.get(1)));
+	}
+	
+	@Test
+	public void lostTest4() {
+	
+		Hold lost = HoldFactory.createHold(HoldType.LOST, 10, FakeDB.getCopy("C8"));
+		
+		assertTrue(this.patronHolds.get(9).equals(lost));
 	}
 
 

@@ -271,6 +271,77 @@ public class managerTest {
 		
 	}
 	
+	/************** LOST HOLDS TEST ******************************************************************/
+
+	@Test
+	public void cannotMarkLostHold() {
+
+		Patron ross = this.patrons.get(1);
+		Copy textbook = this.copies.get(0);
+
+		ross.checkCopyOut(textbook);
+
+		assertFalse(this.manage.markLostHold(ross, textbook, 10));
+
+		ross.checkCopyIn(textbook);
+		textbook.setLastPersonToCheckOut(null);
+	}
+
+	@Test
+	public void canMarkLostHold() {
+
+		Patron ross = this.patrons.get(1);
+		Copy textbook = this.copies.get(0);
+
+		ross.checkCopyOut(textbook);
+		ross.checkCopyIn(textbook);
+
+		assertTrue(this.manage.markLostHold(ross, textbook, 10));
+
+		ross.resolvedHold(ross.getAllHolds().get(0));
+		textbook.setLastPersonToCheckOut(null);
+
+	}
+	
+	@Test
+	public void returnsCorrectNumberOfLostHolds() {
+		
+		Patron ross = this.patrons.get(1);
+		Copy textbook = this.copies.get(0);
+
+		ross.checkCopyOut(textbook);
+		ross.checkCopyIn(textbook);
+		
+		Patron mowlid = this.patrons.get(2);
+		Copy textbook2 = this.copies.get(1);
+
+		mowlid.checkCopyOut(textbook2);
+		mowlid.checkCopyIn(textbook2);
+		
+		Patron neera = this.patrons.get(3);
+		Copy textbook3 = this.copies.get(2);
+
+		neera.checkCopyOut(textbook3);
+		neera.checkCopyIn(textbook3);
+
+		this.manage.markLostHold(ross, textbook, 10);
+		this.manage.markLostHold(mowlid, textbook2, 10);
+		this.manage.markUnshelevedHold(neera, textbook3, 10);
+		
+		assertTrue(this.manage.getAllPatronsWithLostHolds().size() == 2);
+		assertTrue(this.manage.getAllPatronsWithHolds().size() == 3);
+
+		ross.resolvedHold(ross.getAllHolds().get(0));
+		textbook.setLastPersonToCheckOut(null);
+		
+		mowlid.resolvedHold(mowlid.getAllHolds().get(0));
+		textbook2.setLastPersonToCheckOut(null);
+		
+		neera.resolvedHold(neera.getAllHolds().get(0));
+		textbook3.setLastPersonToCheckOut(null);
+		
+	}
+	
 	/************** MISC HOLDS TEST ******************************************************************/
 
 	@Test

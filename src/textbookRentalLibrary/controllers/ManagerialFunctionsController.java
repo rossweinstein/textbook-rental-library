@@ -123,6 +123,37 @@ public class ManagerialFunctionsController {
 		}
 		return false;
 	}
+	
+	/********** LOST HOLDS **************************************/
+
+	public void displayPatronsWithLostHolds() {
+		this.displayPatronsWith(" with lost textbook holds ", this.manage.getAllPatronsWithLostHolds());
+	}
+
+	public boolean markLostHold() {
+
+		boolean markHold = this.input.askBinaryQuestion("Mark Lost Hold? (y/n)", "y", "n");
+
+		if (markHold) {
+
+			Patron offendingPatron = this.findPatronInDB();
+
+			if (offendingPatron == null) {
+				return false;
+			}
+
+			Copy lostCopy = this.findCopyInDB();
+
+			if (lostCopy == null) {
+				return false;
+			}
+
+			int fineAmount = this.input.askForInteger("Fine Amount: ");
+			return this.manage.markLostHold(offendingPatron, lostCopy, fineAmount);
+
+		}
+		return false;
+	}
 
 	/********** MISC HOLDS **************************************/
 

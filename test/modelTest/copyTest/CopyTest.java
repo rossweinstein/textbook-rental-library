@@ -72,6 +72,13 @@ public class CopyTest {
 	}
 	
 	@Test
+	public void testGetOutTo() {
+		this.firstPatron.checkCopyOut(bookOne);
+		
+		assertTrue(this.bookOne.getOutTo().equals(firstPatron));
+	}
+	
+	@Test
 	public void holdCopyIsNotCheckedOutByAnyone() {
 		assertTrue(this.bookOne.checkedOutBy().equals("Copy is Currently Available"));
 	}

@@ -10,6 +10,7 @@ import model.patron.hold.CopyDamagedHold;
 import model.patron.hold.Hold;
 import model.patron.hold.HoldFactory;
 import model.patron.hold.HoldType;
+import model.patron.hold.LostHold;
 import model.patron.hold.OverdueHold;
 import model.patron.hold.UnshelvedCopyHold;
 
@@ -49,6 +50,18 @@ public class HoldFactoryTest {
 		assertTrue(damage instanceof CopyDamagedHold);
 		assertTrue(damage.getFineAmount() == 10);
 		assertTrue(damage.getHoldCopy().equals(damagedCopy));
+	}
+	
+	@Test
+	public void createsLostHold() {
+		
+		Copy lostCopy = FakeDB.getCopy("C4");
+		
+		Hold lost = HoldFactory.createHold(HoldType.LOST, 10, lostCopy);
+		
+		assertTrue(lost instanceof LostHold);
+		assertTrue(lost.getFineAmount() == 10);
+		assertTrue(lost.getHoldCopy().equals(lostCopy));
 	}
 
 }
