@@ -68,4 +68,9 @@ public class ContactInfoTest {
 		this.contact.setPermanentAddress(addressTwo);
 		assertTrue(this.contact.getPermanentAddress().equals(addressTwo));
 	}
+	
+	@Test
+	public void allContactInfoSet() {
+		assertTrue(this.contact.allContactInfoSet());
+	}
 }
