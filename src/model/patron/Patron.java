@@ -3,6 +3,7 @@ package model.patron;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.FakeDB;
 import model.copy.Copy;
 import model.patron.hold.Hold;
 import model.patron.hold.HoldFactory;
@@ -90,7 +91,8 @@ public class Patron {
 
 	@Override
 	public String toString() {
-		return "Name: " + this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() + " [ID: " + this.patronID + "]";
+		return "ID: " + this.patronID + "\nName: " + this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() +
+				"\nPhone Numeber: " + this.contactInfo.getPhoneNumber() + "\n";
 	}
 
 	// checks to see if the Patron has any books currently checked out; If they
@@ -198,5 +200,9 @@ public class Patron {
 		}
 
 		this.currentHolds.remove(holdCopy);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(FakeDB.getPatron("P1").toString());
 	}
 }

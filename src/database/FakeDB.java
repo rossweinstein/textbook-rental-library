@@ -64,6 +64,8 @@ public class FakeDB {
 		localAddress.setCity("Minneapolis");
 		localAddress.setState("MN");
 		localAddress.setZipCode("55418");
+		
+		ericContact.setLocalAddress(localAddress);
 
 		ericContact.setPermanentAsLocalAddress();
 

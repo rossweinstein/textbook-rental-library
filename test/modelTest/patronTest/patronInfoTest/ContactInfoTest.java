@@ -25,6 +25,11 @@ public class ContactInfoTest {
 
 		this.contact.setPermanentAddress(addressTwo);
 	}
+	
+	@Test
+	public void printFormattedTelephone() {
+		assertTrue(this.contact.getFormattedTelephoneNumber.equals("612.123.4567"));
+	}
 
 	@Test
 	public void getFirstName() {
