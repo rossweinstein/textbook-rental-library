@@ -21,5 +21,10 @@ public class AddressTest {
 	public void setAddressLineOne() {
 		this.address.setAddressLineOne("123 Main St.");
 	}
+	
+	@Test
+	public void setAddressLineTwo() {
+		this.address.setAddressLineTwo("Apt. 18B");
+	}
 
 }
