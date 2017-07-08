@@ -1,13 +1,14 @@
 package textbookRentalLibrary.controllers;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import model.Manager;
-import model.copy.Copy;
 import model.patron.Patron;
-import textbookRentalLibrary.menus.MenuBuilder;
-import textbookRentalLibrary.userInput.InputHelper;
+import textbookRentalLibrary.controllers.hold.DamageHoldController;
+import textbookRentalLibrary.controllers.hold.LostHoldController;
+import textbookRentalLibrary.controllers.hold.MiscHoldController;
+import textbookRentalLibrary.controllers.hold.OverdueHoldController;
+import textbookRentalLibrary.controllers.hold.PlaceHoldController;
+import textbookRentalLibrary.controllers.hold.ResolveHoldController;
+import textbookRentalLibrary.controllers.hold.UnshelvedHoldController;
 
 /**
  * This class controls all the functions that a manager can do: See all records,
@@ -18,12 +19,10 @@ import textbookRentalLibrary.userInput.InputHelper;
  */
 public class ManagerialFunctionsController {
 
-	private InputHelper input;
 	private Manager manage;
 	private DatabaseSearch db;
 
 	public ManagerialFunctionsController() {
-		this.input = new InputHelper();
 		this.manage = new Manager();
 		this.db = new DatabaseSearch();
 	}
@@ -31,7 +30,6 @@ public class ManagerialFunctionsController {
 	/********** GENERAL MANAGER **************************************/
 
 	public void generateHoldNotices() {
-
 		if (this.manage.canGenerateHoldNotices()) {
 			System.out.println("Overdue notices generated...\n");
 		} else {
@@ -40,243 +38,85 @@ public class ManagerialFunctionsController {
 	}
 
 	public void displayAllPatrons() {
-		this.displayPatronsWith(" ", this.manage.getAllPatronsInTRL());
+		System.out.println("All Patrons In Database:");
+		this.manage.getAllPatronsInTRL();
 	}
 
 	public void displayAllPatronsWithHolds() {
-		this.displayPatronsWith(" with holds ", this.manage.getAllPatronsWithHolds());
+		System.out.println("All Patrons With Holds:");
+		this.manage.getAllPatronsWithHolds();
 	}
+	
+	public void displayPatronsWithUnreturnedTextbooks() {
+		System.out.println("Patrons Textbooks Currently Checked Out"); 
+				this.manage.getAllPatronsWithUnreturnedTextBooks();
+	}
+	
+	/********** RESOLVE HOLD ***************************************/
 
 	public void resolvePatronHold() {
-
-		Patron offendingPatron = this.findPatronInDB();
-
-		if (offendingPatron == null || offendingPatron.getAllHolds().size() == 0) {
-			System.out.println("Patron has no holds on record");
-			
-		} else {
-
-			boolean canResolveMoreHolds = true;
-			while (canResolveMoreHolds) {
-
-				MenuBuilder resolveMenu = this.buildResolveHoldMenu(offendingPatron);
-				resolveMenu.displayMenuWithoutBanner();
-
-				int selection = this.input.askForSelection(resolveMenu.getMenuItems());
-
-				if (selectsValidHold(resolveMenu, selection)) {
-
-					if (resolveHoldConfirmation()) {
-						offendingPatron.resolvedHold(offendingPatron.getAllHolds().get(selection - 1));
-					}
-
-				} else {
-					
-					canResolveMoreHolds = false;
-				}
-			}
-		}
-	}
-
-	private boolean resolveHoldConfirmation() {
-		return this.input.askBinaryQuestion("Hold can be resolved? (y/n)", "y", "n");
-	}
-
-	private boolean selectsValidHold(MenuBuilder resolveMenu, int selection) {
-		return selection >= 1 && selection <= resolveMenu.getMenuItems().size() - 1;
-	}
-
-	private MenuBuilder buildResolveHoldMenu(Patron offendingPatron) {
 		
-		MenuBuilder selectHoldMenu = new MenuBuilder();
-
-		List<String> outstandingHolds = offendingPatron.getAllHolds().stream().map(hold -> hold.toString())
-				.collect(Collectors.toList());
-		outstandingHolds.add("Exit");
-
-		selectHoldMenu.setMenuTitle("Select Hold:");
-		selectHoldMenu.setMenuItems(outstandingHolds);
-		
-		return selectHoldMenu;
+		ResolveHoldController resolve = new ResolveHoldController();
+		resolve.resolvePatronHold();
 	}
 
 	/********** OVERDUE HOLDS **************************************/
 
-	public void displayPatronsWithUnreturnedTextbooks() {
-		this.displayPatronsWith(" with unreturned textbooks ", this.manage.getAllPatronsWithUnreturnedTextBooks());
-	}
-
 	public void displayPatronsWithOverdueHolds() {
-		this.displayPatronsWith(" with overdue holds ", this.manage.getAllPatronsWithOverdueHolds());
+		this.displayHolds(new OverdueHoldController());
 	}
 
 	public boolean markOverdueHolds() {
-
-		boolean markHolds = this.input.askBinaryQuestion("Mark Overdue Holds? (y/n)", "y", "n");
-
-		if (markHolds) {
-			int fineAmount = this.input.askForInteger("Fine Amount: ");
-			return this.manage.markOverdueHolds(fineAmount);
-		}
-		return false;
+		return this.markHolds(new OverdueHoldController());
 	}
 
 	/********** UNSHELVED HOLDS **************************************/
 
 	public void displayPatronsWithUnshelvedHolds() {
-		this.displayPatronsWith(" with unshelved holds ", this.manage.getAllPatronsWithUnshelvedHolds());
+		this.displayHolds(new UnshelvedHoldController());
 	}
 
 	public boolean markUnshelvedHold() {
-
-		boolean markHold = this.input.askBinaryQuestion("Mark Unshelved Hold? (y/n)", "y", "n");
-
-		if (markHold) {
-
-			Patron offendingPatron = this.findPatronInDB();
-
-			if (offendingPatron == null) {
-				return false;
-			}
-
-			Copy damagedCopy = this.findCopyInDB();
-
-			if (damagedCopy == null) {
-				return false;
-			}
-
-			int fineAmount = this.input.askForInteger("Fine Amount: ");
-			return this.manage.markUnshelevedHold(offendingPatron, damagedCopy, fineAmount);
-
-		}
-		return false;
-		
+		return this.markHolds(new UnshelvedHoldController());
 	}
 
 	/********** DAMAGED HOLDS **************************************/
 
 	public void displayPatronsWithDamageHolds() {
-		this.displayPatronsWith(" with damaged textbook holds ", this.manage.getAllPatronsWithDamageHolds());
+		this.displayHolds(new DamageHoldController());
 	}
 
 	public boolean markDamageHold() {
-
-		boolean markHold = this.input.askBinaryQuestion("Mark Damage Hold? (y/n)", "y", "n");
-
-		if (markHold) {
-
-			Patron offendingPatron = this.findPatronInDB();
-
-			if (offendingPatron == null) {
-				return false;
-			}
-
-			Copy damagedCopy = this.findCopyInDB();
-
-			if (damagedCopy == null) {
-				return false;
-			}
-
-			int fineAmount = this.input.askForInteger("Fine Amount: ");
-			return this.manage.markDamageHold(offendingPatron, damagedCopy, fineAmount);
-
-		}
-		return false;
+		return this.markHolds(new DamageHoldController());
 	}
 
 	/********** LOST HOLDS **************************************/
 
 	public void displayPatronsWithLostHolds() {
-		this.displayPatronsWith(" with lost textbook holds ", this.manage.getAllPatronsWithLostHolds());
+		this.displayHolds(new LostHoldController());
 	}
 
 	public boolean markLostHold() {
-
-		boolean markHold = this.input.askBinaryQuestion("Mark Lost Hold? (y/n)", "y", "n");
-
-		if (markHold) {
-
-			Patron offendingPatron = this.findPatronInDB();
-
-			if (offendingPatron == null) {
-				return false;
-			}
-
-			Copy lostCopy = this.findCopyInDB();
-
-			if (lostCopy == null) {
-				return false;
-			}
-
-			int fineAmount = this.input.askForInteger("Fine Amount: ");
-			return this.manage.markLostHold(offendingPatron, lostCopy, fineAmount);
-
-		}
-		return false;
+		return this.markHolds(new LostHoldController());
 	}
 
 	/********** MISC HOLDS **************************************/
 
 	public void displayPatronsWithMiscHolds() {
-		this.displayPatronsWith(" with misc. holds ", this.manage.getAllPatronsWithMiscHolds());
+		this.displayHolds(new MiscHoldController());
 	}
 
 	public boolean markMiscHold() {
-
-		boolean markHold = this.input.askBinaryQuestion("Mark Miscellaneous Hold? (y/n)", "y", "n");
-
-		if (markHold) {
-
-			Patron thePatron = this.findPatronInDB();
-
-			if (thePatron == null) {
-				return false;
-			}
-
-			String item = this.input.askForString("What item was found: ");
-			String location = this.input.askForString("Where was it found: ");
-
-			return this.manage.markMiscHold(thePatron, item, location);
-
-		}
-		return false;
+		return this.markHolds(new MiscHoldController());
 	}
 
 	/********** HELPER METHODS **************************************/
-
-	private void displayPatronsWith(String holdType, List<Patron> holdList) {
-
-		if (holdList.size() == 0) {
-			System.out.println("There are no currently no patrons" + holdType + "in the system");
-		} else {
-			this.printDesiredPatrons(holdList);
-		}
+	
+	private void displayHolds(PlaceHoldController theHolds) {
+		theHolds.displayHolds();
 	}
-
-	private void printDesiredPatrons(List<Patron> thePatrons) {
-		for (int i = 0; i < thePatrons.size(); i++) {
-			System.out.println((i + 1) + ": " + thePatrons.get(i).showPatronIDAndName());
-		}
-	}
-
-	private Patron findPatronInDB() {
-
-		Patron offendingPatron = this.db.locatePatronInDB();
-
-		if (offendingPatron == null) {
-			System.out.println("Unable to locate Patron in system...");
-		}
-
-		return offendingPatron;
-	}
-
-	private Copy findCopyInDB() {
-
-		Copy theCopy = this.db.locateCopyInDB();
-
-		if (theCopy == null) {
-			System.out.println("Unable to locate Copy in system...");
-		}
-		return theCopy;
+	
+	private boolean markHolds(PlaceHoldController theHold) {
+		return theHold.markHold();
 	}
 }
