@@ -138,6 +138,7 @@ public class Patron {
 		// check if the copy is available before checking it out
 		if (c.getOutTo() == null) {
 			c.setOutTo(this);
+			c.checkedOut();
 			return this.copiesOut.add(c);
 		} else {
 			return false;
@@ -160,6 +161,7 @@ public class Patron {
 		if (this.copiesOut.contains(c)) {
 			c.setOutTo(null);
 			c.setLastPersonToCheckOut(this);
+			c.checkedIn();
 			return this.copiesOut.remove(c);
 		} else {
 			return false;

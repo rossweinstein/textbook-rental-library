@@ -25,7 +25,7 @@ public class Copy {
 		this.title = title;
 		this.outTo = null;
 		this.lastPersonToCheckOut = null;
-		this.dueDate = LocalDateTime.now().plusDays(100);
+		this.dueDate = null;
 	}
 
 	/***** GETTERS / SETTERS *******************************/
@@ -99,18 +99,19 @@ public class Copy {
 		return "Title: " + this.title + " [ID: " + this.copyID +"]";
 	}
 
-	/**
-	 * Checks to see if the copy is currently checked and prints the name and ID
-	 * of the patron who has it; otherwise it says it's available
-	 * 
-	 * @return String the Patron and PatronID or a message saying that the copy
-	 *         is currently available
-	 */
 	public String checkedOutBy() {
 		if (this.outTo == null) {
 			return "Copy is Currently Available";
 		} else {
 			return this.outTo.toString();
 		}
+	}
+	
+	public void checkedOut() {
+		this.dueDate = LocalDateTime.now().plusDays(100);
+	}
+	
+	public void checkedIn() {
+		this.dueDate = null;
 	}
 }
