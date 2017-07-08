@@ -93,6 +93,10 @@ public class Patron {
 		return "ID: " + this.patronID + "\nName: " + this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() +
 				"\nPhone Numeber: " + this.contactInfo.getFormattedTelephoneNumber() + "\n\n" + this.contactInfo.getAddresses();
 	}
+	
+	public String showPatronIDAndName() {
+		return "ID: " + this.patronID + " | Name: " + this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName();
+	}
 
 	// checks to see if the Patron has any books currently checked out; If they
 	// do, it'll list all of them with title and ID number in a comma separated

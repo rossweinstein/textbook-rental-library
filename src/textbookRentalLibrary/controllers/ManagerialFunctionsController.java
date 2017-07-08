@@ -255,7 +255,7 @@ public class ManagerialFunctionsController {
 
 	private void printDesiredPatrons(List<Patron> thePatrons) {
 		for (int i = 0; i < thePatrons.size(); i++) {
-			System.out.println((i + 1) + ": " + thePatrons.get(i));
+			System.out.println((i + 1) + ": " + thePatrons.get(i).showPatronIDAndName());
 		}
 	}
 

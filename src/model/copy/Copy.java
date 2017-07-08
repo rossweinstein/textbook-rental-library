@@ -1,5 +1,7 @@
 package model.copy;
 
+import java.time.LocalDateTime;
+
 import model.patron.Patron;
 
 /**
@@ -16,12 +18,14 @@ public class Copy {
 	private String title;
 	private Patron outTo;
 	private Patron lastPersonToCheckOut;
+	private LocalDateTime dueDate;
 
 	public Copy(String copyID, String title) {
 		this.copyID = copyID;
 		this.title = title;
 		this.outTo = null;
 		this.lastPersonToCheckOut = null;
+		this.dueDate = LocalDateTime.now().plusDays(100);
 	}
 
 	/***** GETTERS / SETTERS *******************************/
@@ -52,6 +56,14 @@ public class Copy {
 	
 	public void setLastPersonToCheckOut(Patron patron) {
 		this.lastPersonToCheckOut = patron;
+	}
+	
+	public LocalDateTime getDueDate() {
+		return this.dueDate;
+	}
+	
+	public void setDueDate(LocalDateTime dueDate) {
+		this.dueDate = dueDate;
 	}
 
 	/***** OVERRIDES ********************************************/

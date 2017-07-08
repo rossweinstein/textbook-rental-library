@@ -137,6 +137,8 @@ public class FakeDB {
 		localAddress.setState("MN");
 		localAddress.setZipCode("55424");
 
+		neeraContact.setLocalAddress(localAddress);
+
 		neeraContact.setPermanentAsLocalAddress();
 
 		return new Patron("P4", neeraContact);
