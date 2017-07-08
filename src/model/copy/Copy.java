@@ -114,4 +114,8 @@ public class Copy {
 	public void checkedIn() {
 		this.dueDate = null;
 	}
+	
+	public boolean isOverdue() {
+		return this.dueDate.isAfter(LocalDateTime.now());
+	}
 }
