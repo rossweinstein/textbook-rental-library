@@ -95,8 +95,9 @@ public class CopyTest {
 		this.firstPatron.checkCopyOut(bookOne);
 		this.firstPatron.checkCopyIn(bookOne);
 		this.bookOne.holdReturned();
+		boolean result = bookOne.getOutTo() == null;
 		
-		assertTrue(this.bookOne.getOutTo() == null);
+		assertTrue(result);
 	}
 	
 	@Test

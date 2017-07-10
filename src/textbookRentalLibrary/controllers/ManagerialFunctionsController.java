@@ -1,5 +1,7 @@
 package textbookRentalLibrary.controllers;
 
+import java.util.List;
+
 import model.Manager;
 import model.patron.Patron;
 import textbookRentalLibrary.controllers.hold.DamageHoldController;
@@ -20,36 +22,67 @@ import textbookRentalLibrary.controllers.hold.UnshelvedHoldController;
 public class ManagerialFunctionsController {
 
 	private Manager manage;
-	private DatabaseSearch db;
 
 	public ManagerialFunctionsController() {
 		this.manage = new Manager();
-		this.db = new DatabaseSearch();
 	}
 
-	/********** GENERAL MANAGER **************************************/
+	/********** DISPLAY FUNCTIONS **************************************/
 
+	public void displayAllPatrons() {
+		
+		List<Patron> allPatrons = this.manage.getAllPatronsInTRL();
+		String message = "ALL PATRONS";
+		
+		if (allPatrons.size() == 0) {
+			System.out.println("There are currently no patrons in the database");
+		} else {
+			this.displaySelectedPatrons(allPatrons, message);
+		}
+	}
+
+	public void displayAllPatronsWithHolds() {
+		
+		List<Patron> patronsWithHolds = this.manage.getAllPatronsWithHolds();
+		String message = "PATRONS WITH HOLDS";
+		
+		if (patronsWithHolds.size() == 0) {
+			System.out.println("There are currently no patrons with holds");
+		} else {
+			this.displaySelectedPatrons(patronsWithHolds, message);
+		}
+	}
+	
+	public void displayPatronsWithUnreturnedTextbooks() {
+		
+		List<Patron> patronsWithUnreturnedTextbooks = this.manage.getAllPatronsWithUnreturnedTextBooks();
+		String message = "PATRONS WITH UNRETURNED BOOKS";
+		
+		if (patronsWithUnreturnedTextbooks.size() == 0) {
+			System.out.println("There are currently no patrons with unreturned textbooks");
+		} else {
+			this.displaySelectedPatrons(patronsWithUnreturnedTextbooks, message);
+		}
+	}
+	
+	private void displaySelectedPatrons(List<Patron> selectedPatrons, String title) {
+		
+		System.out.println("--DISPLAY: " + title + "--");
+		System.out.println("..." + selectedPatrons.size() + " Patrons found...\n");
+		
+		for (int i = 0; i < selectedPatrons.size(); i++) {
+			System.out.println((i + 1) + ": " + selectedPatrons.get(i).showPatronIDAndName());
+		}
+	}
+	
+	/********** GENERATE HOLD NOTICES ********************************/
+	
 	public void generateHoldNotices() {
 		if (this.manage.canGenerateHoldNotices()) {
 			System.out.println("Overdue notices generated...\n");
 		} else {
 			System.out.println("There are no holds in the system.");
 		}
-	}
-
-	public void displayAllPatrons() {
-		System.out.println("All Patrons In Database:");
-		this.manage.getAllPatronsInTRL();
-	}
-
-	public void displayAllPatronsWithHolds() {
-		System.out.println("All Patrons With Holds:");
-		this.manage.getAllPatronsWithHolds();
-	}
-	
-	public void displayPatronsWithUnreturnedTextbooks() {
-		System.out.println("Patrons Textbooks Currently Checked Out"); 
-				this.manage.getAllPatronsWithUnreturnedTextBooks();
 	}
 	
 	/********** RESOLVE HOLD ***************************************/

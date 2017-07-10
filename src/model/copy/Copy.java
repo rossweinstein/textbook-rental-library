@@ -1,6 +1,7 @@
 package model.copy;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import model.patron.Patron;
 
@@ -96,7 +97,7 @@ public class Copy {
 
 	@Override
 	public String toString() {
-		return "Title: " + this.title + " [ID: " + this.copyID +"]";
+		return "ID: " + this.copyID + " | Title: " + this.title + " | Due Date: " + this.showDueDate();
 	}
 
 	public String checkedOutBy() {
@@ -104,6 +105,14 @@ public class Copy {
 			return "Copy is Currently Available";
 		} else {
 			return this.outTo.toString();
+		}
+	}
+	
+	public String showDueDate() {
+		if (this.dueDate == null) {
+			return "N/A";
+		} else {
+			return this.dueDate.format(DateTimeFormatter.ISO_DATE);
 		}
 	}
 	

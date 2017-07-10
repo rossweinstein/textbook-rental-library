@@ -122,6 +122,8 @@ public class CheckOutController extends SessionController implements TRLSession 
 
 			if (!bookIsAvailable) {
 				this.displayBookAlreadyCheckedOutMessage(theCopy);
+			} else {
+				this.displayBookJustCheckedOut(theCopy);
 			}
 		}
 	}
@@ -130,5 +132,9 @@ public class CheckOutController extends SessionController implements TRLSession 
 		System.out.println("\nALERT:" + " Cannot checkout " + theCopy.getTitle() + " [copyID:" + theCopy.getCopyID()
 				+ "] because that copyID is already associated with Patron " + theCopy.getOutTo().getPatronID()
 				+ ". \nCheck the copyID number. If the copyID was entered correctly, contact a manager.");
+	}
+	
+	private void displayBookJustCheckedOut(Copy theCopy) {
+		System.out.println("\nCopy Just Checked Out:\n" + theCopy.toString());
 	}
 }
