@@ -4,28 +4,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import model.patron.Patron;
+import model.patron.hold.Hold;
 import textbookRentalLibrary.menus.MenuBuilder;
 
 public class ResolveHoldController extends HoldController {
-	
-	public ResolveHoldController(){
+
+	public ResolveHoldController() {
 		super();
-		
+
 	}
+
 	public void resolvePatronHold() {
 
 		Patron offendingPatron = super.getDB().locatePatronInDB();
 
-		if (offendingPatron == null || offendingPatron.getAllHolds().size() == 0) {
-			System.out.println("Patron has no holds on record");
-			
-		} else {
+		boolean canResolveMoreHolds = true;
+		while (canResolveMoreHolds) {
 
-			boolean canResolveMoreHolds = true;
-			while (canResolveMoreHolds) {
+			if (offendingPatron == null || offendingPatron.hasNoHoldsOnRecord()) {
+				System.out.println("Patron has no holds on record");
+				canResolveMoreHolds = false;
+
+			} else {
 
 				MenuBuilder resolveMenu = this.buildResolveHoldMenu(offendingPatron);
-				resolveMenu.displayMenuWithoutBanner();
+				System.out.println(resolveMenu.displayMenuWithoutBanner());
 
 				int selection = super.getInput().askForSelection(resolveMenu.getMenuItems());
 
@@ -36,7 +39,7 @@ public class ResolveHoldController extends HoldController {
 					}
 
 				} else {
-					
+
 					canResolveMoreHolds = false;
 				}
 			}
@@ -52,18 +55,19 @@ public class ResolveHoldController extends HoldController {
 	}
 
 	private MenuBuilder buildResolveHoldMenu(Patron offendingPatron) {
-		
+
 		MenuBuilder selectHoldMenu = new MenuBuilder();
 
-		List<String> outstandingHolds = offendingPatron.getAllHolds().stream().map(hold -> hold.toString())
-				.collect(Collectors.toList());
+		List<String> outstandingHolds = this.allToString(offendingPatron.getAllHolds());
 		outstandingHolds.add("Exit");
 
 		selectHoldMenu.setMenuTitle("Select Hold:");
 		selectHoldMenu.setMenuItems(outstandingHolds);
-		
+
 		return selectHoldMenu;
 	}
 
-
+	private List<String> allToString(List<Hold> theHolds) {
+		return theHolds.stream().map(eachHold -> "\n" + eachHold.getHoldMessage()).collect(Collectors.toList());
+	}
 }

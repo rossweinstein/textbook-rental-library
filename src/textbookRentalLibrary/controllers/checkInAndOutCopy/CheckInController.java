@@ -55,6 +55,16 @@ public class CheckInController extends SessionController implements TRLSession {
 				endSession = !super.input.askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
 			}
 		}
+		this.printExitSessionMessage(thePatron);
+	}
+	
+	private void printExitSessionMessage(Patron thePatron) {
+		
+		if (thePatron.getCopiesOut().size() == 0) {
+			System.out.println("All copies checked back in");
+		} else {
+			super.showCopiesOutToPatron(thePatron);
+		}
 	}
 
 	/**
