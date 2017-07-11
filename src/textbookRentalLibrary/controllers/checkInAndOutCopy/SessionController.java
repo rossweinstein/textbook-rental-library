@@ -1,6 +1,5 @@
 package textbookRentalLibrary.controllers.checkInAndOutCopy;
 
-
 import model.patron.Patron;
 import textbookRentalLibrary.menus.CommandLineMenu;
 import textbookRentalLibrary.menus.PatronInfoUpdateMenu;
@@ -53,5 +52,10 @@ public class SessionController {
 	private boolean patronInfoVerified(Patron patron) {
 		System.out.println("\n----------VERIFY CONTACT INFORMATION----------\n" + patron.toString());
 		return this.input.askBinaryQuestion("\nIs this information correct? (y/n)", "y", "n");
+	}
+
+	protected void showCopiesOutToPatron(Patron thePatron) {
+		System.out.println("\nCopies Currently Out to " + thePatron.getContactInfo().getFirstName() + " " + thePatron.getContactInfo().getLastName() + ":");
+		thePatron.getCopiesOut().stream().forEach(eachCopy -> System.out.println(eachCopy.toString()));
 	}
 }

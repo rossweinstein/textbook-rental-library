@@ -31,7 +31,8 @@ public class CheckOutController extends SessionController implements TRLSession 
 			return false;
 		}
 
-		if (this.patronHasHolds(thePatron)) {
+		if (!thePatron.hasNoHoldsOnRecord()) {
+			this.handleHolds(thePatron);
 			return false;
 		}
 
@@ -41,14 +42,9 @@ public class CheckOutController extends SessionController implements TRLSession 
 
 	/******************* HOLD METHODS ********************************/
 
-	private boolean patronHasHolds(Patron thePatron) {
-
-		return thePatron.hasNoHoldsOnRecord() ? false : this.handleHolds(thePatron);
-	}
-
-	private boolean handleHolds(Patron patron) {
+	private void handleHolds(Patron patron) {
 		this.printHoldAlertMessage(patron);
-		return this.dealWithEachHold(patron);
+		this.dealWithEachHold(patron);
 	}
 
 	private boolean dealWithEachHold(Patron patron) {
@@ -64,21 +60,21 @@ public class CheckOutController extends SessionController implements TRLSession 
 			} else {
 				currentHold++;
 			}
-
 		}
-
 		return patron.getAllHolds().size() == 0;
 
 	}
 
 	private void printHoldAlertMessage(Patron patron) {
 
-		System.out.println("---HOLD ALERT---");
+		System.out.println("\n---HOLD ALERT---");
 		System.out.println("Hold Amount: " + patron.getAllHolds().size());
 
 		for (Hold eachHold : patron.getAllHolds()) {
 			System.out.println(eachHold.getHoldMessage());
 		}
+		
+		System.out.println("\nHolds must be resolved at Manager Station before any textbooks may be checked out");
 
 	}
 
@@ -89,7 +85,7 @@ public class CheckOutController extends SessionController implements TRLSession 
 	 * @return boolean true if Patron can resolve holds; false otherwise
 	 */
 	private boolean isAbleToResolveHolds() {
-		return super.input.askBinaryQuestion("\nIs patron able to resolve this hold? (y/n)", "y", "n");
+		return super.input.askBinaryQuestion("\nHas worker given hold notice? (y)", "y", "y");
 	}
 
 	/******************* CHECKOUT METHODS ********************************/
@@ -102,6 +98,8 @@ public class CheckOutController extends SessionController implements TRLSession 
 			this.checkoutTextbookCopy(thePatron);
 			endSession = !super.input.askBinaryQuestion("\nCheckout another book? (y/n)", "y", "n");
 		}
+		
+		super.showCopiesOutToPatron(thePatron);
 	}
 
 	/**

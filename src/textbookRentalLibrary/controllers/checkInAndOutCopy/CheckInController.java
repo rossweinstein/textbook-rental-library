@@ -3,6 +3,7 @@ package textbookRentalLibrary.controllers.checkInAndOutCopy;
 import model.copy.Copy;
 import model.patron.Patron;
 import textbookRentalLibrary.controllers.DatabaseSearch;
+import textbookRentalLibrary.controllers.hold.DamageHoldController;
 
 /**
  * This class handles the Check In Sessions for the TRL application
@@ -38,16 +39,22 @@ public class CheckInController extends SessionController implements TRLSession {
 		return true;
 	}
 
-
 	private void checkInCopies(Patron thePatron) {
 
 		boolean endSession = false;
 		while (!endSession) {
 
-			this.checkInTextbookCopy(thePatron);
-			endSession = !super.input.askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
-		}
+			if (thePatron.getCopiesOut().size() == 0) {
+				System.out.println("All copies checked back in");
+				endSession = true;
+				
+			} else {
 
+				super.showCopiesOutToPatron(thePatron);
+				this.checkInTextbookCopy(thePatron);
+				endSession = !super.input.askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
+			}
+		}
 	}
 
 	/**
@@ -67,6 +74,9 @@ public class CheckInController extends SessionController implements TRLSession {
 
 			if (!patronCanReturnCopy) {
 				this.displayCopyIsNotCheckedOutToPatronAlert(theCopy, thePatron);
+			} else {
+				this.displayBookJustCheckedIn(theCopy);
+				this.copyIsDamaged();
 			}
 		}
 	}
@@ -76,5 +86,19 @@ public class CheckInController extends SessionController implements TRLSession {
 				+ "] because that copyID is not associated with Patron [ID:" + thePatron.getPatronID()
 				+ "]. \nCheck the copyID number. If the copyID was entered correctly, contact a manager.");
 
+	}
+
+	private void displayBookJustCheckedIn(Copy theCopy) {
+		System.out.println("\nCopy Just Checked In:\n" + theCopy.toString());
+	}
+
+	private void copyIsDamaged() {
+
+		boolean isBookDamaged = super.input.askBinaryQuestion("Is Copy Damaged? (y/n)", "y", "n");
+
+		if (isBookDamaged) {
+			DamageHoldController damage = new DamageHoldController();
+			damage.markHold();
+		}
 	}
 }
