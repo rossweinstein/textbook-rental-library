@@ -24,11 +24,15 @@ public class BuyBookController {
 
 			if (wantsToBuy) {
 
-				FakeDB.getCopiesDB().remove(theCopy.getCopyID());
+				this.removeBookFromDB(theCopy);
 				System.out.println(
 						theCopy.getTitle() + " [ID: " + theCopy.getCopyID() + "] has been removed from database");
 
 			}
 		}
+	}
+	
+	public void removeBookFromDB(Copy theCopy) {
+		FakeDB.getCopiesDB().remove(theCopy.getCopyID());
 	}
 }
