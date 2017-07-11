@@ -71,6 +71,12 @@ public class PatronTest {
 
 		return new Patron("P1", ericContact);
 	}
+	
+	@Test
+	public void getCorrectNameAndID() {
+		String equalString = "ID: P2 | Name: Ross Weinstein";
+		assertTrue(this.firstPatron.showPatronIDAndName().equals(equalString));
+	}
 
 	@Test
 	public void getPatronContactInfo() {

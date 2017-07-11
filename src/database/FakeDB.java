@@ -35,6 +35,10 @@ public class FakeDB {
 		copyStore.put("C8", new Copy("C8", "Tons of Fun with Objects"));
 		copyStore.put("C9", new Copy("C9", "Forgotten Fun with Objects"));
 	}
+	
+	public static Map<String, Copy> getCopiesDB() {
+		return copyStore;
+	}
 
 	public static List<Patron> getAllPatrons() {
 		return patronStore.values().stream().collect(Collectors.toList());

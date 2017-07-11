@@ -3,6 +3,7 @@ package textbookRentalLibrary.menus.managerMenus;
 import java.util.Arrays;
 import java.util.List;
 
+import textbookRentalLibrary.controllers.BuyBookController;
 import textbookRentalLibrary.menus.CommandLineMenu;
 import textbookRentalLibrary.menus.MenuBuilder;
 
@@ -22,7 +23,7 @@ public class ManagerialMenuMain extends ManagerMenu {
 	private MenuBuilder managerMainMenu() {
 		super.buildMenu().setMenuTitle("-----MANAGER FUNCTIONS MENU-----");
 
-		List<String> options = Arrays.asList("View Records", "Add Hold", "Resolve Hold", "Exit Manager Menu");
+		List<String> options = Arrays.asList("View Records", "Add Hold", "Resolve Hold", "Buy Books", "Exit Manager Menu");
 		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
@@ -48,11 +49,21 @@ public class ManagerialMenuMain extends ManagerMenu {
 
 		} else if (selection == 3) {
 			this.resolvePatronHolds();
-
+			
+		} else if (selection == 4) {
+			this.buyTextbook();
+			
 		} else {
 			return false;
 		}
 		return true;
+	}
+
+	private void buyTextbook() {
+		System.out.println();
+		BuyBookController buyBook = new BuyBookController();
+		buyBook.startProcess();
+		System.out.println();
 	}
 
 	private void resolvePatronHolds() {

@@ -39,10 +39,6 @@ public class Patron {
 		return contactInfo;
 	}
 
-	public void setContactInfo(ContactInfo contact) {
-		this.contactInfo = contact;
-	}
-
 	public String getPatronID() {
 		return patronID;
 	}
