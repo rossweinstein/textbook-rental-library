@@ -3,6 +3,9 @@ package modelTest.copyTest;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,6 +52,33 @@ public class CopyTest {
 		return new Patron("P2", rossContact);
 
 	}
+	
+	@Test
+	public void getDueDate() {
+		bookOne.checkedOut();
+		LocalDateTime time = LocalDateTime.now().plusDays(100);
+		String compareString = "ID: 123 | Title: Book One | Due Date: " + time.format(DateTimeFormatter.ISO_DATE);
+		assertTrue(bookOne.toString().equals(compareString));
+	}
+	
+	@Test
+	public void copyIsNotOverdue() {
+		bookOne.checkedOut();
+		assertFalse(bookOne.isOverdue());
+	}
+	
+	@Test
+	public void copyIsOverdue() {
+		bookOne.checkedOut();
+		bookOne.setDueDate(LocalDateTime.now().minusDays(1));
+		assertTrue(bookOne.isOverdue());
+	}
+	
+	@Test
+	public void uncheckedCopyCannotBeOverdue() {
+		assertFalse(bookOne.isOverdue());
+	}
+	
 	
 	@Test
 	public void CopyRegistersPatronName() {
@@ -122,8 +152,10 @@ public class CopyTest {
 	
 	@Test
 	public void correctToString() {
-		assertTrue(this.bookOne.toString().equals("Title: Book One [ID: 123]"));
+		assertTrue(this.bookOne.toString().equals("ID: 123 | Title: Book One | Due Date: N/A"));
 	}
+	
+
 	
 	@Test
 	public void correctHashCode() {

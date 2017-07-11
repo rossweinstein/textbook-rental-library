@@ -108,7 +108,7 @@ public class Copy {
 		}
 	}
 	
-	public String showDueDate() {
+	private String showDueDate() {
 		if (this.dueDate == null) {
 			return "N/A";
 		} else {
@@ -125,6 +125,6 @@ public class Copy {
 	}
 	
 	public boolean isOverdue() {
-		return this.dueDate.isAfter(LocalDateTime.now());
+		return  this.dueDate == null ? false : !this.dueDate.isAfter(LocalDateTime.now());
 	}
 }

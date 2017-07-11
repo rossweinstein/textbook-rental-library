@@ -2,6 +2,7 @@ package modelTest;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.Before;
@@ -100,18 +101,20 @@ public class managerTest {
 
 		Patron ross = this.patrons.get(1);
 		Copy textbook = this.copies.get(0);
-
 		ross.checkCopyOut(textbook);
+		textbook.setDueDate(LocalDateTime.now().minusDays(1));
+
 		
 		Patron mowlid = this.patrons.get(2);
 		Copy textbook2 = this.copies.get(1);
-
 		mowlid.checkCopyOut(textbook2);
+		textbook2.setDueDate(LocalDateTime.now().minusDays(1));
+
 		
 		Patron neera = this.patrons.get(3);
 		Copy textbook3 = this.copies.get(2);
-
 		neera.checkCopyOut(textbook3);
+		textbook3.setDueDate(LocalDateTime.now().minusDays(1));
 
 		assertTrue(this.manage.markOverdueHolds(10));
 		assertTrue(this.manage.getAllPatronsWithOverdueHolds().size() == 3);
