@@ -11,7 +11,7 @@
         <Extension destinationClassName="model.patron.hold.Hold"/>
     </Class>
     <Class name="textbookRentalLibrary.controllers.DatabaseController"
-        x="1487" y="857">
+        x="1453" y="622">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -20,7 +20,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="textbookRentalLibrary.controllers.TRLController">
-            <Point x="1569" y="465"/>
+            <Point x="1502" y="457"/>
         </Extension>
         <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
         <Communication destinationClassName="model.patron.Patron"/>
@@ -51,7 +51,7 @@
         <Communication destinationClassName="model.patron.hold.Hold"/>
     </Class>
     <Class name="textbookRentalLibrary.controllers.hold.HoldController"
-        x="1292" y="260">
+        x="1548" y="63">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -64,12 +64,12 @@
             destinationClassName="textbookRentalLibrary.controllers.DatabaseController"
             endpointName="db" kind="Simple">
             <Point x="1701" y="302"/>
-            <Point x="1736" y="892"/>
+            <Point x="1647" y="633"/>
         </Association>
         <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
     </Class>
     <Class name="textbookRentalLibrary.controllers.BuyBookController"
-        x="1524" y="314">
+        x="1515" y="252">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -81,7 +81,7 @@
         <Association
             destinationClassName="textbookRentalLibrary.controllers.DatabaseController"
             endpointName="db" kind="Simple">
-            <Point x="1677" y="853"/>
+            <Point x="1611" y="532"/>
         </Association>
         <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
         <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
@@ -135,7 +135,7 @@
     </Class>
     <Class
         name="textbookRentalLibrary.controllers.checkInAndOutCopy.SessionController"
-        x="1295" y="645">
+        x="1198" y="407">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -228,7 +228,7 @@
         <Communication destinationClassName="textbookRentalLibrary.controllers.ManagerController"/>
     </Class>
     <Class name="textbookRentalLibrary.controllers.TRLController"
-        x="1261" y="353">
+        x="1299" y="222">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -314,7 +314,7 @@
     </Class>
     <Class
         name="textbookRentalLibrary.controllers.checkInAndOutCopy.CheckOutController"
-        x="1159" y="524">
+        x="1106" y="537">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -357,7 +357,7 @@
     </Class>
     <Class
         name="textbookRentalLibrary.controllers.checkInAndOutCopy.TRLSession"
-        x="1099" y="610">
+        x="1113" y="612">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -382,7 +382,7 @@
     </Class>
     <Class
         name="textbookRentalLibrary.controllers.hold.ResolveHoldController"
-        x="1258" y="77">
+        x="1223" y="9">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -519,7 +519,9 @@
             accessors-accepted="false" constructors-accepted="false"/>
         <Association
             destinationClassName="textbookRentalLibrary.controllers.DatabaseController"
-            endpointName="db" kind="Simple"/>
+            endpointName="db" kind="Simple">
+            <Point x="1521" y="878"/>
+        </Association>
         <Communication destinationClassName="textbookRentalLibrary.controllers.hold.ResolveHoldController"/>
         <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
         <Communication destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
