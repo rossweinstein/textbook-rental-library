@@ -104,7 +104,7 @@ public class DatabaseController {
 	}
 	
 	
-	/********** SEARCH DATABASE **************************/
+	/********** SEARCH DATABASE FOR SPECIFIC PATRON/COPY **************************/
 
 	public Patron locatePatronInDB() {
 

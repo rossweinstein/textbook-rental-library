@@ -20,11 +20,19 @@ public abstract class HoldController {
 		return input;
 	}
 	
-	protected DatabaseController getDB() {
+	protected DatabaseController queryDB() {
 		return this.db;
 	}
 	
 	protected Manager getManage() {
 		return this.manage;
+	}
+	
+	public int getHoldTotal() {
+		return this.db.getAllPatronsWithHolds().stream().map(patron -> patron.getAllHolds().size()).mapToInt(i -> i).sum();
+	}
+	
+	protected boolean holdsUpdatedCorrectly(int tally) {
+		return this.getHoldTotal() == tally;
 	}
 }

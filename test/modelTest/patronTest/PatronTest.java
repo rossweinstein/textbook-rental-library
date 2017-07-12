@@ -9,6 +9,7 @@ import org.junit.Test;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.PatronType;
+import model.patron.hold.HoldType;
 import model.patron.patronInfo.Address;
 import model.patron.patronInfo.ContactInfo;
 
@@ -70,6 +71,55 @@ public class PatronTest {
 		ericContact.setPermanentAsLocalAddress();
 
 		return new Patron("P1", ericContact, PatronType.FACULTY);
+	}
+	
+	@Test
+	public void patronDoesHaveHoldsOnRecord() {
+
+		this.firstPatron.checkCopyOut(bookOne);
+		this.firstPatron.checkCopyIn(bookOne);
+		this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 10, bookOne);
+		
+		assertFalse(this.firstPatron.hasNoHoldsOnRecord());
+		
+		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
+		bookOne.setLastPersonToCheckOut(null);
+	}
+
+	@Test
+	public void patronResolvesHolds() {
+		
+		this.firstPatron.checkCopyOut(bookOne);
+		this.firstPatron.checkCopyOut(bookTwo);
+
+		this.firstPatron.checkCopyIn(bookOne);
+		this.firstPatron.checkCopyIn(bookTwo);
+		
+		
+		this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 10, bookOne);
+		this.firstPatron.placeHoldOnRecord(HoldType.LOST, 10, bookOne);
+
+		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
+		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
+
+		assertTrue(this.firstPatron.copiesCurrentlyCheckedOut() == 0);
+		assertTrue(this.firstPatron.hasNoHoldsOnRecord());
+		
+		bookOne.setLastPersonToCheckOut(null);
+		bookTwo.setLastPersonToCheckOut(null);
+	}
+
+	@Test
+	public void patronCannotPlaceHoldTwice() {
+		
+		this.firstPatron.checkCopyOut(bookOne);
+		this.firstPatron.checkCopyIn(bookOne);
+
+		assertTrue(this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 10, bookOne));
+		assertFalse(this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 10, bookOne));
+		
+		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
+		bookOne.setLastPersonToCheckOut(null);
 	}
 	
 	@Test
