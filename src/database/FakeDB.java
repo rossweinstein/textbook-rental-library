@@ -36,6 +36,8 @@ public class FakeDB {
 		copyStore.put("C9", new Copy("C9", "Forgotten Fun with Objects"));
 	}
 	
+	/********* FAKEDB RETRIEVAL METHODS ****************/
+	
 	public static Map<String, Copy> getCopiesDB() {
 		return copyStore;
 	}
@@ -55,6 +57,8 @@ public class FakeDB {
 	public static Copy getCopy(String copyID) {
 		return copyStore.get(copyID);
 	}
+	
+	/********* TRL PATRON SET UP ****************/
 
 	private static Patron createPatronEric() {
 

@@ -82,16 +82,6 @@ public class Patron {
 	}
 
 	@Override
-	public int hashCode() {
-		int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.patronID == null) ? 0 : this.patronID.hashCode());
-		result = prime * result
-				+ ((this.contactInfo.getLastName() == null) ? 0 : this.contactInfo.getLastName().hashCode());
-		return result;
-	}
-
-	@Override
 	public String toString() {
 		return "ID: " + this.patronID + "\nType: " + this.type.toString() + "\nName: "
 				+ this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() + "\nPhone Numeber: "
@@ -103,24 +93,6 @@ public class Patron {
 				+ this.contactInfo.getLastName();
 	}
 
-	public String showBookList() {
-
-		if (this.copiesOut.isEmpty()) {
-			return "No Books Currently Checked Out";
-		}
-
-		String theCopies = "";
-
-		for (int i = 0; i < this.copiesOut.size(); i++) {
-
-			if (i < this.copiesOut.size() - 1) {
-				theCopies += this.copiesOut.get(i).getTitle() + " [ID: " + this.copiesOut.get(i).getCopyID() + "], ";
-			} else {
-				theCopies += this.copiesOut.get(i).getTitle() + " [ID: " + this.copiesOut.get(i).getCopyID() + "]";
-			}
-		}
-		return theCopies;
-	}
 
 	/***** CHECK IN AND OUT COPY METHODS ************************/
 
@@ -138,17 +110,19 @@ public class Patron {
 		return c.getOutTo() == null;
 	}
 
-	public boolean checkCopyIn(Copy c) {
+	public boolean checkCopyIn(Copy returningCopy) {
+		return patronHasCopyCheckedOut(returningCopy) ? this.patronChecksInCopy(returningCopy) : false;
+	}
 
-		// make sure they have the book before they can return it
-		if (this.copiesOut.contains(c)) {
-			c.setOutTo(null);
-			c.setLastPersonToCheckOut(this);
-			c.checkedIn();
-			return this.copiesOut.remove(c);
-		} else {
-			return false;
-		}
+	private boolean patronChecksInCopy(Copy c) {
+		c.setOutTo(null);
+		c.setLastPersonToCheckOut(this);
+		c.checkedIn();
+		return this.copiesOut.remove(c);
+	}
+
+	private boolean patronHasCopyCheckedOut(Copy c) {
+		return this.copiesOut.contains(c);
 	}
 
 	public int copiesCurrentlyCheckedOut() {

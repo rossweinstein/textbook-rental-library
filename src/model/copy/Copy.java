@@ -87,18 +87,11 @@ public class Copy {
 	}
 
 	@Override
-	public int hashCode() {
-		int prime = 29;
-		int result = 1;
-		result = prime * result + ((this.copyID == null) ? 0 : this.copyID.hashCode());
-		result = prime * result + ((this.title == null) ? 0 : this.title.hashCode());
-		return result;
-	}
-
-	@Override
 	public String toString() {
 		return "ID: " + this.copyID + " | Title: " + this.title + " | Due Date: " + this.showDueDate();
 	}
+	
+	/***** DOES ANYONE HAVE COPY CHECKED OUT? *******************/
 
 	public String checkedOutBy() {
 		if (this.copyIsCurrentlyAvailable()) {
@@ -111,6 +104,8 @@ public class Copy {
 	private boolean copyIsCurrentlyAvailable() {
 		return this.outTo == null;
 	}
+	
+	/***** DUE DATE / OVERDUE METHODS ***************************/
 	
 	private String showDueDate() {
 		if (this.copyIsNotCurrentlyCheckedOut()) {

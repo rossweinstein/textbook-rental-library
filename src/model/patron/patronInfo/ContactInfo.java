@@ -135,7 +135,7 @@ public class ContactInfo {
 
 		} else if (this.onlyOneAddressIsProvided()) {
 
-			Address address = !this.localAddress.isEmpty() ? this.localAddress : this.permanentAddress;
+			Address address = !this.localAddress.isNotFilledOut() ? this.localAddress : this.permanentAddress;
 			addresses = "Address:\n" + address.toString();
 
 		} else {
@@ -156,10 +156,10 @@ public class ContactInfo {
 	}
 
 	private boolean oneAddressIsBlank() {
-		return this.localAddress.isEmpty() || this.permanentAddress.isEmpty();
+		return this.localAddress.isNotFilledOut() || this.permanentAddress.isNotFilledOut();
 	}
 
 	private boolean bothAddressesAreBlank() {
-		return this.localAddress.isEmpty() && this.permanentAddress.isEmpty();
+		return this.localAddress.isNotFilledOut() && this.permanentAddress.isNotFilledOut();
 	}
 }

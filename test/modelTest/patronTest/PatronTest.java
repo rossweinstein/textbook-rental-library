@@ -198,37 +198,4 @@ public class PatronTest {
 	public void resetPatronID() {
 		assertTrue(this.firstPatron.getPatronID().equals("P2"));
 	}
-
-	@Test
-	public void bookListIsEmpty() {
-		assertTrue(this.firstPatron.showBookList().equals("No Books Currently Checked Out"));
-	}
-
-	@Test
-	public void booksInBookList() {
-		this.firstPatron.checkCopyOut(this.bookOne);
-		this.firstPatron.checkCopyOut(this.bookTwo);
-
-		String bookList = this.bookOne.getTitle() + " [ID: " + this.bookOne.getCopyID() + "], "
-				+ this.bookTwo.getTitle() + " [ID: " + this.bookTwo.getCopyID() + "]";
-
-		assertTrue(this.firstPatron.showBookList().equals(bookList));
-
-	}
-
-	@Test
-	public void correctHashCode() {
-
-		int hashCode = this.hashCode(this.firstPatron.getPatronID(), this.firstPatron.getContactInfo().getLastName());
-
-		assertTrue(this.firstPatron.hashCode() == hashCode);
-	}
-
-	private int hashCode(String patronID, String name) {
-		int prime = 31;
-		int result = 1;
-		result = prime * result + ((patronID == null) ? 0 : patronID.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
 }

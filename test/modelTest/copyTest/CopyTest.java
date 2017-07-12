@@ -155,22 +155,4 @@ public class CopyTest {
 	public void correctToString() {
 		assertTrue(this.bookOne.toString().equals("ID: 123 | Title: Book One | Due Date: N/A"));
 	}
-	
-
-	
-	@Test
-	public void correctHashCode() {
-		
-		int bookHash = this.hashCode(this.bookOne.getCopyID(), this.bookOne.getTitle());
-		
-		assertTrue(this.bookOne.hashCode() == bookHash);
-	}
-	
-	private int hashCode(String copyID, String title) {
-		int prime = 29;
-		int result = 1;
-		result = prime * result + ((copyID == null) ? 0 : copyID.hashCode());
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		return result;
-	}
 }
