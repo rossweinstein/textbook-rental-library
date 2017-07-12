@@ -30,8 +30,8 @@ public class HoldTest {
 		theHolds.add(HoldFactory.createHold(HoldType.DAMAGED, 10, FakeDB.getCopy("C2")));
 		theHolds.add(HoldFactory.createHold(HoldType.OVERDUE, 10, FakeDB.getCopy("C3")));
 		theHolds.add(HoldFactory.createHold(HoldType.OVERDUE, 10, FakeDB.getCopy("C4")));
-		theHolds.add(HoldFactory.createHold(HoldType.UNSHELEVED, 10, FakeDB.getCopy("C5")));
-		theHolds.add(HoldFactory.createHold(HoldType.UNSHELEVED, 10, FakeDB.getCopy("C6")));
+		theHolds.add(HoldFactory.createHold(HoldType.UNSHELVED, 10, FakeDB.getCopy("C5")));
+		theHolds.add(HoldFactory.createHold(HoldType.UNSHELVED, 10, FakeDB.getCopy("C6")));
 		theHolds.add(new MiscHold("backpack", "history"));
 		theHolds.add(new MiscHold("notebook", "computer lab"));
 		theHolds.add(HoldFactory.createHold(HoldType.LOST, 10, FakeDB.getCopy("C7")));
@@ -126,7 +126,7 @@ public class HoldTest {
 	@Test
 	public void unshelvedTest4() {
 	
-		Hold misc = HoldFactory.createHold(HoldType.UNSHELEVED, 10, FakeDB.getCopy("C6"));
+		Hold misc = HoldFactory.createHold(HoldType.UNSHELVED, 10, FakeDB.getCopy("C6"));
 		
 		assertTrue(this.patronHolds.get(5).equals(misc));
 	}

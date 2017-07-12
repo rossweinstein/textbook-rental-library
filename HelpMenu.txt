@@ -1,0 +1,96 @@
+——————————————HELP——————————————
+
+This program allows a user to do several things…
+
+1) It allows a Patron to check books out from the Library
+2) It allows a Patron to check book back in to the Library
+3) It allows manager to view Patrons, place holds on Patron, and resolve holds for Patrons
+
+* See the bottom for an explanation of each hold type
+
+—————CHECK-OUT SESSIONS——————————
+
+How to perform a successful checkout session:
+
+1) Select Check-out Session from Main Menu
+2) Enter Patron ID (Patron ID will need to be reentered if cannot be found in database)
+3) Verify Patron’s Contact Information (If information is not current, worker will have opportunity to update contact information)
+4) If Patron has any holds on record, prompt will inform Patron of Holds and navigate them to appropriate place to resolve holds
+5) If no holds on Patron’s record, enter Copy ID Patron wishes to check out (Copy ID will need to be reentered if cannot be found in database)
+6) Once all copies are entered, worker may end session
+7) All Patron’s checked out books will be printed to the console
+
+—————CHECK-IN SESSIONS——————————
+
+How to perform a successful check-in session:
+
+1) Select Check-in Session from Main Menu
+2) Enter Patron ID (Patron ID will need to be reentered if cannot be found in database)
+3) Verify Patron’s Contact Information (If information is not current, worker will have opportunity to update contact information)
+4) Enter Copy ID Patron wishes to check in (Copy ID will need to be reentered if cannot be found in database)
+5) Check the copy for any damages, if so, mark Copy as damaged and hold will be placed on Patron’s record
+5) Once all copies are entered, worker may end session (or if all Copies associated with Patron’s record are checked in, session will automatically end)
+6) All Patron’s checked out books will be printed to the console
+
+—————MANAGER FUNCTIONS—————————
+
+In the manager functions menu, the user may accomplish several tasks...
+
+In the View Records Menu, the user may see several things
+	1) All Patrons in the database (this will list their ID number and full name)
+	2) All Copies in the database (This will list their ID, title, and who, if anyone, has it currently checked out)
+	3) All Patrons with Holds on their records (it does not list each individual hold, just each individual Patron with a hold)
+	4) All Patrons with unreturned books (it does not list the books unreturned, just each individual Patron with unreturned books)
+	5) The rest of the options will display each individual hold types, and the patrons with those holds
+
+In the Add Hold Menu, the user will be have a selection of each different hold types with the ability to add a hold to any of them.  For all the options except for Overdue, only one hold can be added at a time.  For overdue holds, the manager has the option of making all copies that are beyond their due date to be marked as overdue.
+
+In the Resolve Hold Menu, the user will be prompted for a Patron ID.  If that Patron is found, and if that Patron does have a hold of any kind on their record, the holds will be listed and the Patron will be able to resolve the hold.
+
+In the Buy Book Menu will handle selling a book to a Patron and removing it from the database.
+
+—————HOLDS——————————————————————
+
+——HOLD TYPES——
+
+TEXTBOOK HOLDS:
+OVERDUE - This hold is assigned when a Patron keeps a particular textbook beyond its due date
+UNSHELVED - This hold is assigned when Patrons does not return their textbooks to their proper shelves after checking them back in
+DAMAGE - This hold is assigned when a textbook is returned in a condition worse than when it was checked out
+LOST - This hold is assigned when a Patron cannot find their textbook to return
+
+NON-TEXTBOOK HOLDS:
+MISC - This hold is not related to a textbook, but when something, such as a phone or backpack, is found in the Library and the Patron has yet to pick it up
+
+——RESOLVING HOLDS——
+
+TEXTBOOK HOLDS:
+For a textbook hold to be resolved, a fine must be paid.  For overdue holds, the book must be returned as well. 
+
+NON-TEXTBOOK HOLDS:
+There are no fines to be paid with non-textbook holds.  The Patron just needs to provide ID.
+
+—————DATABASE QUICK REFERENCE——————————————————————
+
+Patrons:
+
+ ID  | NAME
+ ----------------------
+ P1  | Eric Level
+ P2  | Ross Weinstein
+ P3  | Mowlid Abdillahi
+ P4  | Neera Chaudhary
+ 
+ Copies:
+ 
+ ID  | Title
+ ----------------------
+ C1  | Fun with Objects
+ C2  | More Fun with Objects
+ C3  | Plenty Of Fun with Objects
+ C4  | No Fun with Objects
+ C5  | Some Fun with Objects
+ C6  | Occasional Fun with Objects
+ C7  | Questionable Fun with Objects
+ C8  | Tons of Fun with Objects
+ C9  | Forgotten Fun with Objects

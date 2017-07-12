@@ -2,6 +2,12 @@ package textbookRentalLibrary.menus;
 
 import textbookRentalLibrary.userInput.InputHelper;
 
+/**
+ * 
+ * @author Ross Weinstein
+ *
+ */
+
 public abstract class TRLMenu implements CommandLineMenu {
 	
 	private InputHelper input;

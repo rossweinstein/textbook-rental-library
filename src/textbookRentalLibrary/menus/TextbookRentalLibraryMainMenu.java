@@ -1,5 +1,8 @@
 package textbookRentalLibrary.menus;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,7 +36,7 @@ public class TextbookRentalLibraryMainMenu extends TRLMenu {
 		super.buildMenu().setMenuTitle("Textbook Rental Library");
 
 		List<String> options = Arrays.asList("Start Check-Out Session", "Start Check-In Session", "Manager Functions",
-				"Quit Program");
+				"Help", "Quit Program");
 		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
@@ -51,16 +54,19 @@ public class TextbookRentalLibraryMainMenu extends TRLMenu {
 
 		if (selection == 1) {
 			this.startCheckOutSession();
-			
+
 		} else if (selection == 2) {
 			this.startCheckInSession();
-			
+
 		} else if (selection == 3) {
 			this.managerFunctions();
-			
+
+		} else if (selection == 4) {
+			this.helpMenu();
+
 		} else {
 			return false;
-			
+
 		}
 		return true;
 	}
@@ -80,6 +86,28 @@ public class TextbookRentalLibraryMainMenu extends TRLMenu {
 	private void managerFunctions() {
 		System.out.println();
 		this.managerFunc.displayMenu();
+		System.out.println();
+	}
+
+	private void helpMenu() {
+		System.out.println();
+		
+		try {
+			BufferedReader in = new BufferedReader(new FileReader("HelpMenu.txt"));
+			String line;
+
+			line = in.readLine();
+
+			while (line != null) {
+				System.out.println(line);
+				line = in.readLine();
+			}
+			in.close();
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
 		System.out.println();
 	}
 }

@@ -1,6 +1,6 @@
-/.DS_Store
-/database/
+/test.mgc
 /model/
-/modelTest/
 /textbookRentalLibrary/
+/modelTest/
+/database/
 /textbookRentalLibraryTest/

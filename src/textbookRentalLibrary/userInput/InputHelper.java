@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-
 /**
  * This class assists in handling all the input for this program.
  * 
@@ -35,7 +34,6 @@ public class InputHelper {
 	 */
 	public int askForInteger(String question) {
 
-		
 		int answer = 0;
 		boolean itsANumber = false;
 
@@ -91,7 +89,7 @@ public class InputHelper {
 
 		return validAnswer;
 	}
-	
+
 	private boolean numberInRange(int number, int upperRange) {
 		return number >= 1 && number <= upperRange;
 	}
@@ -118,7 +116,12 @@ public class InputHelper {
 				result = false;
 				questionUnanswered = false;
 			} else {
-				System.out.println("Invalid Entry. You Must Enter " + yes + " or " + no);
+
+				if (yes.equals(no)) {
+					System.out.println("Invalid Entry. You Must Enter " + yes);
+				} else {
+					System.out.println("Invalid Entry. You Must Enter " + yes + " or " + no);
+				}
 			}
 		}
 		return result;

@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="model.patron.hold.MiscHold" x="46" y="739">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="model.patron.hold.Hold"/>
+    </Class>
+    <Class name="textbookRentalLibrary.controllers.DatabaseController"
+        x="1453" y="622">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.TRLController">
+            <Point x="1502" y="457"/>
+        </Extension>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="model.patron.Patron"/>
+        <Communication destinationClassName="database.FakeDB"/>
+    </Class>
+    <Class name="model.patron.hold.DamagedHold" x="303" y="677">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="model.patron.hold.Hold"/>
+        <Communication destinationClassName="model.copy.Copy"/>
+        <Communication destinationClassName="model.patron.hold.Hold"/>
+    </Class>
+    <Class name="model.patron.hold.LostHold" x="203" y="760">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="model.patron.hold.Hold"/>
+        <Communication destinationClassName="model.copy.Copy"/>
+        <Communication destinationClassName="model.patron.hold.Hold"/>
+    </Class>
+    <Class name="textbookRentalLibrary.controllers.hold.HoldController"
+        x="1548" y="63">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.TRLController"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.controllers.DatabaseController"
+            endpointName="db" kind="Simple">
+            <Point x="1701" y="302"/>
+            <Point x="1647" y="633"/>
+        </Association>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+    </Class>
+    <Class name="textbookRentalLibrary.controllers.BuyBookController"
+        x="1515" y="252">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.TRLController"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.controllers.DatabaseController"
+            endpointName="db" kind="Simple">
+            <Point x="1611" y="532"/>
+        </Association>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.menus.managerMenus.ManagerAddHoldMenu"
+        x="539" y="764">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.menus.managerMenus.ManagerMenu"/>
+        <Communication destinationClassName="textbookRentalLibrary.menus.MenuBuilder"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.ManagerController"/>
+    </Class>
+    <Class name="textbookRentalLibrary.menus.TRLMenu" x="919" y="597">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.menus.CommandLineMenu"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.userInput.InputHelper"
+            endpointName="input" kind="Simple"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.menus.MenuBuilder"
+            endpointName="menu" kind="Simple"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.hold.MiscHoldController"
+        x="648" y="301">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
+        <Communication destinationClassName="model.patron.Patron"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.checkInAndOutCopy.SessionController"
+        x="1198" y="407">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.TRLController"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.controllers.DatabaseController"
+            endpointName="db" kind="Simple"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="textbookRentalLibrary.menus.CommandLineMenu"/>
+    </Class>
+    <Class name="textbookRentalLibrary.userInput.InputHelper" x="869" y="410">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="model.patron.patronInfo.ContactInfo" x="371" y="26">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="model.patron.patronInfo.Address"
+            endpointName="localAddress" kind="Simple">
+            <Point x="321" y="18"/>
+        </Association>
+        <Association
+            destinationClassName="model.patron.patronInfo.Address"
+            endpointName="permanentAddress" kind="Simple">
+            <Point x="308" y="121"/>
+        </Association>
+        <Communication destinationClassName="model.patron.patronInfo.Address"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.hold.PlaceHoldController"
+        x="1101" y="102">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.hold.HoldController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="model.patron.Patron"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.hold.HoldController"/>
+    </Class>
+    <Class name="model.copy.Copy" x="17" y="343">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.patron.Patron"
+            endpointName="outTo" kind="Simple"/>
+        <Association destinationClassName="model.patron.Patron"
+            endpointName="lastPersonToCheckOut" kind="Simple">
+            <Point x="179" y="379"/>
+            <Point x="295" y="379"/>
+        </Association>
+        <Communication destinationClassName="model.patron.Patron"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.menus.managerMenus.ManagerViewRecordsMenu"
+        x="486" y="877">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.menus.managerMenus.ManagerMenu"/>
+        <Communication destinationClassName="textbookRentalLibrary.menus.MenuBuilder"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.ManagerController"/>
+    </Class>
+    <Class name="textbookRentalLibrary.controllers.TRLController"
+        x="1299" y="222">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.userInput.InputHelper"
+            endpointName="input" kind="Simple"/>
+    </Class>
+    <Class name="model.patron.hold.OverdueHold" x="15" y="671">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="model.patron.hold.Hold"/>
+        <Communication destinationClassName="model.copy.Copy"/>
+        <Communication destinationClassName="model.patron.hold.Hold"/>
+    </Class>
+    <Class name="textbookRentalLibrary.menus.PatronInfoUpdateMenu"
+        x="681" y="445">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.menus.TRLMenu"/>
+        <Association destinationClassName="model.patron.Patron"
+            endpointName="patronToModify" kind="Simple"/>
+        <Communication destinationClassName="textbookRentalLibrary.menus.MenuBuilder"/>
+        <Communication destinationClassName="model.patron.patronInfo.Address"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="model.patron.patronInfo.ContactInfo"/>
+    </Class>
+    <Class name="model.patron.hold.Hold" x="215" y="576">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.copy.Copy"
+            endpointName="copy" kind="Simple">
+            <Point x="145" y="565"/>
+        </Association>
+    </Class>
+    <Class name="model.patron.hold.UnshelvedHold" x="8" y="609">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="model.patron.hold.Hold"/>
+        <Communication destinationClassName="model.copy.Copy"/>
+        <Communication destinationClassName="model.patron.hold.Hold"/>
+    </Class>
+    <Class name="textbookRentalLibrary.menus.MenuBuilder" x="585" y="525">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="model.patron.patronInfo.Address" x="86" y="17">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.checkInAndOutCopy.CheckOutController"
+        x="1106" y="537">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.checkInAndOutCopy.SessionController"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.checkInAndOutCopy.TRLSession"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="model.patron.Patron"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.menus.TextbookRentalLibraryMainMenu"
+        x="1030" y="785">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.menus.TRLMenu"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.menus.managerMenus.ManagerialMenuMain"
+            endpointName="managerFunc" kind="Simple"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.controllers.checkInAndOutCopy.TRLSession"
+            endpointName="checkIn" kind="Simple"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.controllers.checkInAndOutCopy.TRLSession"
+            endpointName="checkOut" kind="Simple">
+            <Point x="1066" y="669"/>
+        </Association>
+        <Communication destinationClassName="textbookRentalLibrary.menus.MenuBuilder"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.checkInAndOutCopy.TRLSession"/>
+        <Communication destinationClassName="textbookRentalLibrary.menus.managerMenus.ManagerialMenuMain"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.checkInAndOutCopy.TRLSession"
+        x="1113" y="612">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.hold.DamageHoldController"
+        x="1004" y="244">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.hold.ResolveHoldController"
+        x="1223" y="9">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.hold.HoldController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.menus.MenuBuilder"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="model.patron.Patron"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.hold.OverdueHoldController"
+        x="617" y="40">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
+        <Communication destinationClassName="model.patron.Patron"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.hold.HoldController"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.hold.LostHoldController"
+        x="833" y="-19">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController">
+            <Point x="1138" y="37"/>
+        </Extension>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
+    </Class>
+    <Class name="textbookRentalLibrary.menus.CommandLineMenu" x="675" y="641">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="model.patron.Patron" x="318" y="339">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="model.patron.patronInfo.ContactInfo"
+            endpointName="contactInfo" kind="Simple"/>
+        <Association destinationClassName="model.patron.PatronType"
+            endpointName="type" kind="Simple"/>
+        <Association destinationClassName="model.patron.hold.Hold"
+            endpointName="currentHolds" kind="Simple">
+            <Point x="414" y="600"/>
+        </Association>
+        <Association destinationClassName="model.copy.Copy"
+            endpointName="copiesOut" kind="Simple">
+            <Point x="260" y="497"/>
+            <Point x="204" y="511"/>
+        </Association>
+        <Communication destinationClassName="model.patron.patronInfo.ContactInfo"/>
+        <Communication destinationClassName="model.copy.Copy"/>
+    </Class>
+    <Class name="database.FakeDB" x="167" y="227">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="model.patron.Patron"
+            endpointName="patronStore" kind="Simple"/>
+        <Association destinationClassName="model.copy.Copy"
+            endpointName="copyStore" kind="Simple"/>
+        <Communication destinationClassName="model.patron.patronInfo.Address"/>
+        <Communication destinationClassName="model.patron.patronInfo.ContactInfo"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.checkInAndOutCopy.CheckInController"
+        x="1252" y="777">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.checkInAndOutCopy.SessionController"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.checkInAndOutCopy.TRLSession"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="model.patron.Patron"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.hold.DamageHoldController"/>
+    </Class>
+    <Class name="textbookRentalLibrary.menus.managerMenus.ManagerMenu"
+        x="742" y="785">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.menus.TRLMenu"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.controllers.ManagerController"
+            endpointName="manage" kind="Simple"/>
+    </Class>
+    <Class name="textbookRentalLibrary.controllers.ManagerController"
+        x="1028" y="842">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="textbookRentalLibrary.controllers.DatabaseController"
+            endpointName="db" kind="Simple">
+            <Point x="1521" y="878"/>
+        </Association>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.hold.ResolveHoldController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.menus.managerMenus.ManagerialMenuMain"
+        x="868" y="745">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.menus.managerMenus.ManagerMenu"/>
+        <Communication destinationClassName="textbookRentalLibrary.menus.MenuBuilder"/>
+        <Communication destinationClassName="textbookRentalLibrary.userInput.InputHelper"/>
+        <Communication destinationClassName="textbookRentalLibrary.menus.CommandLineMenu"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.ManagerController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.BuyBookController"/>
+    </Class>
+    <Class name="model.patron.PatronType" x="468" y="558">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class
+        name="textbookRentalLibrary.controllers.hold.UnshelvedHoldController"
+        x="508" y="193">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.DatabaseController"/>
+        <Communication destinationClassName="textbookRentalLibrary.controllers.hold.PlaceHoldController"/>
+        <Communication destinationClassName="model.copy.Copy"/>
+    </Class>
+</ClassDiagram>

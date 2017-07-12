@@ -11,9 +11,8 @@ import model.patron.hold.MiscHold;
 import model.patron.patronInfo.ContactInfo;
 
 /**
- * 
  * The Patron is the individual who can check in and out books, as well as have
- * holds put on their record if the fail to return a copy on time.
+ * holds put on their record.
  * 
  * @author Ross Weinstein
  *
@@ -23,12 +22,14 @@ public class Patron {
 
 	private ContactInfo contactInfo;
 	private String patronID;
+	private PatronType type;
 	private ArrayList<Copy> copiesOut;
 	private List<Hold> currentHolds;
 
-	public Patron(String id, ContactInfo contactInfo) {
+	public Patron(String id, ContactInfo contactInfo, PatronType status) {
 		this.patronID = id;
 		this.contactInfo = contactInfo;
+		this.type = status;
 		this.copiesOut = new ArrayList<>();
 		this.currentHolds = new ArrayList<>();
 	}
@@ -37,10 +38,6 @@ public class Patron {
 
 	public ContactInfo getContactInfo() {
 		return contactInfo;
-	}
-
-	public void setContactInfo(ContactInfo contact) {
-		this.contactInfo = contact;
 	}
 
 	public String getPatronID() {
@@ -57,6 +54,10 @@ public class Patron {
 
 	public List<Hold> getAllHolds() {
 		return this.currentHolds;
+	}
+
+	public PatronType getStatus() {
+		return this.type;
 	}
 
 	/***** OVERRIDES ********************************************/
@@ -76,129 +77,91 @@ public class Patron {
 
 		// cast and comparisons
 		Patron otherPatron = (Patron) o;
-		return this.patronID.equals(otherPatron.patronID) && this.contactInfo.equals(otherPatron.contactInfo);
-	}
-
-	@Override
-	public int hashCode() {
-		int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.patronID == null) ? 0 : this.patronID.hashCode());
-		result = prime * result + ((this.contactInfo.getLastName() == null) ? 0 : this.contactInfo.getLastName().hashCode());
-		return result;
+		return this.patronID.equals(otherPatron.patronID) && this.contactInfo.equals(otherPatron.contactInfo)
+				&& this.type.equals(otherPatron.type);
 	}
 
 	@Override
 	public String toString() {
-		return "ID: " + this.patronID + "\nName: " + this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() +
-				"\nPhone Numeber: " + this.contactInfo.getFormattedTelephoneNumber() + "\n\n" + this.contactInfo.getAddresses();
+		return "ID: " + this.patronID + "\nType: " + this.type.toString() + "\nName: " + this.contactInfo.getFirstName()
+				+ " " + this.contactInfo.getLastName() + "\nPhone Numeber: "
+				+ this.contactInfo.getFormattedTelephoneNumber() + "\n\n" + this.contactInfo.getAddresses();
 	}
 
-	// checks to see if the Patron has any books currently checked out; If they
-	// do, it'll list all of them with title and ID number in a comma separated
-	// list; if no books are checked out, it'll state no book are currently
-	// checked out
-	public String showBookList() {
-
-		if (this.copiesOut.isEmpty()) {
-			return "No Books Currently Checked Out";
-		}
-
-		String theCopies = "";
-
-		for (int i = 0; i < this.copiesOut.size(); i++) {
-
-			if (i < this.copiesOut.size() - 1) {
-				theCopies += this.copiesOut.get(i).getTitle() + " [ID: " + this.copiesOut.get(i).getCopyID() + "], ";
-			} else {
-				theCopies += this.copiesOut.get(i).getTitle() + " [ID: " + this.copiesOut.get(i).getCopyID() + "]";
-			}
-		}
-		return theCopies;
+	public String showPatronIDAndName() {
+		return "ID: " + this.patronID + " | Name: " + this.contactInfo.getFirstName() + " "
+				+ this.contactInfo.getLastName();
 	}
 
-	/***** CHECK IN AND OUT COPY METHODS ************************/
+	/***** CHECK COPY OUT METHODS ************************/
 
-	/**
-	 * Allows for a Patron to check out a particular Copy by first checking if
-	 * that Copy is available. If it is available, Patron is able to check it
-	 * out.
-	 * 
-	 * @param c
-	 *            the Copy the Patron wants to check out
-	 * @return boolean true if the copyID entered is available to be checked
-	 *         out; false otherwise
-	 */
-	public boolean checkCopyOut(Copy c) {
-
-		// check if the copy is available before checking it out
-		if (c.getOutTo() == null) {
-			c.setOutTo(this);
-			return this.copiesOut.add(c);
-		} else {
-			return false;
-		}
+	public boolean checkCopyOut(Copy desiredCopy) {
+		return copyIsAvailable(desiredCopy) ? patronChecksOutCopy(desiredCopy) : false;
 	}
 
-	/**
-	 * Allows for a Patron to check in a particular Copy by first checking if
-	 * that Copy is associated with the Patron. If it is associated with the
-	 * Patron, the Patron is able to check that Copy back in.
-	 * 
-	 * @param c
-	 *            the Copy the Patron wants to check in
-	 * @return boolean true if the copyID entered is associated with the Patron
-	 *         and can be checked in; false otherwise
-	 */
-	public boolean checkCopyIn(Copy c) {
-
-		// make sure they have the book before they can return it
-		if (this.copiesOut.contains(c)) {
-			c.setOutTo(null);
-			c.setLastPersonToCheckOut(this);
-			return this.copiesOut.remove(c);
-		} else {
-			return false;
-		}
+	private boolean patronChecksOutCopy(Copy c) {
+		c.setOutTo(this);
+		c.checkedOut();
+		return this.copiesOut.add(c);
 	}
 
-	/**
-	 * The number of Copy objects currently checked out by the Patron
-	 * 
-	 * @return int the number of Copy objects checked out
-	 */
+	private boolean copyIsAvailable(Copy c) {
+		return c.getOutTo() == null;
+	}
+	
+	/***** CHECK COPY IN METHODS ************************/
+
+	public boolean checkCopyIn(Copy returningCopy) {
+		return patronHasCopyCheckedOut(returningCopy) ? this.patronChecksInCopy(returningCopy) : false;
+	}
+
+	private boolean patronChecksInCopy(Copy c) {
+		c.setOutTo(null);
+		c.setLastPersonToCheckOut(this);
+		c.checkedIn();
+		return this.copiesOut.remove(c);
+	}
+
+	private boolean patronHasCopyCheckedOut(Copy c) {
+		return this.copiesOut.contains(c);
+	}
+
 	public int copiesCurrentlyCheckedOut() {
 		return this.copiesOut.size();
 	}
 
-	/***** HOLD METHODS ************************/
+	/********** PLACE HOLD **************************************/
 
 	public boolean placeHoldOnRecord(HoldType type, int fineAmount, Copy copy) {
 
 		Hold copyHold = HoldFactory.createHold(type, fineAmount, copy);
 
-		if (!this.currentHolds.contains(copyHold)) {
+		if (this.holdNotAlreadyPlacedOnPatron(copyHold)) {
 			return this.currentHolds.add(copyHold);
 		}
-
 		return false;
+	}
+
+	private boolean holdNotAlreadyPlacedOnPatron(Hold copyHold) {
+		return !this.currentHolds.contains(copyHold);
 	}
 
 	public void placeLostAndFoundHold(String item, String location) {
 		this.currentHolds.add(new MiscHold(item, location));
 	}
 
-	/**
-	 * Patron has resolved their holds and can check out book again. Books are
-	 * returned, or bought, and fine is paid.
-	 */
+	/********** RESOLVE HOLD **************************************/
+
 	public boolean resolvedHold(Hold holdCopy) {
 
-		if (this.copiesOut.contains(holdCopy.getHoldCopy())) {
+		if (this.holdInvolvedUnreturnedCopy(holdCopy)) {
 			this.checkCopyIn(holdCopy.getHoldCopy());
 		}
-
 		return this.currentHolds.remove(holdCopy);
 	}
-	
+
+	private boolean holdInvolvedUnreturnedCopy(Hold holdCopy) {
+		return this.copiesOut.contains(holdCopy.getHoldCopy());
+	}
+
 }

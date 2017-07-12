@@ -1,5 +1,8 @@
 package model.copy;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import model.patron.Patron;
 
 /**
@@ -16,12 +19,14 @@ public class Copy {
 	private String title;
 	private Patron outTo;
 	private Patron lastPersonToCheckOut;
+	private LocalDateTime dueDate;
 
 	public Copy(String copyID, String title) {
 		this.copyID = copyID;
 		this.title = title;
 		this.outTo = null;
 		this.lastPersonToCheckOut = null;
+		this.dueDate = null;
 	}
 
 	/***** GETTERS / SETTERS *******************************/
@@ -53,6 +58,14 @@ public class Copy {
 	public void setLastPersonToCheckOut(Patron patron) {
 		this.lastPersonToCheckOut = patron;
 	}
+	
+	public LocalDateTime getDueDate() {
+		return this.dueDate;
+	}
+	
+	public void setDueDate(LocalDateTime dueDate) {
+		this.dueDate = dueDate;
+	}
 
 	/***** OVERRIDES ********************************************/
 
@@ -74,31 +87,47 @@ public class Copy {
 	}
 
 	@Override
-	public int hashCode() {
-		int prime = 29;
-		int result = 1;
-		result = prime * result + ((this.copyID == null) ? 0 : this.copyID.hashCode());
-		result = prime * result + ((this.title == null) ? 0 : this.title.hashCode());
-		return result;
-	}
-
-	@Override
 	public String toString() {
-		return "Title: " + this.title + " [ID: " + this.copyID +"]";
+		return "ID: " + this.copyID + " | Title: " + this.title + " | Due Date: " + this.showDueDate();
 	}
+	
+	/***** DOES ANYONE HAVE COPY CHECKED OUT? *******************/
 
-	/**
-	 * Checks to see if the copy is currently checked and prints the name and ID
-	 * of the patron who has it; otherwise it says it's available
-	 * 
-	 * @return String the Patron and PatronID or a message saying that the copy
-	 *         is currently available
-	 */
 	public String checkedOutBy() {
-		if (this.outTo == null) {
+		if (this.copyIsCurrentlyAvailable()) {
 			return "Copy is Currently Available";
 		} else {
-			return this.outTo.toString();
+			return this.outTo.getPatronID();
 		}
+	}
+
+	private boolean copyIsCurrentlyAvailable() {
+		return this.outTo == null;
+	}
+	
+	/***** DUE DATE / OVERDUE METHODS ***************************/
+	
+	private String showDueDate() {
+		if (this.copyIsNotCurrentlyCheckedOut()) {
+			return "N/A";
+		} else {
+			return this.dueDate.format(DateTimeFormatter.ISO_DATE);
+		}
+	}
+
+	private boolean copyIsNotCurrentlyCheckedOut() {
+		return this.dueDate == null;
+	}
+	
+	public void checkedOut() {
+		this.dueDate = LocalDateTime.now().plusDays(100);
+	}
+	
+	public void checkedIn() {
+		this.dueDate = null;
+	}
+	
+	public boolean isOverdue() {
+		return  copyIsNotCurrentlyCheckedOut() ? false : !this.dueDate.isAfter(LocalDateTime.now());
 	}
 }

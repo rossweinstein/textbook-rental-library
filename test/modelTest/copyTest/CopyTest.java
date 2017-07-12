@@ -3,11 +3,15 @@ package modelTest.copyTest;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.PatronType;
 import model.patron.patronInfo.Address;
 import model.patron.patronInfo.ContactInfo;
 
@@ -46,9 +50,36 @@ public class CopyTest {
 
 		rossContact.setPermanentAddress(permanentAddress);
 
-		return new Patron("P2", rossContact);
+		return new Patron("P2", rossContact, PatronType.STUDENT);
 
 	}
+	
+	@Test
+	public void getDueDate() {
+		bookOne.checkedOut();
+		LocalDateTime time = LocalDateTime.now().plusDays(100);
+		String compareString = "ID: 123 | Title: Book One | Due Date: " + time.format(DateTimeFormatter.ISO_DATE);
+		assertTrue(bookOne.toString().equals(compareString));
+	}
+	
+	@Test
+	public void copyIsNotOverdue() {
+		bookOne.checkedOut();
+		assertFalse(bookOne.isOverdue());
+	}
+	
+	@Test
+	public void copyIsOverdue() {
+		bookOne.checkedOut();
+		bookOne.setDueDate(LocalDateTime.now().minusDays(1));
+		assertTrue(bookOne.isOverdue());
+	}
+	
+	@Test
+	public void uncheckedCopyCannotBeOverdue() {
+		assertFalse(bookOne.isOverdue());
+	}
+	
 	
 	@Test
 	public void CopyRegistersPatronName() {
@@ -95,8 +126,9 @@ public class CopyTest {
 		this.firstPatron.checkCopyOut(bookOne);
 		this.firstPatron.checkCopyIn(bookOne);
 		this.bookOne.holdReturned();
+		boolean result = bookOne.getOutTo() == null;
 		
-		assertTrue(this.bookOne.getOutTo() == null);
+		assertTrue(result);
 	}
 	
 	@Test
@@ -116,27 +148,11 @@ public class CopyTest {
 		
 		this.firstPatron.checkCopyOut(this.bookOne);
 		
-		assertTrue(this.bookOne.checkedOutBy().equals(this.firstPatron.toString()));
+		assertTrue(this.bookOne.checkedOutBy().equals(this.firstPatron.getPatronID()));
 	}
 	
 	@Test
 	public void correctToString() {
-		assertTrue(this.bookOne.toString().equals("Title: Book One [ID: 123]"));
-	}
-	
-	@Test
-	public void correctHashCode() {
-		
-		int bookHash = this.hashCode(this.bookOne.getCopyID(), this.bookOne.getTitle());
-		
-		assertTrue(this.bookOne.hashCode() == bookHash);
-	}
-	
-	private int hashCode(String copyID, String title) {
-		int prime = 29;
-		int result = 1;
-		result = prime * result + ((copyID == null) ? 0 : copyID.hashCode());
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		return result;
+		assertTrue(this.bookOne.toString().equals("ID: 123 | Title: Book One | Due Date: N/A"));
 	}
 }

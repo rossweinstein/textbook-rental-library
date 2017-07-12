@@ -1,5 +1,4 @@
 package database;
-// SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.stream.Collectors;
 
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.PatronType;
 import model.patron.patronInfo.Address;
 import model.patron.patronInfo.ContactInfo;
 
@@ -35,6 +35,16 @@ public class FakeDB {
 		copyStore.put("C8", new Copy("C8", "Tons of Fun with Objects"));
 		copyStore.put("C9", new Copy("C9", "Forgotten Fun with Objects"));
 	}
+	
+	/********* FAKEDB RETRIEVAL METHODS ****************/
+	
+	public static Map<String, Copy> getCopiesDB() {
+		return copyStore;
+	}
+	
+	public static Map<String, Patron> getPatronsDB() {
+		return patronStore;
+	}
 
 	public static List<Patron> getAllPatrons() {
 		return patronStore.values().stream().collect(Collectors.toList());
@@ -51,6 +61,8 @@ public class FakeDB {
 	public static Copy getCopy(String copyID) {
 		return copyStore.get(copyID);
 	}
+	
+	/********* TRL PATRON SET UP ****************/
 
 	private static Patron createPatronEric() {
 
@@ -69,7 +81,7 @@ public class FakeDB {
 
 		ericContact.setPermanentAsLocalAddress();
 
-		return new Patron("P1", ericContact);
+		return new Patron("P1", ericContact, PatronType.FACULTY);
 	}
 
 	private static Patron createPatronRoss() {
@@ -95,7 +107,7 @@ public class FakeDB {
 
 		rossContact.setPermanentAddress(permanentAddress);
 
-		return new Patron("P2", rossContact);
+		return new Patron("P2", rossContact, PatronType.STUDENT);
 	}
 
 	private static Patron createPatronMowlid() {
@@ -121,7 +133,7 @@ public class FakeDB {
 
 		mowlidContact.setPermanentAddress(permanentAddress);
 
-		return new Patron("P3", mowlidContact);
+		return new Patron("P3", mowlidContact, PatronType.STUDENT);
 	}
 
 	private static Patron createPatronNeera() {
@@ -137,8 +149,10 @@ public class FakeDB {
 		localAddress.setState("MN");
 		localAddress.setZipCode("55424");
 
+		neeraContact.setLocalAddress(localAddress);
+
 		neeraContact.setPermanentAsLocalAddress();
 
-		return new Patron("P4", neeraContact);
+		return new Patron("P4", neeraContact, PatronType.STUDENT);
 	}
 }

@@ -5,8 +5,15 @@ import java.util.List;
 
 import textbookRentalLibrary.menus.MenuBuilder;
 
+/**
+ * The Manager Holds Menu allows a user to mark any hold they wish based on
+ * their selection.
+ * 
+ * @author Ross Weinstein
+ *
+ */
 public class ManagerAddHoldMenu extends ManagerMenu {
-	
+
 	public ManagerAddHoldMenu() {
 		super();
 	}
@@ -36,13 +43,13 @@ public class ManagerAddHoldMenu extends ManagerMenu {
 
 		} else if (selection == 2) {
 			this.markDamageHold();
-			
+
 		} else if (selection == 3) {
 			this.markUnshelvedHolds();
-			
+
 		} else if (selection == 4) {
 			this.markLostHold();
-			
+
 		} else if (selection == 5) {
 			this.markMiscHolds();
 
@@ -51,31 +58,33 @@ public class ManagerAddHoldMenu extends ManagerMenu {
 		}
 		return true;
 	}
-	
+
+	/********** SELECTIONS **************************************/
+
 	private void markAllOverdueHolds() {
 		System.out.println();
 		this.managerFunc().markOverdueHolds();
 		System.out.println();
 	}
-	
+
 	private void markDamageHold() {
 		System.out.println();
 		this.managerFunc().markDamageHold();
 		System.out.println();
 	}
-	
+
 	private void markUnshelvedHolds() {
 		System.out.println();
 		this.managerFunc().markUnshelvedHold();
 		System.out.println();
 	}
-	
+
 	private void markLostHold() {
 		System.out.println();
 		this.managerFunc().markLostHold();
 		System.out.println();
 	}
-	
+
 	private void markMiscHolds() {
 		System.out.println();
 		this.managerFunc().markMiscHold();

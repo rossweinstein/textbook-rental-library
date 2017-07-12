@@ -6,8 +6,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import database.FakeDB;
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.PatronType;
 import model.patron.hold.HoldType;
 import model.patron.patronInfo.Address;
 import model.patron.patronInfo.ContactInfo;
@@ -48,11 +50,10 @@ public class PatronTest {
 		permanentAddress.setCity("St. Paul");
 		permanentAddress.setState("MN");
 		permanentAddress.setZipCode("55115");
-		
+
 		rossContact.setPermanentAddress(permanentAddress);
 
-		return new Patron("P2", rossContact);
-
+		return new Patron("P2", rossContact, PatronType.STUDENT);
 	}
 	
 	private Patron setUpPatronTwo() {
@@ -69,7 +70,72 @@ public class PatronTest {
 
 		ericContact.setPermanentAsLocalAddress();
 
-		return new Patron("P1", ericContact);
+		return new Patron("P1", ericContact, PatronType.FACULTY);
+	}
+	
+	@Test
+	public void getCorrectStatus() {
+		assertTrue(this.firstPatron.getStatus().equals(PatronType.STUDENT));
+	}
+	
+	@Test
+	public void correctToString() {
+		assertTrue(this.firstPatron.toString().equals(FakeDB.getPatron("P2").toString()));
+	}
+	
+	@Test
+	public void patronDoesHaveHoldsOnRecord() {
+
+		this.firstPatron.checkCopyOut(bookOne);
+		this.firstPatron.checkCopyIn(bookOne);
+		this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 10, bookOne);
+		
+		assertFalse(this.firstPatron.hasNoHoldsOnRecord());
+		
+		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
+		bookOne.setLastPersonToCheckOut(null);
+	}
+
+	@Test
+	public void patronResolvesHolds() {
+		
+		this.firstPatron.checkCopyOut(bookOne);
+		this.firstPatron.checkCopyOut(bookTwo);
+
+		this.firstPatron.checkCopyIn(bookOne);
+		this.firstPatron.checkCopyIn(bookTwo);
+		
+		
+		this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 10, bookOne);
+		this.firstPatron.placeHoldOnRecord(HoldType.LOST, 10, bookOne);
+
+		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
+		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
+
+		assertTrue(this.firstPatron.copiesCurrentlyCheckedOut() == 0);
+		assertTrue(this.firstPatron.hasNoHoldsOnRecord());
+		
+		bookOne.setLastPersonToCheckOut(null);
+		bookTwo.setLastPersonToCheckOut(null);
+	}
+
+	@Test
+	public void patronCannotPlaceHoldTwice() {
+		
+		this.firstPatron.checkCopyOut(bookOne);
+		this.firstPatron.checkCopyIn(bookOne);
+
+		assertTrue(this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 10, bookOne));
+		assertFalse(this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 10, bookOne));
+		
+		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
+		bookOne.setLastPersonToCheckOut(null);
+	}
+	
+	@Test
+	public void getCorrectNameAndID() {
+		String equalString = "ID: P2 | Name: Ross Weinstein";
+		assertTrue(this.firstPatron.showPatronIDAndName().equals(equalString));
 	}
 
 	@Test
@@ -148,40 +214,6 @@ public class PatronTest {
 	}
 
 	@Test
-	public void patronDoesHaveHoldsOnRecord() {
-
-		this.firstPatron.checkCopyOut(bookOne);
-		this.firstPatron.placeHoldOnRecord(HoldType.OVERDUE, 50, bookOne);
-		assertFalse(this.firstPatron.hasNoHoldsOnRecord());
-	}
-
-	@Test
-	public void patronResolvesHolds() {
-		this.firstPatron.checkCopyOut(bookOne);
-		this.firstPatron.checkCopyOut(bookTwo);
-
-		this.firstPatron.placeHoldOnRecord(HoldType.OVERDUE, 50, bookOne);
-		this.firstPatron.placeHoldOnRecord(HoldType.OVERDUE, 50, bookTwo);
-
-		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
-		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
-
-		assertTrue(this.firstPatron.copiesCurrentlyCheckedOut() == 0);
-		assertTrue(this.firstPatron.hasNoHoldsOnRecord());
-	}
-
-	@Test
-	public void patronCannotPlaceHoldTwice() {
-
-		this.firstPatron.checkCopyOut(this.bookOne);
-		this.firstPatron.checkCopyIn(this.bookOne);
-
-		this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 5, this.bookOne);
-
-		assertFalse(this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 5, this.bookOne));
-	}
-
-	@Test
 	public void resetPatronName() {
 		this.firstPatron.getContactInfo().setFirstName("Newt");
 		assertTrue(this.firstPatron.getContactInfo().getFirstName().equals("Newt"));
@@ -190,38 +222,5 @@ public class PatronTest {
 	@Test
 	public void resetPatronID() {
 		assertTrue(this.firstPatron.getPatronID().equals("P2"));
-	}
-
-	@Test
-	public void bookListIsEmpty() {
-		assertTrue(this.firstPatron.showBookList().equals("No Books Currently Checked Out"));
-	}
-
-	@Test
-	public void booksInBookList() {
-		this.firstPatron.checkCopyOut(this.bookOne);
-		this.firstPatron.checkCopyOut(this.bookTwo);
-
-		String bookList = this.bookOne.getTitle() + " [ID: " + this.bookOne.getCopyID() + "], "
-				+ this.bookTwo.getTitle() + " [ID: " + this.bookTwo.getCopyID() + "]";
-
-		assertTrue(this.firstPatron.showBookList().equals(bookList));
-
-	}
-
-	@Test
-	public void correctHashCode() {
-
-		int hashCode = this.hashCode(this.firstPatron.getPatronID(), this.firstPatron.getContactInfo().getLastName());
-
-		assertTrue(this.firstPatron.hashCode() == hashCode);
-	}
-
-	private int hashCode(String patronID, String name) {
-		int prime = 31;
-		int result = 1;
-		result = prime * result + ((patronID == null) ? 0 : patronID.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
 	}
 }

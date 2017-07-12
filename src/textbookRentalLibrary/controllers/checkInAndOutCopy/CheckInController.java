@@ -2,7 +2,7 @@ package textbookRentalLibrary.controllers.checkInAndOutCopy;
 
 import model.copy.Copy;
 import model.patron.Patron;
-import textbookRentalLibrary.controllers.DatabaseSearch;
+import textbookRentalLibrary.controllers.hold.DamageHoldController;
 
 /**
  * This class handles the Check In Sessions for the TRL application
@@ -12,63 +12,87 @@ import textbookRentalLibrary.controllers.DatabaseSearch;
  */
 public class CheckInController extends SessionController implements TRLSession {
 
-	private DatabaseSearch db;
-
-	public CheckInController() {
-		super();
-		this.db = new DatabaseSearch();
-	}
+	/********** CHECK IN SESSION **************************************/
 
 	@Override
 	public boolean startSession() {
 		System.out.println("------------------BEGINNING CHECK IN SESSION------------------");
 
-		Patron thePatron = this.db.locatePatronInDB();
+		Patron thePatron = super.queryDB().locatePatronInDB();
 
-		if (!super.patronCanBeValidated(thePatron)) {
+		if (super.patronCannotBeValidated(thePatron)) {
 			return false;
 		}
 
-		if (thePatron.copiesCurrentlyCheckedOut() > 0) {
+		if (patronHasCopiesCheckedOut(thePatron)) {
 			this.checkInCopies(thePatron);
 		} else {
-			System.out.println("\n" + thePatron.getContactInfo().getFirstName() + " [ID:" + thePatron.getPatronID()
-					+ "]  does not have any copies currently checked out");
+			printPatronHasNoCopiesOutAlert(thePatron);
 		}
 		return true;
 	}
 
+	/********** SESSION HELPER METHODS **************************************/
 
 	private void checkInCopies(Patron thePatron) {
 
 		boolean endSession = false;
 		while (!endSession) {
 
-			this.checkInTextbookCopy(thePatron);
-			endSession = !super.input.askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
-		}
+			if (patronHasNoMoreCopiesOut(thePatron)) {
+				System.out.println("All copies checked back in");
+				endSession = true;
 
+			} else {
+
+				super.showCopiesOutToPatron(thePatron);
+				this.checkInTextbookCopy(thePatron);
+				endSession = !super.userInput().askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
+			}
+		}
+		this.printExitSessionMessage(thePatron);
 	}
 
-	/**
-	 * Where the copy is actually returned. It searches the database for the
-	 * copy, see if it exists, checks if the copy is currently checked out by
-	 * the Patron, and then returns it
-	 * 
-	 * @param thePatron
-	 *            Patron the Patron who wants to check in copies
-	 */
 	private void checkInTextbookCopy(Patron thePatron) {
-		Copy theCopy = this.db.locateCopyInDB();
+		Copy theCopy = super.queryDB().locateCopyInDB();
 
-		if (theCopy != null) {
+		if (copyIsLocated(theCopy)) {
 
 			boolean patronCanReturnCopy = thePatron.checkCopyIn(theCopy);
 
-			if (!patronCanReturnCopy) {
+			if (patronCanReturnCopy) {
+				this.handleReturn(theCopy);
+
+			} else {
 				this.displayCopyIsNotCheckedOutToPatronAlert(theCopy, thePatron);
 			}
 		}
+	}
+
+	private void handleReturn(Copy theCopy) {
+		this.displayBookJustCheckedIn(theCopy);
+		this.copyIsDamaged();
+	}
+
+	/********** ENCAPSULATED CONDITIONALS *************/
+
+	private boolean patronHasCopiesCheckedOut(Patron thePatron) {
+		return thePatron.copiesCurrentlyCheckedOut() > 0;
+	}
+
+	private boolean copyIsLocated(Copy theCopy) {
+		return theCopy != null;
+	}
+
+	private boolean patronHasNoMoreCopiesOut(Patron thePatron) {
+		return thePatron.getCopiesOut().size() == 0;
+	}
+
+	/********** ALERT PRINT MESSAGES **************************************/
+
+	private void printPatronHasNoCopiesOutAlert(Patron thePatron) {
+		System.out.println("\n" + thePatron.getContactInfo().getFirstName() + " [ID:" + thePatron.getPatronID()
+				+ "]  does not have any copies currently checked out");
 	}
 
 	private void displayCopyIsNotCheckedOutToPatronAlert(Copy theCopy, Patron thePatron) {
@@ -76,5 +100,30 @@ public class CheckInController extends SessionController implements TRLSession {
 				+ "] because that copyID is not associated with Patron [ID:" + thePatron.getPatronID()
 				+ "]. \nCheck the copyID number. If the copyID was entered correctly, contact a manager.");
 
+	}
+
+	private void displayBookJustCheckedIn(Copy theCopy) {
+		System.out.println("\nCopy Just Checked In:\n" + theCopy.toString());
+	}
+
+	private void printExitSessionMessage(Patron thePatron) {
+
+		if (patronHasNoMoreCopiesOut(thePatron)) {
+			System.out.println("All copies checked back in");
+		} else {
+			super.showCopiesOutToPatron(thePatron);
+		}
+	}
+
+	/********** COPY IS DAMAGED HELPER **************************************/
+
+	private void copyIsDamaged() {
+
+		boolean isBookDamaged = super.userInput().askBinaryQuestion("Is Copy Damaged? (y/n)", "y", "n");
+
+		if (isBookDamaged) {
+			DamageHoldController damage = new DamageHoldController();
+			damage.markHold();
+		}
 	}
 }

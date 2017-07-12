@@ -2,6 +2,13 @@ package model.patron.hold;
 
 import model.copy.Copy;
 
+/**
+ * Holds prevent Patrons from checking out new textbooks.  
+ * 
+ * @author Ross Weinstein
+ *
+ */
+
 public abstract class Hold {
 
 	private int fine;
