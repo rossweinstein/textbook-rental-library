@@ -14,11 +14,11 @@ import textbookRentalLibrary.controllers.hold.*;
  * @author Ross Weinstein
  *
  */
-public class ManagerialFunctionsController {
+public class ManagerController {
 
 	private Manager manage;
 
-	public ManagerialFunctionsController() {
+	public ManagerController() {
 		this.manage = new Manager();
 	}
 
@@ -42,10 +42,13 @@ public class ManagerialFunctionsController {
 
 			System.out.println("--DISPLAY: ALL COPIES--");
 			System.out.println("..." + allCopies.size() + " Copies found...\n");
+			printAllCopies(allCopies);
+		}
+	}
 
-			for (int i = 0; i < allCopies.size(); i++) {
-				System.out.println((i + 1) + ": " + allCopies.get(i).getCopyID() + " | " + allCopies.get(i).getTitle());
-			}
+	private void printAllCopies(List<Copy> allCopies) {
+		for (int i = 0; i < allCopies.size(); i++) {
+			System.out.println((i + 1) + ": " + allCopies.get(i).getCopyID() + " | " + allCopies.get(i).getTitle());
 		}
 	}
 

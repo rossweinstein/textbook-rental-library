@@ -41,6 +41,10 @@ public class FakeDB {
 	public static Map<String, Copy> getCopiesDB() {
 		return copyStore;
 	}
+	
+	public static Map<String, Patron> getPatronsDB() {
+		return patronStore;
+	}
 
 	public static List<Patron> getAllPatrons() {
 		return patronStore.values().stream().collect(Collectors.toList());

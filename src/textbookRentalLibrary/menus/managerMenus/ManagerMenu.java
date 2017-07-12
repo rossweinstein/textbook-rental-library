@@ -1,18 +1,24 @@
 package textbookRentalLibrary.menus.managerMenus;
 
-import textbookRentalLibrary.controllers.ManagerialFunctionsController;
+import textbookRentalLibrary.controllers.ManagerController;
 import textbookRentalLibrary.menus.TRLMenu;
+
+/**
+ * 
+ * @author Ross Weinstein
+ *
+ */
 
 public abstract class ManagerMenu extends TRLMenu {
 	
-	private ManagerialFunctionsController manage;
+	private ManagerController manage;
 	
 	public ManagerMenu() {
 		super();
-		this.manage = new ManagerialFunctionsController();
+		this.manage = new ManagerController();
 	}
 	
-	protected ManagerialFunctionsController managerFunc() {
+	protected ManagerController managerFunc() {
 		return this.manage;
 	}
 }

@@ -27,17 +27,21 @@ public class CheckOutController extends SessionController implements TRLSession 
 
 		Patron thePatron = this.db.locatePatronInDB();
 
-		if (!super.patronCanBeValidated(thePatron)) {
+		if (super.patronCannotBeValidated(thePatron)) {
 			return false;
 		}
 
-		if (!thePatron.hasNoHoldsOnRecord()) {
+		if (patronCannotCheckOutCopiesDueToHolds(thePatron)) {
 			this.printHoldAlertMessage(thePatron);
 			return false;
 		}
 
 		this.checkOutCopies(thePatron);
 		return true;
+	}
+
+	private boolean patronCannotCheckOutCopiesDueToHolds(Patron thePatron) {
+		return !thePatron.hasNoHoldsOnRecord();
 	}
 
 	/******************* HOLD METHODS ********************************/
@@ -69,14 +73,6 @@ public class CheckOutController extends SessionController implements TRLSession 
 		super.showCopiesOutToPatron(thePatron);
 	}
 
-	/**
-	 * Where the copy is actually checked out. It searches the database for the
-	 * copy, see if it exists, checks if the copy is not currently checked out
-	 * by another Patron, and then checks it out to the Patron
-	 * 
-	 * @param thePatron
-	 *            Patron the Patron who wants to check out copies
-	 */
 	private void checkoutTextbookCopy(Patron thePatron) {
 
 		Copy theCopy = this.db.locateCopyInDB();

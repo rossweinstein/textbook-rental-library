@@ -21,8 +21,8 @@ public class SessionController {
 		this.input = new InputHelper();
 	}
 
-	public boolean patronCanBeValidated(Patron thePatron) {
-		return this.patronFoundInDB(thePatron) && this.patronInfoIsValid(thePatron);
+	public boolean patronCannotBeValidated(Patron thePatron) {
+		return !this.patronFoundInDB(thePatron) && !this.patronInfoIsValid(thePatron);
 	}
 
 	public boolean patronFoundInDB(Patron thePatron) {

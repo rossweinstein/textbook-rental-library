@@ -58,6 +58,8 @@ public class ManagerialMenuMain extends ManagerMenu {
 		}
 		return true;
 	}
+	
+	/********** SELECTIONS **************************************/
 
 	private void buyTextbook() {
 		System.out.println();

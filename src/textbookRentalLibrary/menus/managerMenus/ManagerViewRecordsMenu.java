@@ -5,8 +5,15 @@ import java.util.List;
 
 import textbookRentalLibrary.menus.MenuBuilder;
 
+/**
+ * This class allows a user to search the database for a number of preselected
+ * queries.
+ * 
+ * @author Ross Weinstein
+ *
+ */
 public class ManagerViewRecordsMenu extends ManagerMenu {
-	
+
 	public ManagerViewRecordsMenu() {
 		super();
 	}
@@ -14,10 +21,11 @@ public class ManagerViewRecordsMenu extends ManagerMenu {
 	private MenuBuilder miscHolds() {
 		super.buildMenu().setMenuTitle("-----MANAGER: VIEW PATRON RECORDS MENU-----");
 
-		List<String> options = Arrays.asList("Display All Copies", "Display All Patron", "Display All Patrons With Holds",
-				this.menuItemFor("Unreturned Books"), this.menuItemFor("Overdue Holds"),
-				this.menuItemFor("Damaged Holds"), this.menuItemFor("Unshelved Holds"),
-				this.menuItemFor("Lost Holds"), this.menuItemFor("Misc. Holds"), "Exit Menu");
+		List<String> options = Arrays.asList("Display All Copies", "Display All Patron",
+				"Display All Patrons With Holds", this.menuItemFor("Unreturned Books"),
+				this.menuItemFor("Overdue Holds"), this.menuItemFor("Damaged Holds"),
+				this.menuItemFor("Unshelved Holds"), this.menuItemFor("Lost Holds"), this.menuItemFor("Misc. Holds"),
+				"Exit Menu");
 		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
@@ -35,28 +43,28 @@ public class ManagerViewRecordsMenu extends ManagerMenu {
 
 		if (selection == 1) {
 			this.displayAlCopies();
-		
+
 		} else if (selection == 2) {
 			this.displayAllPatrons();
 
 		} else if (selection == 3) {
 			this.displayAllPatronsWithHolds();
-			
+
 		} else if (selection == 4) {
 			this.displayPatronsWithUnreturnedBooks();
-			
+
 		} else if (selection == 5) {
 			this.displayPatronsWithOverdueHolds();
-			
+
 		} else if (selection == 6) {
 			this.displayPatronsWithDamageHolds();
-			
+
 		} else if (selection == 7) {
 			this.displayPatronsWithUnshelvedHolds();
-			
+
 		} else if (selection == 8) {
 			displayPatronsWithLostHolds();
-			
+
 		} else if (selection == 9) {
 			this.displayPatronsWithMiscHolds();
 
@@ -65,12 +73,13 @@ public class ManagerViewRecordsMenu extends ManagerMenu {
 		}
 		return true;
 	}
+
+	/********** SELECTIONS **************************************/
 	
 	private void displayAlCopies() {
 		System.out.println();
 		super.managerFunc().displayAllCopies();
 		System.out.println();
-		
 	}
 
 	private void displayAllPatrons() {
@@ -78,7 +87,7 @@ public class ManagerViewRecordsMenu extends ManagerMenu {
 		super.managerFunc().displayAllPatrons();
 		System.out.println();
 	}
-	
+
 	private void displayAllPatronsWithHolds() {
 		System.out.println();
 		super.managerFunc().displayAllPatronsWithHolds();

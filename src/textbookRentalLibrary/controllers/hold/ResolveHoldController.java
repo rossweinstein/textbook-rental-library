@@ -27,13 +27,15 @@ public class ResolveHoldController extends HoldController {
 					: printErrorMessage();
 		}
 	}
+	
+	/***** RESOLVE HOLDS HELPER METHODS *******************************/
 
 	private boolean patronFoundWithHolds(Patron offendingPatron) {
 		return offendingPatron != null && !offendingPatron.hasNoHoldsOnRecord();
 	}
 
 	private boolean printErrorMessage() {
-		System.out.println("Patron either cannot be found or has no holds on record");
+		System.out.println("Patron either cannot be found or has no holds on record.");
 		return false;
 	}
 
@@ -52,13 +54,14 @@ public class ResolveHoldController extends HoldController {
 
 		boolean canResolveHold = this.resolveHoldConfirmation();
 		Hold holdInQuestion = offendingPatron.getAllHolds().get(selection - 1);
-		
 		return canResolveHold ? offendingPatron.resolvedHold(holdInQuestion) : false;
 	}
 
 	private boolean resolveHoldConfirmation() {
 		return super.getInput().askBinaryQuestion("Hold can be resolved? (y/n)", "y", "n");
 	}
+	
+	/***** RESOLVE HOLD MENU *******************************/
 
 	private boolean selectsValidHold(MenuBuilder resolveMenu, int selection) {
 		return selection >= 1 && selection <= resolveMenu.getMenuItems().size() - 1;

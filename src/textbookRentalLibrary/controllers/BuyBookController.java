@@ -1,6 +1,5 @@
 package textbookRentalLibrary.controllers;
 
-import database.FakeDB;
 import model.copy.Copy;
 import textbookRentalLibrary.userInput.InputHelper;
 
@@ -33,6 +32,6 @@ public class BuyBookController {
 	}
 	
 	public void removeBookFromDB(Copy theCopy) {
-		FakeDB.getCopiesDB().remove(theCopy.getCopyID());
+		this.db.getCopiesDB().remove(theCopy.getCopyID());
 	}
 }

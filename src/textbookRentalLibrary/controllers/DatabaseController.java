@@ -3,6 +3,7 @@ package textbookRentalLibrary.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -49,6 +50,14 @@ public class DatabaseController {
 	public List<Patron> getAllPatronsWithHolds() {
 		return this.getAllPatronsInTRL().stream().filter(patron -> !patron.hasNoHoldsOnRecord())
 				.collect(Collectors.toList());
+	}
+	
+	public Map<String, Copy> getCopiesDB() {
+		return FakeDB.getCopiesDB();
+	}
+	
+	public Map<String, Patron> getPatronsDB() {
+		return FakeDB.getPatronsDB();
 	}
 	
 	/********** GET PATRONS WITH SPECIFIC HOLDS QUERIES **************************/
