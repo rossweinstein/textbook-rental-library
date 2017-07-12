@@ -128,37 +128,4 @@ public class Patron {
 	public int copiesCurrentlyCheckedOut() {
 		return this.copiesOut.size();
 	}
-
-	/***** HOLD METHODS ************************/
-
-	public boolean placeHoldOnRecord(HoldType type, int fineAmount, Copy copy) {
-
-		Hold copyHold = HoldFactory.createHold(type, fineAmount, copy);
-
-		if (this.holdNotAlreadyPlacedOnPatron(copyHold)) {
-			return this.currentHolds.add(copyHold);
-		}
-		return false;
-	}
-
-	private boolean holdNotAlreadyPlacedOnPatron(Hold copyHold) {
-		return !this.currentHolds.contains(copyHold);
-	}
-
-	public void placeLostAndFoundHold(String item, String location) {
-		this.currentHolds.add(new MiscHold(item, location));
-	}
-
-	public boolean resolvedHold(Hold holdCopy) {
-
-		if (this.holdInvolvedUnreturnedCopy(holdCopy)) {
-			this.checkCopyIn(holdCopy.getHoldCopy());
-		}
-		return this.currentHolds.remove(holdCopy);
-	}
-
-	private boolean holdInvolvedUnreturnedCopy(Hold holdCopy) {
-		return this.copiesOut.contains(holdCopy.getHoldCopy());
-	}
-
 }

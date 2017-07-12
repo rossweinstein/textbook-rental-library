@@ -35,7 +35,7 @@ public class ResolveHoldController extends HoldController {
 				if (selectsValidHold(resolveMenu, selection)) {
 
 					if (resolveHoldConfirmation()) {
-						offendingPatron.resolvedHold(offendingPatron.getAllHolds().get(selection - 1));
+						super.getManage().resolvedHold(offendingPatron, offendingPatron.getAllHolds().get(selection - 1));
 					}
 
 				} else {

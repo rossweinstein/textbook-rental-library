@@ -10,21 +10,36 @@ import database.FakeDB;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.Hold;
+import model.patron.hold.HoldFactory;
 import model.patron.hold.HoldType;
+import model.patron.hold.MiscHold;
+
+/**
+ * A Manger is able to query the FakeDB, place holds, and resolve holds
+ * 
+ * 
+ * @author Ross Weistein
+ *
+ */
 
 public class Manager {
 
 	public Manager() {
 	}
 
-	/********** GENERAL MANAGER **************************************/
-
-	public List<Patron> getAllPatronsInTRL() {
-		return FakeDB.getAllPatrons();
-	}
+	/********** BASIC FAKEDB QUERIES **************************************/
 
 	public List<Copy> getAllCopiesInTRL() {
 		return FakeDB.getAllCopies();
+	}
+	
+	public List<Patron> getAllPatronsInTRL() {
+		return FakeDB.getAllPatrons();
+	}
+	
+	public List<Patron> getAllPatronsWithUnreturnedTextBooks() {
+		return this.getAllPatronsInTRL().stream().filter(patron -> patron.copiesCurrentlyCheckedOut() > 0)
+				.collect(Collectors.toList());
 	}
 
 	public List<Patron> getAllPatronsWithHolds() {
@@ -41,11 +56,6 @@ public class Manager {
 	}
 
 	/********** OVERDUE HOLDS **************************************/
-
-	public List<Patron> getAllPatronsWithUnreturnedTextBooks() {
-		return this.getAllPatronsInTRL().stream().filter(patron -> patron.copiesCurrentlyCheckedOut() > 0)
-				.collect(Collectors.toList());
-	}
 
 	public List<Patron> getAllPatronsWithOverdueHolds() {
 		return this.getSpecificHold("OVERDUE");
@@ -69,7 +79,7 @@ public class Manager {
 
 		for (Copy eachCopy : overdueCopies) {
 
-			boolean addedNewHold = offendingPatron.placeHoldOnRecord(HoldType.OVERDUE, fineAmount, eachCopy);
+			boolean addedNewHold = this.placeHoldOnRecord(offendingPatron, HoldType.OVERDUE, fineAmount, eachCopy);
 
 			if (addedNewHold) {
 				newHoldsMarked++;
@@ -122,8 +132,42 @@ public class Manager {
 	public boolean markMiscHold(Patron thePatron, String item, String location) {
 
 		int holdTally = this.getHoldTotal();
-		thePatron.placeLostAndFoundHold(item, location);
+		this.placeLostAndFoundHold(thePatron, item, location);
 		return this.holdsUpdatedCorrectly(++holdTally);
+	}
+	
+	/********** PLACE HOLD **************************************/
+	
+	public boolean placeHoldOnRecord(Patron offendingPatron, HoldType type, int fineAmount, Copy copy) {
+
+		Hold copyHold = HoldFactory.createHold(type, fineAmount, copy);
+
+		if (this.holdNotAlreadyPlacedOnPatron(offendingPatron, copyHold)) {
+			return offendingPatron.getAllHolds().add(copyHold);
+		}
+		return false;
+	}
+
+	private boolean holdNotAlreadyPlacedOnPatron(Patron offendingPatron, Hold copyHold) {
+		return !offendingPatron.getAllHolds().contains(copyHold);
+	}
+
+	public void placeLostAndFoundHold(Patron offendingPatron, String item, String location) {
+		offendingPatron.getAllHolds().add(new MiscHold(item, location));
+	}
+	
+	/********** RESOLVE HOLD **************************************/
+
+	public boolean resolvedHold(Patron offendingPatron, Hold holdCopy) {
+
+		if (this.holdInvolvedUnreturnedCopy(offendingPatron, holdCopy)) {
+			offendingPatron.checkCopyIn(holdCopy.getHoldCopy());
+		}
+		return offendingPatron.getAllHolds().remove(holdCopy);
+	}
+
+	private boolean holdInvolvedUnreturnedCopy(Patron offendingPatron, Hold holdCopy) {
+		return offendingPatron.getCopiesOut().contains(holdCopy.getHoldCopy());
 	}
 
 	/********** HELPER METHODS **************************************/
@@ -145,7 +189,7 @@ public class Manager {
 			return false;
 		}
 
-		offendingPatron.placeHoldOnRecord(type, fineAmount, unshelvedCopy);
+		this.placeHoldOnRecord(offendingPatron, type, fineAmount, unshelvedCopy);
 
 		return this.holdsUpdatedCorrectly(++holdTally);
 	}

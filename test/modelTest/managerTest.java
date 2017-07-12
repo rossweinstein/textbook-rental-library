@@ -52,8 +52,8 @@ public class managerTest {
 		
 		assertTrue(this.manage.getHoldTotal() == 2);
 		
-		ross.resolvedHold(ross.getAllHolds().get(0));
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 	}
 
 	@Test
@@ -69,7 +69,64 @@ public class managerTest {
 
 		assertFalse(this.manage.getAllPatronsWithHolds().isEmpty());
 
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
+		textbook.setLastPersonToCheckOut(null);
+	}
+	
+	@Test
+	public void patronDoesHaveHoldsOnRecord() {
+
+		Patron ross = this.patrons.get(1);
+		Copy textbook = this.copies.get(0);
+		
+		ross.checkCopyOut(textbook);
+		ross.checkCopyIn(textbook);
+		this.manage.markDamageHold(ross, textbook, 10);
+		
+		assertFalse(ross.hasNoHoldsOnRecord());
+		
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
+		textbook.setLastPersonToCheckOut(null);
+	}
+
+	@Test
+	public void patronResolvesHolds() {
+		
+		Patron ross = this.patrons.get(1);
+		Copy textbook = this.copies.get(0);
+		Copy textbook2 = this.copies.get(1);
+		
+		ross.checkCopyOut(textbook);
+		ross.checkCopyOut(textbook2);
+
+		ross.checkCopyIn(textbook);
+		ross.checkCopyIn(textbook2);
+		
+		this.manage.markLostHold(ross, textbook, 40);
+		this.manage.markDamageHold(ross, textbook2, 10);
+
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
+
+		assertTrue(ross.copiesCurrentlyCheckedOut() == 0);
+		assertTrue(ross.hasNoHoldsOnRecord());
+		
+		textbook.setLastPersonToCheckOut(null);
+		textbook2.setLastPersonToCheckOut(null);
+	}
+
+	@Test
+	public void patronCannotPlaceHoldTwice() {
+		
+		Patron ross = this.patrons.get(1);
+		Copy textbook = this.copies.get(0);
+
+		ross.checkCopyOut(textbook);
+		ross.checkCopyIn(textbook);
+
+		assertTrue(this.manage.markDamageHold(ross, textbook, 10));
+		assertFalse(this.manage.markDamageHold(ross, textbook, 10));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 		textbook.setLastPersonToCheckOut(null);
 	}
 	
@@ -120,13 +177,13 @@ public class managerTest {
 		assertTrue(this.manage.getAllPatronsWithOverdueHolds().size() == 3);
 		assertTrue(this.manage.getAllPatronsWithHolds().size() == 3);
 		
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 		textbook.setLastPersonToCheckOut(null);
 		
-		mowlid.resolvedHold(mowlid.getAllHolds().get(0));
+		this.manage.resolvedHold(mowlid, mowlid.getAllHolds().get(0));
 		textbook2.setLastPersonToCheckOut(null);
 		
-		neera.resolvedHold(neera.getAllHolds().get(0));
+		this.manage.resolvedHold(neera, neera.getAllHolds().get(0));
 		textbook3.setLastPersonToCheckOut(null);
 	}
 	
@@ -158,7 +215,7 @@ public class managerTest {
 
 		assertTrue(this.manage.markDamageHold(ross, textbook, 10));
 
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 		textbook.setLastPersonToCheckOut(null);
 
 	}
@@ -191,13 +248,13 @@ public class managerTest {
 		assertTrue(this.manage.getAllPatronsWithDamageHolds().size() == 2);
 		assertTrue(this.manage.getAllPatronsWithHolds().size() == 3);
 
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 		textbook.setLastPersonToCheckOut(null);
 		
-		mowlid.resolvedHold(mowlid.getAllHolds().get(0));
+		this.manage.resolvedHold(mowlid, mowlid.getAllHolds().get(0));
 		textbook2.setLastPersonToCheckOut(null);
 		
-		neera.resolvedHold(neera.getAllHolds().get(0));
+		this.manage.resolvedHold(neera, neera.getAllHolds().get(0));
 		textbook3.setLastPersonToCheckOut(null);
 		
 	}
@@ -230,7 +287,7 @@ public class managerTest {
 
 		assertTrue(this.manage.markUnshelevedHold(ross, textbook, 10));
 
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 		textbook.setLastPersonToCheckOut(null);
 
 	}
@@ -263,13 +320,13 @@ public class managerTest {
 		assertTrue(this.manage.getAllPatronsWithUnshelvedHolds().size() == 1);
 		assertTrue(this.manage.getAllPatronsWithHolds().size() == 3);
 
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 		textbook.setLastPersonToCheckOut(null);
 		
-		mowlid.resolvedHold(mowlid.getAllHolds().get(0));
+		this.manage.resolvedHold(mowlid, mowlid.getAllHolds().get(0));
 		textbook2.setLastPersonToCheckOut(null);
 		
-		neera.resolvedHold(neera.getAllHolds().get(0));
+		this.manage.resolvedHold(neera, neera.getAllHolds().get(0));
 		textbook3.setLastPersonToCheckOut(null);
 		
 	}
@@ -301,7 +358,7 @@ public class managerTest {
 
 		assertTrue(this.manage.markLostHold(ross, textbook, 10));
 
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 		textbook.setLastPersonToCheckOut(null);
 
 	}
@@ -334,13 +391,13 @@ public class managerTest {
 		assertTrue(this.manage.getAllPatronsWithLostHolds().size() == 2);
 		assertTrue(this.manage.getAllPatronsWithHolds().size() == 3);
 
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 		textbook.setLastPersonToCheckOut(null);
 		
-		mowlid.resolvedHold(mowlid.getAllHolds().get(0));
+		this.manage.resolvedHold(mowlid, mowlid.getAllHolds().get(0));
 		textbook2.setLastPersonToCheckOut(null);
 		
-		neera.resolvedHold(neera.getAllHolds().get(0));
+		this.manage.resolvedHold(neera, neera.getAllHolds().get(0));
 		textbook3.setLastPersonToCheckOut(null);
 		
 	}
@@ -354,7 +411,7 @@ public class managerTest {
 
 		assertTrue(this.manage.markMiscHold(ross, "backpack", "History shelves"));
 
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 	}
 	
 	@Test
@@ -372,9 +429,9 @@ public class managerTest {
 		assertTrue(this.manage.getAllPatronsWithMiscHolds().size() == 3);
 		assertTrue(this.manage.getAllPatronsWithHolds().size() == 3);
 
-		ross.resolvedHold(ross.getAllHolds().get(0));
-		mowlid.resolvedHold(mowlid.getAllHolds().get(0));
-		neera.resolvedHold(neera.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
+		this.manage.resolvedHold(mowlid, mowlid.getAllHolds().get(0));
+		this.manage.resolvedHold(neera, neera.getAllHolds().get(0));
 	}
 	
 	/************** GENERATE HOLD NOTICES TEST ******************************************************************/
@@ -387,7 +444,7 @@ public class managerTest {
 		
 		assertTrue(this.manage.canGenerateHoldNotices());
 
-		ross.resolvedHold(ross.getAllHolds().get(0));
+		this.manage.resolvedHold(ross, ross.getAllHolds().get(0));
 	}
 
 	@Test

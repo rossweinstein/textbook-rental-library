@@ -32,7 +32,7 @@ public class CheckOutController extends SessionController implements TRLSession 
 		}
 
 		if (!thePatron.hasNoHoldsOnRecord()) {
-			this.handleHolds(thePatron);
+			this.printHoldAlertMessage(thePatron);
 			return false;
 		}
 
@@ -41,29 +41,6 @@ public class CheckOutController extends SessionController implements TRLSession 
 	}
 
 	/******************* HOLD METHODS ********************************/
-
-	private void handleHolds(Patron patron) {
-		this.printHoldAlertMessage(patron);
-		this.dealWithEachHold(patron);
-	}
-
-	private boolean dealWithEachHold(Patron patron) {
-
-		int currentHold = 0;
-
-		while (currentHold < patron.getAllHolds().size()) {
-
-			patron.getAllHolds().get(currentHold).getHoldMessage();
-
-			if (this.isAbleToResolveHolds()) {
-				patron.resolvedHold(patron.getAllHolds().get(currentHold));
-			} else {
-				currentHold++;
-			}
-		}
-		return patron.getAllHolds().size() == 0;
-
-	}
 
 	private void printHoldAlertMessage(Patron patron) {
 
@@ -76,16 +53,6 @@ public class CheckOutController extends SessionController implements TRLSession 
 		
 		System.out.println("\nHolds must be resolved at Manager Station before any textbooks may be checked out");
 
-	}
-
-	/**
-	 * Prompts the rental worker to see if the Patron is able to resolve their
-	 * holds
-	 * 
-	 * @return boolean true if Patron can resolve holds; false otherwise
-	 */
-	private boolean isAbleToResolveHolds() {
-		return super.input.askBinaryQuestion("\nHas worker given hold notice? (y)", "y", "y");
 	}
 
 	/******************* CHECKOUT METHODS ********************************/

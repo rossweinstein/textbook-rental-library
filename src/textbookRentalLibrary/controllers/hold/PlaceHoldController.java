@@ -2,21 +2,16 @@ package textbookRentalLibrary.controllers.hold;
 
 import java.util.List;
 
-import model.Manager;
 import model.patron.Patron;
 
 public abstract class PlaceHoldController extends HoldController {
 	
-	private Manager manage;
 
 	public PlaceHoldController() {
 		super();
-		this.manage = new Manager();
+		
 	}
-	
-	protected Manager getManage() {
-		return manage;
-	}
+
 	
 	public abstract void displayHolds();
 	public abstract boolean markHold();

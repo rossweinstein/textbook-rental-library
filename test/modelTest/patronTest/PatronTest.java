@@ -9,7 +9,6 @@ import org.junit.Test;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.PatronType;
-import model.patron.hold.HoldType;
 import model.patron.patronInfo.Address;
 import model.patron.patronInfo.ContactInfo;
 
@@ -152,40 +151,6 @@ public class PatronTest {
 	@Test
 	public void patronDoesNotHaveHoldsOnRecord() {
 		assertTrue(this.firstPatron.hasNoHoldsOnRecord());
-	}
-
-	@Test
-	public void patronDoesHaveHoldsOnRecord() {
-
-		this.firstPatron.checkCopyOut(bookOne);
-		this.firstPatron.placeHoldOnRecord(HoldType.OVERDUE, 50, bookOne);
-		assertFalse(this.firstPatron.hasNoHoldsOnRecord());
-	}
-
-	@Test
-	public void patronResolvesHolds() {
-		this.firstPatron.checkCopyOut(bookOne);
-		this.firstPatron.checkCopyOut(bookTwo);
-
-		this.firstPatron.placeHoldOnRecord(HoldType.OVERDUE, 50, bookOne);
-		this.firstPatron.placeHoldOnRecord(HoldType.OVERDUE, 50, bookTwo);
-
-		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
-		this.firstPatron.resolvedHold(this.firstPatron.getAllHolds().get(0));
-
-		assertTrue(this.firstPatron.copiesCurrentlyCheckedOut() == 0);
-		assertTrue(this.firstPatron.hasNoHoldsOnRecord());
-	}
-
-	@Test
-	public void patronCannotPlaceHoldTwice() {
-
-		this.firstPatron.checkCopyOut(this.bookOne);
-		this.firstPatron.checkCopyIn(this.bookOne);
-
-		this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 5, this.bookOne);
-
-		assertFalse(this.firstPatron.placeHoldOnRecord(HoldType.DAMAGED, 5, this.bookOne));
 	}
 
 	@Test
