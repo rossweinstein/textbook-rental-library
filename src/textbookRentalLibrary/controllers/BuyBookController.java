@@ -1,15 +1,13 @@
 package textbookRentalLibrary.controllers;
 
 import model.copy.Copy;
-import textbookRentalLibrary.userInput.InputHelper;
 
-public class BuyBookController {
+public class BuyBookController extends TRLController{
 
-	private InputHelper input;
 	private DatabaseController db;
 
 	public BuyBookController() {
-		this.input = new InputHelper();
+		super();
 		this.db = new DatabaseController();
 	}
 
@@ -19,7 +17,7 @@ public class BuyBookController {
 
 		if (theCopy != null) {
 
-			boolean wantsToBuy = this.input.askBinaryQuestion("Patron wishes to buy book? (y/n)", "y", "n");
+			boolean wantsToBuy = super.userInput().askBinaryQuestion("Patron wishes to buy book? (y/n)", "y", "n");
 
 			if (wantsToBuy) {
 

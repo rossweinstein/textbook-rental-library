@@ -2,7 +2,6 @@ package textbookRentalLibrary.controllers.checkInAndOutCopy;
 
 import model.copy.Copy;
 import model.patron.Patron;
-import textbookRentalLibrary.controllers.DatabaseController;
 import textbookRentalLibrary.controllers.hold.DamageHoldController;
 
 /**
@@ -13,20 +12,13 @@ import textbookRentalLibrary.controllers.hold.DamageHoldController;
  */
 public class CheckInController extends SessionController implements TRLSession {
 
-	private DatabaseController db;
-
-	public CheckInController() {
-		super();
-		this.db = new DatabaseController();
-	}
-
 	/********** CHECK IN SESSION **************************************/
 
 	@Override
 	public boolean startSession() {
 		System.out.println("------------------BEGINNING CHECK IN SESSION------------------");
 
-		Patron thePatron = this.db.locatePatronInDB();
+		Patron thePatron = super.queryDB().locatePatronInDB();
 
 		if (super.patronCannotBeValidated(thePatron)) {
 			return false;
@@ -55,14 +47,14 @@ public class CheckInController extends SessionController implements TRLSession {
 
 				super.showCopiesOutToPatron(thePatron);
 				this.checkInTextbookCopy(thePatron);
-				endSession = !super.input.askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
+				endSession = !super.userInput().askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
 			}
 		}
 		this.printExitSessionMessage(thePatron);
 	}
 
 	private void checkInTextbookCopy(Patron thePatron) {
-		Copy theCopy = this.db.locateCopyInDB();
+		Copy theCopy = super.queryDB().locateCopyInDB();
 
 		if (copyIsLocated(theCopy)) {
 
@@ -127,7 +119,7 @@ public class CheckInController extends SessionController implements TRLSession {
 
 	private void copyIsDamaged() {
 
-		boolean isBookDamaged = super.input.askBinaryQuestion("Is Copy Damaged? (y/n)", "y", "n");
+		boolean isBookDamaged = super.userInput().askBinaryQuestion("Is Copy Damaged? (y/n)", "y", "n");
 
 		if (isBookDamaged) {
 			DamageHoldController damage = new DamageHoldController();

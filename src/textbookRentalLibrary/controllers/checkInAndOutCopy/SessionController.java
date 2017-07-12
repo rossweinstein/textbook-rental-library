@@ -1,9 +1,10 @@
 package textbookRentalLibrary.controllers.checkInAndOutCopy;
 
 import model.patron.Patron;
+import textbookRentalLibrary.controllers.DatabaseController;
+import textbookRentalLibrary.controllers.TRLController;
 import textbookRentalLibrary.menus.CommandLineMenu;
 import textbookRentalLibrary.menus.PatronInfoUpdateMenu;
-import textbookRentalLibrary.userInput.InputHelper;
 
 /**
  * This class does the basic Patron verification for TRL application. It checks
@@ -13,16 +14,21 @@ import textbookRentalLibrary.userInput.InputHelper;
  * @author Ross Weinstein
  *
  */
-public class SessionController {
-
-	protected InputHelper input;
+public class SessionController extends TRLController {
+	
+	private DatabaseController db;
 
 	public SessionController() {
-		this.input = new InputHelper();
+		super();
+		this.db = new DatabaseController();
+	}
+	
+	protected DatabaseController queryDB() {
+		return this.db;
 	}
 
 	public boolean patronCannotBeValidated(Patron thePatron) {
-		return !this.patronFoundInDB(thePatron) && !this.patronInfoIsValid(thePatron);
+		return !this.patronFoundInDB(thePatron) || !this.patronInfoIsValid(thePatron);
 	}
 
 	public boolean patronFoundInDB(Patron thePatron) {
@@ -37,7 +43,7 @@ public class SessionController {
 
 		if (!this.patronInfoVerified(patron)) {
 
-			if (this.input.askBinaryQuestion(
+			if (super.userInput().askBinaryQuestion(
 					"\nIs this the wrong patron or do they have incorrect information? (patron/info)", "patron",
 					"info")) {
 				System.out.println("\n--ALERT--\nInform the patron to see a manager to resolve any issues with their Patron ID");
@@ -52,7 +58,7 @@ public class SessionController {
 
 	private boolean patronInfoVerified(Patron patron) {
 		System.out.println("\n----------VERIFY CONTACT INFORMATION----------\n" + patron.toString());
-		return this.input.askBinaryQuestion("\nIs this information correct? (y/n)", "y", "n");
+		return super.userInput().askBinaryQuestion("\nIs this information correct? (y/n)", "y", "n");
 	}
 
 	protected void showCopiesOutToPatron(Patron thePatron) {

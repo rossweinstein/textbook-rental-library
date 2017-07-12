@@ -3,7 +3,6 @@ package textbookRentalLibrary.controllers.checkInAndOutCopy;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.Hold;
-import textbookRentalLibrary.controllers.DatabaseController;
 
 /**
  * This class handles the Check Out Sessions for the TRL application
@@ -13,19 +12,12 @@ import textbookRentalLibrary.controllers.DatabaseController;
  */
 public class CheckOutController extends SessionController implements TRLSession {
 
-	private DatabaseController db;
-
-	public CheckOutController() {
-		super();
-		this.db = new DatabaseController();
-	}
-
 	@Override
 	public boolean startSession() {
 
 		System.out.println("------------------BEGINNING CHECKOUT SESSION------------------");
 
-		Patron thePatron = this.db.locatePatronInDB();
+		Patron thePatron = super.queryDB().locatePatronInDB();
 
 		if (super.patronCannotBeValidated(thePatron)) {
 			return false;
@@ -67,7 +59,7 @@ public class CheckOutController extends SessionController implements TRLSession 
 		while (!endSession) {
 
 			this.checkoutTextbookCopy(thePatron);
-			endSession = !super.input.askBinaryQuestion("\nCheckout another book? (y/n)", "y", "n");
+			endSession = !super.userInput().askBinaryQuestion("\nCheckout another book? (y/n)", "y", "n");
 		}
 		
 		super.showCopiesOutToPatron(thePatron);
@@ -75,7 +67,7 @@ public class CheckOutController extends SessionController implements TRLSession 
 
 	private void checkoutTextbookCopy(Patron thePatron) {
 
-		Copy theCopy = this.db.locateCopyInDB();
+		Copy theCopy = super.queryDB().locateCopyInDB();
 
 		if (theCopy != null) {
 

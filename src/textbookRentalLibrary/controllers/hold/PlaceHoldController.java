@@ -24,11 +24,11 @@ public abstract class PlaceHoldController extends HoldController {
 	/***** USER INPUT *******************************/
 	
 	protected int enterFineAmout() {
-		return super.getInput().askForInteger("Fine Amount: ");
+		return super.userInput().askForInteger("Fine Amount: ");
 	}
 
 	protected boolean confirmHoldForType(String holdType) {
-		return super.getInput().askBinaryQuestion("Mark " + holdType + " Hold? (y/n)", "y", "n");
+		return super.userInput().askBinaryQuestion("Mark " + holdType + " Hold? (y/n)", "y", "n");
 	}
 	
 	/***** DISPLAY METHODS **************************/

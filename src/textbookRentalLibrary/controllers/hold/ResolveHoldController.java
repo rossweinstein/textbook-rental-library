@@ -44,7 +44,7 @@ public class ResolveHoldController extends HoldController {
 		MenuBuilder resolveMenu = this.buildResolveHoldMenu(offendingPatron);
 		System.out.println(resolveMenu.displayMenuWithoutBanner());
 
-		int selection = super.getInput().askForSelection(resolveMenu.getMenuItems());
+		int selection = super.userInput().askForSelection(resolveMenu.getMenuItems());
 		boolean validSelection = this.selectsValidHold(resolveMenu, selection);
 		
 		return validSelection ? this.tryToResolveHold(offendingPatron, selection) : false;
@@ -58,7 +58,7 @@ public class ResolveHoldController extends HoldController {
 	}
 
 	private boolean resolveHoldConfirmation() {
-		return super.getInput().askBinaryQuestion("Hold can be resolved? (y/n)", "y", "n");
+		return super.userInput().askBinaryQuestion("Hold can be resolved? (y/n)", "y", "n");
 	}
 	
 	/***** RESOLVE HOLD MENU *******************************/

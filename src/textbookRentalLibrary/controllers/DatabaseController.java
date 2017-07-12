@@ -12,7 +12,6 @@ import database.FakeDB;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.Hold;
-import textbookRentalLibrary.userInput.InputHelper;
 
 /**
  * 
@@ -24,13 +23,7 @@ import textbookRentalLibrary.userInput.InputHelper;
  *
  */
 
-public class DatabaseController {
-
-	private InputHelper input;
-
-	public DatabaseController() {
-		this.input = new InputHelper();
-	}
+public class DatabaseController extends TRLController{
 	
 	/********** GENERAL DATABASE QUERIES **************************************/
 	
@@ -127,7 +120,7 @@ public class DatabaseController {
 		boolean locatingPatron = false;
 		while (!locatingPatron) {
 
-			String patronID = this.input.askForString("\nEnter Patron ID number: ");
+			String patronID = super.userInput().askForString("\nEnter Patron ID number: ");
 			Patron possiblePatron = FakeDB.getPatron(patronID);
 
 			if (possiblePatron != null) {
@@ -152,7 +145,7 @@ public class DatabaseController {
 		boolean locatingCopy = false;
 		while (!locatingCopy) {
 
-			String copyID = this.input.askForString("\nEnter Copy ID number: ");
+			String copyID = super.userInput().askForString("\nEnter Copy ID number: ");
 			Copy possibleCopy = FakeDB.getCopy(copyID);
 
 			if (possibleCopy != null) {
@@ -171,7 +164,7 @@ public class DatabaseController {
 	}
 
 	private boolean enterAnotherIDNumber() {
-		return this.input.askBinaryQuestion("\nID NOT FOUND: Would you like to enter a differnt ID number? (y/n)", "y",
+		return super.userInput().askBinaryQuestion("\nID NOT FOUND: Would you like to enter a differnt ID number? (y/n)", "y",
 				"n");
 	}
 

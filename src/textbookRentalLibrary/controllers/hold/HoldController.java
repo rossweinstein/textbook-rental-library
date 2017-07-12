@@ -3,7 +3,7 @@ package textbookRentalLibrary.controllers.hold;
 import model.copy.Copy;
 import model.patron.Patron;
 import textbookRentalLibrary.controllers.DatabaseController;
-import textbookRentalLibrary.userInput.InputHelper;
+import textbookRentalLibrary.controllers.TRLController;
 
 /**
  * The basic tools needed for all the individual hold controllers such as
@@ -14,18 +14,13 @@ import textbookRentalLibrary.userInput.InputHelper;
  *
  */
 
-public abstract class HoldController {
+public abstract class HoldController extends TRLController {
 
-	private InputHelper input;
 	private DatabaseController db;
 
 	public HoldController() {
-		this.input = new InputHelper();
+		super();
 		this.db = new DatabaseController();
-	}
-
-	protected InputHelper getInput() {
-		return input;
 	}
 
 	protected DatabaseController queryDB() {

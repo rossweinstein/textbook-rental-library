@@ -31,8 +31,8 @@ public class MiscHoldController extends PlaceHoldController {
 			return false;
 		}
 
-		String item = super.getInput().askForString("What item was found: ");
-		String location = super.getInput().askForString("Where was it found: ");
+		String item = super.userInput().askForString("What item was found: ");
+		String location = super.userInput().askForString("Where was it found: ");
 
 		return this.placeLostAndFoundHold(thePatron, item, location);
 	}
