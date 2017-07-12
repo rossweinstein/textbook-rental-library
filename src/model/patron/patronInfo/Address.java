@@ -2,6 +2,14 @@ package model.patron.patronInfo;
 
 import java.util.Arrays;
 
+/**
+ * A simple class to hold all the relevant information for an Address. At this
+ * point, this class can only validate addresses in the US.  This class was created with TDD.
+ * 
+ * @author Ross Weinstein
+ *
+ */
+
 public class Address {
 
 	private String addressLineOne;

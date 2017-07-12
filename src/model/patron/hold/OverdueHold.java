@@ -2,12 +2,20 @@ package model.patron.hold;
 
 import model.copy.Copy;
 
+/**
+ * An OverdueHold is placed on a Patron's record when they keep a textbook
+ * longer than its due date.
+ * 
+ * @author rweinstein
+ *
+ */
+
 public class OverdueHold extends Hold {
 
 	public OverdueHold(int fineAmount, Copy copy) {
 		super(fineAmount, copy);
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 
@@ -20,7 +28,7 @@ public class OverdueHold extends Hold {
 		if (o == null || !(o instanceof OverdueHold)) {
 			return false;
 		}
-		
+
 		// cast and comparisons
 		OverdueHold otherOverdueCopy = (OverdueHold) o;
 		return super.getFineAmount() == otherOverdueCopy.getFineAmount()

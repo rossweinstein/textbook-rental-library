@@ -11,9 +11,8 @@ import model.patron.hold.MiscHold;
 import model.patron.patronInfo.ContactInfo;
 
 /**
- * 
  * The Patron is the individual who can check in and out books, as well as have
- * holds put on their record if the fail to return a copy on time.
+ * holds put on their record.
  * 
  * @author Ross Weinstein
  *
@@ -104,10 +103,6 @@ public class Patron {
 				+ this.contactInfo.getLastName();
 	}
 
-	// checks to see if the Patron has any books currently checked out; If they
-	// do, it'll list all of them with title and ID number in a comma separated
-	// list; if no books are checked out, it'll state no book are currently
-	// checked out
 	public String showBookList() {
 
 		if (this.copiesOut.isEmpty()) {
@@ -129,38 +124,20 @@ public class Patron {
 
 	/***** CHECK IN AND OUT COPY METHODS ************************/
 
-	/**
-	 * Allows for a Patron to check out a particular Copy by first checking if
-	 * that Copy is available. If it is available, Patron is able to check it
-	 * out.
-	 * 
-	 * @param c
-	 *            the Copy the Patron wants to check out
-	 * @return boolean true if the copyID entered is available to be checked
-	 *         out; false otherwise
-	 */
-	public boolean checkCopyOut(Copy c) {
-
-		// check if the copy is available before checking it out
-		if (c.getOutTo() == null) {
-			c.setOutTo(this);
-			c.checkedOut();
-			return this.copiesOut.add(c);
-		} else {
-			return false;
-		}
+	public boolean checkCopyOut(Copy desiredCopy) {
+		return copyIsAvailable(desiredCopy) ? patronChecksOutCopy(desiredCopy) : false;
 	}
 
-	/**
-	 * Allows for a Patron to check in a particular Copy by first checking if
-	 * that Copy is associated with the Patron. If it is associated with the
-	 * Patron, the Patron is able to check that Copy back in.
-	 * 
-	 * @param c
-	 *            the Copy the Patron wants to check in
-	 * @return boolean true if the copyID entered is associated with the Patron
-	 *         and can be checked in; false otherwise
-	 */
+	private boolean patronChecksOutCopy(Copy c) {
+		c.setOutTo(this);
+		c.checkedOut();
+		return this.copiesOut.add(c);
+	}
+
+	private boolean copyIsAvailable(Copy c) {
+		return c.getOutTo() == null;
+	}
+
 	public boolean checkCopyIn(Copy c) {
 
 		// make sure they have the book before they can return it
@@ -174,11 +151,6 @@ public class Patron {
 		}
 	}
 
-	/**
-	 * The number of Copy objects currently checked out by the Patron
-	 * 
-	 * @return int the number of Copy objects checked out
-	 */
 	public int copiesCurrentlyCheckedOut() {
 		return this.copiesOut.size();
 	}
@@ -189,28 +161,30 @@ public class Patron {
 
 		Hold copyHold = HoldFactory.createHold(type, fineAmount, copy);
 
-		if (!this.currentHolds.contains(copyHold)) {
+		if (this.holdNotAlreadyPlacedOnPatron(copyHold)) {
 			return this.currentHolds.add(copyHold);
 		}
-
 		return false;
+	}
+
+	private boolean holdNotAlreadyPlacedOnPatron(Hold copyHold) {
+		return !this.currentHolds.contains(copyHold);
 	}
 
 	public void placeLostAndFoundHold(String item, String location) {
 		this.currentHolds.add(new MiscHold(item, location));
 	}
 
-	/**
-	 * Patron has resolved their holds and can check out book again. Books are
-	 * returned, or bought, and fine is paid.
-	 */
 	public boolean resolvedHold(Hold holdCopy) {
 
-		if (this.copiesOut.contains(holdCopy.getHoldCopy())) {
+		if (this.holdInvolvedUnreturnedCopy(holdCopy)) {
 			this.checkCopyIn(holdCopy.getHoldCopy());
 		}
-
 		return this.currentHolds.remove(holdCopy);
+	}
+
+	private boolean holdInvolvedUnreturnedCopy(Hold holdCopy) {
+		return this.copiesOut.contains(holdCopy.getHoldCopy());
 	}
 
 }

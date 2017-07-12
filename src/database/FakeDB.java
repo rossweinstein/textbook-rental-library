@@ -1,5 +1,4 @@
 package database;
-// SEIS 635 TP-1 : Mowlid Abdillahi | Neera Chaudhary | Ross Weinstein
 
 import java.util.HashMap;
 import java.util.List;

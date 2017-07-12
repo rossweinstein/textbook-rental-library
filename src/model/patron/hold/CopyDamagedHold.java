@@ -2,6 +2,13 @@ package model.patron.hold;
 
 import model.copy.Copy;
 
+/**
+ * A CopyDamagedHold is when a Patron tries to return a textbook in a condition
+ * worse than when it was initially checked out to that Patron.
+ * 
+ * @author Ross Weinstein
+ *
+ */
 public class CopyDamagedHold extends Hold {
 
 	public CopyDamagedHold(int fineAmount, Copy copy) {
