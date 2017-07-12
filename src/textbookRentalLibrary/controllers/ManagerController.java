@@ -2,7 +2,6 @@ package textbookRentalLibrary.controllers;
 
 import java.util.List;
 
-import model.Manager;
 import model.copy.Copy;
 import model.patron.Patron;
 import textbookRentalLibrary.controllers.hold.*;
@@ -16,17 +15,17 @@ import textbookRentalLibrary.controllers.hold.*;
  */
 public class ManagerController {
 
-	private Manager manage;
+	private DatabaseController db;
 
 	public ManagerController() {
-		this.manage = new Manager();
+		this.db = new DatabaseController();
 	}
 
 	/********** DISPLAY FUNCTIONS **************************************/
 
 	public void displayAllPatrons() {
 
-		List<Patron> allPatrons = this.manage.getAllPatronsInTRL();
+		List<Patron> allPatrons = this.db.getAllPatronsInTRL();
 		String message = "ALL PATRONS";
 
 		this.displayResults(allPatrons, message, "in the database");
@@ -34,7 +33,7 @@ public class ManagerController {
 
 	public void displayAllCopies() {
 
-		List<Copy> allCopies = this.manage.getAllCopiesInTRL();
+		List<Copy> allCopies = this.db.getAllCopiesInTRL();
 
 		if (allCopies.size() == 0) {
 			System.out.println("There are currently no copies in the database");
@@ -54,7 +53,7 @@ public class ManagerController {
 
 	public void displayAllPatronsWithHolds() {
 
-		List<Patron> patronsWithHolds = this.manage.getAllPatronsWithHolds();
+		List<Patron> patronsWithHolds = this.db.getAllPatronsWithHolds();
 		String message = "PATRONS WITH HOLDS";
 
 		this.displayResults(patronsWithHolds, message, "with holds");
@@ -62,7 +61,7 @@ public class ManagerController {
 
 	public void displayPatronsWithUnreturnedTextbooks() {
 
-		List<Patron> patronsWithUnreturnedTextbooks = this.manage.getAllPatronsWithUnreturnedTextBooks();
+		List<Patron> patronsWithUnreturnedTextbooks = this.db.getAllPatronsWithUnreturnedTextBooks();
 		String message = "PATRONS WITH UNRETURNED BOOKS";
 
 		this.displayResults(patronsWithUnreturnedTextbooks, message, "with unreturned textbooks");
@@ -88,9 +87,13 @@ public class ManagerController {
 	}
 
 	/********** GENERATE HOLD NOTICES ********************************/
+	
+	public boolean canGenerateHoldNotices() {
+		return this.db.getAllPatronsWithHolds().size() > 0;
+	}
 
 	public void generateHoldNotices() {
-		if (this.manage.canGenerateHoldNotices()) {
+		if (this.canGenerateHoldNotices()) {
 			System.out.println("Overdue notices generated...\n");
 		} else {
 			System.out.println("There are no holds in the system.");

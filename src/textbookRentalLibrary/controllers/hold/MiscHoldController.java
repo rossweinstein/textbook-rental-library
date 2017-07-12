@@ -38,7 +38,7 @@ public class MiscHoldController extends PlaceHoldController {
 	}
 
 	public boolean placeLostAndFoundHold(Patron offendingPatron, String item, String location) {
-		int holdTally = super.getHoldTotal();
+		int holdTally = super.queryDB().getHoldTotal();
 		offendingPatron.placeLostAndFoundHold(item, location);
 		return super.holdsUpdatedCorrectly(++holdTally);
 	}

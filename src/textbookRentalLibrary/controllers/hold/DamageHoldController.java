@@ -46,7 +46,7 @@ public class DamageHoldController extends PlaceHoldController {
 		return this.markingHold(offendingPatron, damagedCopy, fineAmount);
 	}
 
-	private boolean markingHold(Patron offendingPatron, Copy damagedCopy, int fineAmount) {
+	public boolean markingHold(Patron offendingPatron, Copy damagedCopy, int fineAmount) {
 		return super.placeHold(offendingPatron, damagedCopy, fineAmount, HoldType.DAMAGED);
 	}
 

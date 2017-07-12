@@ -32,13 +32,8 @@ public abstract class HoldController {
 		return this.db;
 	}
 
-	protected int getHoldTotal() {
-		return this.db.getAllPatronsWithHolds().stream().map(patron -> patron.getAllHolds().size()).mapToInt(i -> i)
-				.sum();
-	}
-
 	protected boolean holdsUpdatedCorrectly(int tally) {
-		return this.getHoldTotal() == tally;
+		return this.db.getHoldTotal() == tally;
 	}
 
 	protected boolean unableToFindPatron(Patron thePatron) {

@@ -53,7 +53,7 @@ public abstract class PlaceHoldController extends HoldController {
 	// Post check in holds apply to damaged, unshelved, and 
 	protected boolean placeHold(Patron offendingPatron, Copy unshelvedCopy, int fineAmount, HoldType type) {
 
-		int holdTally = this.getHoldTotal();
+		int holdTally = super.queryDB().getHoldTotal();
 
 		if (this.patronNotLastToCheckOutCopy(offendingPatron, unshelvedCopy)) {
 			return false;

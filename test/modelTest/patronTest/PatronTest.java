@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import database.FakeDB;
 import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.PatronType;
@@ -49,11 +50,10 @@ public class PatronTest {
 		permanentAddress.setCity("St. Paul");
 		permanentAddress.setState("MN");
 		permanentAddress.setZipCode("55115");
-		
+
 		rossContact.setPermanentAddress(permanentAddress);
 
 		return new Patron("P2", rossContact, PatronType.STUDENT);
-
 	}
 	
 	private Patron setUpPatronTwo() {
@@ -71,6 +71,16 @@ public class PatronTest {
 		ericContact.setPermanentAsLocalAddress();
 
 		return new Patron("P1", ericContact, PatronType.FACULTY);
+	}
+	
+	@Test
+	public void getCorrectStatus() {
+		assertTrue(this.firstPatron.getStatus().equals(PatronType.STUDENT));
+	}
+	
+	@Test
+	public void correctToString() {
+		assertTrue(this.firstPatron.toString().equals(FakeDB.getPatron("P2").toString()));
 	}
 	
 	@Test

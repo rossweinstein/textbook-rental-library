@@ -52,6 +52,11 @@ public class DatabaseController {
 				.collect(Collectors.toList());
 	}
 	
+	public int getHoldTotal() {
+		return this.getAllPatronsWithHolds().stream().map(patron -> patron.getAllHolds().size()).mapToInt(i -> i)
+				.sum();
+	}
+	
 	public Map<String, Copy> getCopiesDB() {
 		return FakeDB.getCopiesDB();
 	}

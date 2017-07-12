@@ -1,4 +1,4 @@
-package textbookRentalLibraryTest.controllersTest.checkInAndOutCopyTest;
+package textbookRentalLibraryTest.controllersTest;
 
 import static org.junit.Assert.*;
 

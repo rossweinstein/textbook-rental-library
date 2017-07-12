@@ -32,9 +32,9 @@ public class OverdueHoldController extends PlaceHoldController {
 		return this.successfulHoldMark(fineAmount);
 	}
 
-	private boolean successfulHoldMark(int fineAmount) {
+	public boolean successfulHoldMark(int fineAmount) {
 
-		int holdTally = super.getHoldTotal();
+		int holdTally = super.queryDB().getHoldTotal();
 		List<Patron> patronsWithUnreturnedBooks = super.queryDB().getAllPatronsWithUnreturnedTextBooks();
 
 		for (Patron eachPatron : patronsWithUnreturnedBooks) {
