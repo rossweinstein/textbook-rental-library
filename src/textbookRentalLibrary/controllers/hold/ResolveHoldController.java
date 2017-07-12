@@ -16,7 +16,7 @@ public class ResolveHoldController extends HoldController {
 
 	public void resolvePatronHold() {
 
-		Patron offendingPatron = super.getDB().locatePatronInDB();
+		Patron offendingPatron = super.queryDB().locatePatronInDB();
 
 		boolean canResolveMoreHolds = true;
 		while (canResolveMoreHolds) {

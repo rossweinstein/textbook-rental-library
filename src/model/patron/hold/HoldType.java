@@ -8,6 +8,6 @@ package model.patron.hold;
  */
 
 public enum HoldType {
-	OVERDUE, UNSHELEVED, DAMAGED, LOST;
+	OVERDUE, UNSHELVED, DAMAGED, LOST;
 
 }

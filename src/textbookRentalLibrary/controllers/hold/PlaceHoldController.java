@@ -7,16 +7,8 @@ import model.patron.Patron;
 import model.patron.hold.Hold;
 import model.patron.hold.HoldFactory;
 import model.patron.hold.HoldType;
-import model.patron.hold.MiscHold;
 
 public abstract class PlaceHoldController extends HoldController {
-	
-
-	public PlaceHoldController() {
-		super();
-		
-	}
-
 	
 	public abstract void displayHolds();
 	public abstract boolean markHold();
@@ -74,9 +66,5 @@ public abstract class PlaceHoldController extends HoldController {
 
 	private boolean holdNotAlreadyPlacedOnPatron(Patron offendingPatron, Hold copyHold) {
 		return !offendingPatron.getAllHolds().contains(copyHold);
-	}
-
-	public void placeLostAndFoundHold(Patron offendingPatron, String item, String location) {
-		offendingPatron.getAllHolds().add(new MiscHold(item, location));
 	}
 }

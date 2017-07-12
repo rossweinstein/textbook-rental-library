@@ -2,6 +2,7 @@ package textbookRentalLibrary.controllers.hold;
 
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.hold.HoldType;
 
 public class UnshelvedHoldController extends PlaceHoldController {
 	
@@ -22,7 +23,7 @@ public class UnshelvedHoldController extends PlaceHoldController {
 	
 	private boolean markUnshelvedHold() {
 		
-		Copy unshelvedCopy = super.getDB().locateCopyInDB();
+		Copy unshelvedCopy = super.queryDB().locateCopyInDB();
 		
 		if (unshelvedCopy == null) {
 			return false;
@@ -34,7 +35,15 @@ public class UnshelvedHoldController extends PlaceHoldController {
 			return false;
 		}
 		
+		return this.successfulHoldMarked(offendingPatron, unshelvedCopy);
+	}
+	
+	private boolean successfulHoldMarked(Patron offendingPatron, Copy damagedCopy) {
 		int fineAmount = super.enterFineAmout();
-		return super.getManage().markUnshelevedHold(offendingPatron, unshelvedCopy, fineAmount);
+		return this.markingHold(offendingPatron, damagedCopy, fineAmount);
+	}
+	
+	public boolean markingHold(Patron offendingPatron, Copy lostCopy, int fineAmount) {
+		return this.placePostCheckInHold(offendingPatron, lostCopy, fineAmount, HoldType.UNSHELVED);
 	}
 }

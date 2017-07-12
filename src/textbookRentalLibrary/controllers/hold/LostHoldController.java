@@ -2,6 +2,7 @@ package textbookRentalLibrary.controllers.hold;
 
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.hold.HoldType;
 
 public class LostHoldController extends PlaceHoldController {
 
@@ -21,21 +22,27 @@ public class LostHoldController extends PlaceHoldController {
 
 	private boolean markLostHold() {
 
-		Patron offendingPatron = super.getDB().locatePatronInDB();
+		Patron offendingPatron = super.queryDB().locatePatronInDB();
 
 		if (offendingPatron == null) {
 			return false;
 		}
 
-		Copy lostCopy = super.getDB().locateCopyInDB();
+		Copy lostCopy = super.queryDB().locateCopyInDB();
 
 		if (lostCopy == null) {
 			return false;
 		}
 
-		int fineAmount = super.enterFineAmout();
-		return super.getManage().markLostHold(offendingPatron, lostCopy, fineAmount);
-
+		return this.successfulHoldMarked(offendingPatron, lostCopy);
 	}
-
+	
+	private boolean successfulHoldMarked(Patron offendingPatron, Copy damagedCopy) {
+		int fineAmount = super.enterFineAmout();
+		return this.markingHold(offendingPatron, damagedCopy, fineAmount);
+	}
+	
+	public boolean markingHold(Patron offendingPatron, Copy lostCopy, int fineAmount) {
+		return this.placePostCheckInHold(offendingPatron, lostCopy, fineAmount, HoldType.LOST);
+	}
 }

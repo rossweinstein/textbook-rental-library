@@ -21,7 +21,7 @@ public class MiscHoldController extends PlaceHoldController {
 	
 	private boolean markMiscHold() {
 		
-		Patron thePatron = super.getDB().locatePatronInDB();
+		Patron thePatron = super.queryDB().locatePatronInDB();
 		
 		if (thePatron == null) {
 			return false;
@@ -30,6 +30,12 @@ public class MiscHoldController extends PlaceHoldController {
 		String item = super.getInput().askForString("What item was found: ");
 		String location = super.getInput().askForString("Where was it found: ");
 
-		return super.getManage().markMiscHold(thePatron, item, location);
+		return this.placeLostAndFoundHold(thePatron, item, location);
+	}
+	
+	public boolean placeLostAndFoundHold(Patron offendingPatron, String item, String location) {
+		int holdTally = super.getHoldTotal();
+		offendingPatron.placeLostAndFoundHold(item, location);
+		return super.holdsUpdatedCorrectly(++holdTally);
 	}
 }

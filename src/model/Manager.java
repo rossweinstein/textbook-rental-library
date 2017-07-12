@@ -100,7 +100,7 @@ public class Manager {
 	}
 
 	public boolean markUnshelevedHold(Patron offendingPatron, Copy unshelvedCopy, int fineAmount) {
-		return this.placePostCheckInHold(offendingPatron, unshelvedCopy, fineAmount, HoldType.UNSHELEVED);
+		return this.placePostCheckInHold(offendingPatron, unshelvedCopy, fineAmount, HoldType.UNSHELVED);
 	}
 
 	/********** DAMAGED HOLDS **************************************/

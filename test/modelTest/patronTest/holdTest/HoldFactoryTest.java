@@ -33,7 +33,7 @@ public class HoldFactoryTest {
 		
 		Copy unshelvedCopy = FakeDB.getCopy("C2");
 		
-		Hold unshelved = HoldFactory.createHold(HoldType.UNSHELEVED, 10, unshelvedCopy);
+		Hold unshelved = HoldFactory.createHold(HoldType.UNSHELVED, 10, unshelvedCopy);
 		
 		assertTrue(unshelved instanceof UnshelvedCopyHold);
 		assertTrue(unshelved.getFineAmount() == 10);
