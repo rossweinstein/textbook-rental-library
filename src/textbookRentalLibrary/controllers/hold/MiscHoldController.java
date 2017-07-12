@@ -12,10 +12,6 @@ import model.patron.Patron;
 
 public class MiscHoldController extends PlaceHoldController {
 
-	public MiscHoldController() {
-		super();
-	}
-
 	@Override
 	public void displayHolds() {
 		this.displayPatronsWith(" with misc. holds ", super.queryDB().getAllPatronsWithMiscHolds());

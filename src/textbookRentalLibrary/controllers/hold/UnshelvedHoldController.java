@@ -14,10 +14,6 @@ import model.patron.hold.HoldType;
 
 public class UnshelvedHoldController extends PlaceHoldController {
 	
-	public UnshelvedHoldController() {
-		super();
-	}
-	
 	@Override
 	public void displayHolds() {
 		this.displayPatronsWith(" with unshelved holds ", super.queryDB().getAllPatronsWithUnshelvedHolds());

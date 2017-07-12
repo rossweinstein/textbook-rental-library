@@ -16,41 +16,44 @@ import textbookRentalLibrary.menus.MenuBuilder;
 
 public class ResolveHoldController extends HoldController {
 
-	public ResolveHoldController() {
-		super();
-
-	}
-
 	public void resolvePatronHold() {
 
 		Patron offendingPatron = super.queryDB().locatePatronInDB();
 
-		boolean canResolveMoreHolds = true;
-		while (canResolveMoreHolds) {
+		boolean resolvingHolds = true;
+		while (resolvingHolds) {
 
-			if (offendingPatron == null || offendingPatron.hasNoHoldsOnRecord()) {
-				System.out.println("Patron has no holds on record");
-				canResolveMoreHolds = false;
-
-			} else {
-
-				MenuBuilder resolveMenu = this.buildResolveHoldMenu(offendingPatron);
-				System.out.println(resolveMenu.displayMenuWithoutBanner());
-
-				int selection = super.getInput().askForSelection(resolveMenu.getMenuItems());
-
-				if (selectsValidHold(resolveMenu, selection)) {
-
-					if (resolveHoldConfirmation()) {
-						offendingPatron.resolvedHold(offendingPatron.getAllHolds().get(selection - 1));
-					}
-
-				} else {
-
-					canResolveMoreHolds = false;
-				}
-			}
+			resolvingHolds = patronFoundWithHolds(offendingPatron) ? attemptToReslveHold(offendingPatron)
+					: printErrorMessage();
 		}
+	}
+
+	private boolean patronFoundWithHolds(Patron offendingPatron) {
+		return offendingPatron != null && !offendingPatron.hasNoHoldsOnRecord();
+	}
+
+	private boolean printErrorMessage() {
+		System.out.println("Patron either cannot be found or has no holds on record");
+		return false;
+	}
+
+	private boolean attemptToReslveHold(Patron offendingPatron) {
+
+		MenuBuilder resolveMenu = this.buildResolveHoldMenu(offendingPatron);
+		System.out.println(resolveMenu.displayMenuWithoutBanner());
+
+		int selection = super.getInput().askForSelection(resolveMenu.getMenuItems());
+		boolean validSelection = this.selectsValidHold(resolveMenu, selection);
+		
+		return validSelection ? this.tryToResolveHold(offendingPatron, selection) : false;
+	}
+
+	private boolean tryToResolveHold(Patron offendingPatron, int selection) {
+
+		boolean canResolveHold = this.resolveHoldConfirmation();
+		Hold holdInQuestion = offendingPatron.getAllHolds().get(selection - 1);
+		
+		return canResolveHold ? offendingPatron.resolvedHold(holdInQuestion) : false;
 	}
 
 	private boolean resolveHoldConfirmation() {
