@@ -47,7 +47,7 @@ public class DamageHoldController extends PlaceHoldController {
 	}
 
 	private boolean markingHold(Patron offendingPatron, Copy damagedCopy, int fineAmount) {
-		return super.placePostCheckInHold(offendingPatron, damagedCopy, fineAmount, HoldType.DAMAGED);
+		return super.placeHold(offendingPatron, damagedCopy, fineAmount, HoldType.DAMAGED);
 	}
 
 }

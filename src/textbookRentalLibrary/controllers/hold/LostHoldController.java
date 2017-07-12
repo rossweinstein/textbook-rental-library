@@ -47,6 +47,6 @@ public class LostHoldController extends PlaceHoldController {
 	}
 	
 	public boolean markingHold(Patron offendingPatron, Copy lostCopy, int fineAmount) {
-		return this.placePostCheckInHold(offendingPatron, lostCopy, fineAmount, HoldType.LOST);
+		return super.placeHold(offendingPatron, lostCopy, fineAmount, HoldType.LOST);
 	}
 }

@@ -52,6 +52,6 @@ public class UnshelvedHoldController extends PlaceHoldController {
 	}
 	
 	public boolean markingHold(Patron offendingPatron, Copy lostCopy, int fineAmount) {
-		return this.placePostCheckInHold(offendingPatron, lostCopy, fineAmount, HoldType.UNSHELVED);
+		return super.placeHold(offendingPatron, lostCopy, fineAmount, HoldType.UNSHELVED);
 	}
 }

@@ -21,6 +21,8 @@ public abstract class PlaceHoldController extends HoldController {
 
 	public abstract boolean markHold();
 
+	/***** USER INPUT *******************************/
+	
 	protected int enterFineAmout() {
 		return super.getInput().askForInteger("Fine Amount: ");
 	}
@@ -28,6 +30,8 @@ public abstract class PlaceHoldController extends HoldController {
 	protected boolean confirmHoldForType(String holdType) {
 		return super.getInput().askBinaryQuestion("Mark " + holdType + " Hold? (y/n)", "y", "n");
 	}
+	
+	/***** DISPLAY METHODS **************************/
 
 	protected void displayPatronsWith(String holdType, List<Patron> holdList) {
 
@@ -44,11 +48,10 @@ public abstract class PlaceHoldController extends HoldController {
 		}
 	}
 
-	private boolean patronNotLastToCheckOutCopy(Patron patron, Copy copy) {
-		return !patron.equals(copy.getLastPersonToCheckOut());
-	}
+	/***** PLACING A HOLD METHODS **************************/
 
-	protected boolean placePostCheckInHold(Patron offendingPatron, Copy unshelvedCopy, int fineAmount, HoldType type) {
+	// Post check in holds apply to damaged, unshelved, and 
+	protected boolean placeHold(Patron offendingPatron, Copy unshelvedCopy, int fineAmount, HoldType type) {
 
 		int holdTally = this.getHoldTotal();
 
@@ -59,6 +62,10 @@ public abstract class PlaceHoldController extends HoldController {
 		this.placeHoldOnRecord(offendingPatron, type, fineAmount, unshelvedCopy);
 
 		return this.holdsUpdatedCorrectly(++holdTally);
+	}
+	
+	private boolean patronNotLastToCheckOutCopy(Patron patron, Copy copy) {
+		return !patron.equals(copy.getLastPersonToCheckOut());
 	}
 
 	protected boolean placeHoldOnRecord(Patron offendingPatron, HoldType type, int fineAmount, Copy copy) {
