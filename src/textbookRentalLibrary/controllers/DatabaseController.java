@@ -1,6 +1,9 @@
 package textbookRentalLibrary.controllers;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import database.FakeDB;
 import model.copy.Copy;
 import model.patron.Patron;
@@ -16,22 +19,33 @@ import textbookRentalLibrary.userInput.InputHelper;
  *
  */
 
-public class DatabaseSearch {
+public class DatabaseController {
 
 	private InputHelper input;
 
-	public DatabaseSearch() {
+	public DatabaseController() {
 		this.input = new InputHelper();
 	}
+	
+	public List<Copy> getAllCopiesInTRL() {
+		return FakeDB.getAllCopies();
+	}
+	
+	public List<Patron> getAllPatronsInTRL() {
+		return FakeDB.getAllPatrons();
+	}
+	
+	public List<Patron> getAllPatronsWithUnreturnedTextBooks() {
+		return this.getAllPatronsInTRL().stream().filter(patron -> patron.copiesCurrentlyCheckedOut() > 0)
+				.collect(Collectors.toList());
+	}
 
-	/**
-	 * Prompts the user to enter a patronID and searches the FakeDB for that
-	 * number. If the patronID is not found, the user will be informed and then
-	 * asked if they want to enter a new patronID or quit.
-	 * 
-	 * @return Patron the Patron who matches the patronID or null if the patron
-	 *         cannot be found
-	 */
+	public List<Patron> getAllPatronsWithHolds() {
+		return this.getAllPatronsInTRL().stream().filter(patron -> !patron.hasNoHoldsOnRecord())
+				.collect(Collectors.toList());
+	}
+
+
 	public Patron locatePatronInDB() {
 
 		Patron thePatron = null;
@@ -55,14 +69,7 @@ public class DatabaseSearch {
 		return thePatron;
 	}
 	
-	/**
-	 * Prompts the user to enter a copyID and searches the FakeDB for that
-	 * number. If the copyID is not found, the user will be informed and then
-	 * asked if they want to enter a new copyID or quit.
-	 * 
-	 * @return Copy the Copy who matches the copyID or null if the patron
-	 *         cannot be found
-	 */
+
 	public Copy locateCopyInDB() {
 
 		Copy theCopy = null;

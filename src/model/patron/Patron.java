@@ -83,8 +83,8 @@ public class Patron {
 
 	@Override
 	public String toString() {
-		return "ID: " + this.patronID + "\nType: " + this.type.toString() + "\nName: "
-				+ this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() + "\nPhone Numeber: "
+		return "ID: " + this.patronID + "\nType: " + this.type.toString() + "\nName: " + this.contactInfo.getFirstName()
+				+ " " + this.contactInfo.getLastName() + "\nPhone Numeber: "
 				+ this.contactInfo.getFormattedTelephoneNumber() + "\n\n" + this.contactInfo.getAddresses();
 	}
 
@@ -93,8 +93,7 @@ public class Patron {
 				+ this.contactInfo.getLastName();
 	}
 
-
-	/***** CHECK IN AND OUT COPY METHODS ************************/
+	/***** CHECK COPY OUT METHODS ************************/
 
 	public boolean checkCopyOut(Copy desiredCopy) {
 		return copyIsAvailable(desiredCopy) ? patronChecksOutCopy(desiredCopy) : false;
@@ -109,6 +108,8 @@ public class Patron {
 	private boolean copyIsAvailable(Copy c) {
 		return c.getOutTo() == null;
 	}
+	
+	/***** CHECK COPY IN METHODS ************************/
 
 	public boolean checkCopyIn(Copy returningCopy) {
 		return patronHasCopyCheckedOut(returningCopy) ? this.patronChecksInCopy(returningCopy) : false;
@@ -128,4 +129,39 @@ public class Patron {
 	public int copiesCurrentlyCheckedOut() {
 		return this.copiesOut.size();
 	}
+
+	/********** PLACE HOLD **************************************/
+
+	public boolean placeHoldOnRecord(HoldType type, int fineAmount, Copy copy) {
+
+		Hold copyHold = HoldFactory.createHold(type, fineAmount, copy);
+
+		if (this.holdNotAlreadyPlacedOnPatron(copyHold)) {
+			return this.currentHolds.add(copyHold);
+		}
+		return false;
+	}
+
+	private boolean holdNotAlreadyPlacedOnPatron(Hold copyHold) {
+		return !this.currentHolds.contains(copyHold);
+	}
+
+	public void placeLostAndFoundHold(String item, String location) {
+		this.currentHolds.add(new MiscHold(item, location));
+	}
+
+	/********** RESOLVE HOLD **************************************/
+
+	public boolean resolvedHold(Hold holdCopy) {
+
+		if (this.holdInvolvedUnreturnedCopy(holdCopy)) {
+			this.checkCopyIn(holdCopy.getHoldCopy());
+		}
+		return this.currentHolds.remove(holdCopy);
+	}
+
+	private boolean holdInvolvedUnreturnedCopy(Hold holdCopy) {
+		return this.copiesOut.contains(holdCopy.getHoldCopy());
+	}
+
 }

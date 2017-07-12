@@ -7,11 +7,11 @@ import textbookRentalLibrary.userInput.InputHelper;
 public class BuyBookController {
 
 	private InputHelper input;
-	private DatabaseSearch db;
+	private DatabaseController db;
 
 	public BuyBookController() {
 		this.input = new InputHelper();
-		this.db = new DatabaseSearch();
+		this.db = new DatabaseController();
 	}
 
 	public void startProcess() {

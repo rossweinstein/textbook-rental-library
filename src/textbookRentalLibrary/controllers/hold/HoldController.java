@@ -1,18 +1,18 @@
 package textbookRentalLibrary.controllers.hold;
 
 import model.Manager;
-import textbookRentalLibrary.controllers.DatabaseSearch;
+import textbookRentalLibrary.controllers.DatabaseController;
 import textbookRentalLibrary.userInput.InputHelper;
 
 public abstract class HoldController {
 	
 	private InputHelper input;
-	private DatabaseSearch db;
+	private DatabaseController db;
 	private Manager manage;
 	
 	public HoldController() {
 		this.input = new InputHelper();
-		this.db = new DatabaseSearch();
+		this.db = new DatabaseController();
 		this.manage = new Manager();
 	}
 
@@ -20,7 +20,7 @@ public abstract class HoldController {
 		return input;
 	}
 	
-	protected DatabaseSearch getDB() {
+	protected DatabaseController getDB() {
 		return this.db;
 	}
 	
