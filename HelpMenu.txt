@@ -38,15 +38,18 @@ In the manager functions menu, the user may accomplish several tasks...
 
 In the View Records Menu, the user may see several things
 	1) All Patrons in the database (this will list their ID number and full name)
-	2) All Patrons with Holds on their records (it does not list each individual hold, just each individual Patron with a hold)
-	3) All Patrons with unreturned books (it does not list the books unreturned, just each individual Patron with unreturned books)
-	4) The rest of the options will display each individual hold types, and the patrons with those holds
+	2) All Copies in the database (This will list their ID, title, and who, if anyone, has it currently checked out)
+	3) All Patrons with Holds on their records (it does not list each individual hold, just each individual Patron with a hold)
+	4) All Patrons with unreturned books (it does not list the books unreturned, just each individual Patron with unreturned books)
+	5) The rest of the options will display each individual hold types, and the patrons with those holds
 
 In the Add Hold Menu, the user will be have a selection of each different hold types with the ability to add a hold to any of them.  For all the options except for Overdue, only one hold can be added at a time.  For overdue holds, the manager has the option of making all copies that are beyond their due date to be marked as overdue.
 
 In the Resolve Hold Menu, the user will be prompted for a Patron ID.  If that Patron is found, and if that Patron does have a hold of any kind on their record, the holds will be listed and the Patron will be able to resolve the hold.
 
-—————HOLDS—————————————————
+In the Buy Book Menu will handle selling a book to a Patron and removing it from the database.
+
+—————HOLDS——————————————————————
 
 ——HOLD TYPES——
 
@@ -67,3 +70,27 @@ For a textbook hold to be resolved, a fine must be paid.  For overdue holds, the
 NON-TEXTBOOK HOLDS:
 There are no fines to be paid with non-textbook holds.  The Patron just needs to provide ID.
 
+—————DATABASE QUICK REFERENCE——————————————————————
+
+Patrons:
+
+ ID  | NAME
+ ----------------------
+ P1  | Eric Level
+ P2  | Ross Weinstein
+ P3  | Mowlid Abdillahi
+ P4  | Neera Chaudhary
+ 
+ Copies:
+ 
+ ID  | Title
+ ----------------------
+ C1  | Fun with Objects
+ C2  | More Fun with Objects
+ C3  | Plenty Of Fun with Objects
+ C4  | No Fun with Objects
+ C5  | Some Fun with Objects
+ C6  | Occasional Fun with Objects
+ C7  | Questionable Fun with Objects
+ C8  | Tons of Fun with Objects
+ C9  | Forgotten Fun with Objects

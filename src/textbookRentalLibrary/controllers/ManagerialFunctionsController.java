@@ -4,14 +4,7 @@ import java.util.List;
 
 import model.Manager;
 import model.patron.Patron;
-import textbookRentalLibrary.controllers.hold.DamageHoldController;
-import textbookRentalLibrary.controllers.hold.LostHoldController;
-import textbookRentalLibrary.controllers.hold.MiscHoldController;
-import textbookRentalLibrary.controllers.hold.OverdueHoldController;
-import textbookRentalLibrary.controllers.hold.PlaceHoldController;
-import textbookRentalLibrary.controllers.hold.ResolveHoldController;
-import textbookRentalLibrary.controllers.hold.UnshelvedHoldController;
-
+import textbookRentalLibrary.controllers.hold.*;
 /**
  * This class controls all the functions that a manager can do: See all records,
  * see all records with holds, mark holds, generate overdue notices

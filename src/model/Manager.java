@@ -101,6 +101,7 @@ public class Manager {
 		if (!this.patronLastToCheckOutCopy(offendingPatron, damagedCopy)) {
 			return false;
 		}
+		
 
 		offendingPatron.placeHoldOnRecord(HoldType.DAMAGED, fineAmount, damagedCopy);
 

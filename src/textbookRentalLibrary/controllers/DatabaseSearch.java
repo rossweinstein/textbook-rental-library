@@ -83,6 +83,7 @@ public class DatabaseSearch {
 				}
 			}
 		}
+		
 		return theCopy;
 	}
 

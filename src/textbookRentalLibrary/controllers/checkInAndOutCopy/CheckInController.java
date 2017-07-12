@@ -29,6 +29,7 @@ public class CheckInController extends SessionController implements TRLSession {
 		if (!super.patronCanBeValidated(thePatron)) {
 			return false;
 		}
+		
 
 		if (thePatron.copiesCurrentlyCheckedOut() > 0) {
 			this.checkInCopies(thePatron);
