@@ -7,23 +7,31 @@ import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.HoldType;
 
+/**
+ * This controller interacts with our OverdueHold class to mark any unreturned
+ * copies who are past their due dates as holds.
+ * 
+ * @author Ross Weinstein
+ *
+ */
+
 public class OverdueHoldController extends PlaceHoldController {
 
 	@Override
 	public void displayHolds() {
-		this.displayPatronsWith(" with overdue holds ", super.getManage().getAllPatronsWithOverdueHolds());
+		this.displayPatronsWith(" with overdue holds ", super.queryDB().getAllPatronsWithOverdueHolds());
 	}
 
 	@Override
 	public boolean markHold() {
 		return super.confirmHoldForType("Overdue") ? this.markOverdueHolds() : false;
 	}
-	
+
 	private boolean markOverdueHolds() {
 		int fineAmount = super.enterFineAmout();
 		return this.successfulHoldMark(fineAmount);
 	}
-	
+
 	private boolean successfulHoldMark(int fineAmount) {
 
 		int holdTally = super.getHoldTotal();

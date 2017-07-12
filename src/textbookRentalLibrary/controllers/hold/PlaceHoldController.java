@@ -8,19 +8,27 @@ import model.patron.hold.Hold;
 import model.patron.hold.HoldFactory;
 import model.patron.hold.HoldType;
 
+/**
+ * This class is where we have a few shared methods between our hold controllers.
+ * 
+ * @author Ross Weinstein
+ *
+ */
+
 public abstract class PlaceHoldController extends HoldController {
-	
+
 	public abstract void displayHolds();
+
 	public abstract boolean markHold();
-	
+
 	protected int enterFineAmout() {
 		return super.getInput().askForInteger("Fine Amount: ");
 	}
-	
+
 	protected boolean confirmHoldForType(String holdType) {
 		return super.getInput().askBinaryQuestion("Mark " + holdType + " Hold? (y/n)", "y", "n");
 	}
-	
+
 	protected void displayPatronsWith(String holdType, List<Patron> holdList) {
 
 		if (holdList.size() == 0) {
@@ -35,12 +43,11 @@ public abstract class PlaceHoldController extends HoldController {
 			System.out.println((i + 1) + ": " + thePatrons.get(i).showPatronIDAndName());
 		}
 	}
-	
+
 	private boolean patronNotLastToCheckOutCopy(Patron patron, Copy copy) {
 		return !patron.equals(copy.getLastPersonToCheckOut());
 	}
 
-	
 	protected boolean placePostCheckInHold(Patron offendingPatron, Copy unshelvedCopy, int fineAmount, HoldType type) {
 
 		int holdTally = this.getHoldTotal();
@@ -53,7 +60,7 @@ public abstract class PlaceHoldController extends HoldController {
 
 		return this.holdsUpdatedCorrectly(++holdTally);
 	}
-	
+
 	protected boolean placeHoldOnRecord(Patron offendingPatron, HoldType type, int fineAmount, Copy copy) {
 
 		Hold copyHold = HoldFactory.createHold(type, fineAmount, copy);

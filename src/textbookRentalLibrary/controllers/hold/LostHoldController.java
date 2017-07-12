@@ -4,15 +4,19 @@ import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.HoldType;
 
-public class LostHoldController extends PlaceHoldController {
+/**
+ * This controller interacts with our LostHold class to mark an unreturned
+ * Copy as lost (or presumably lost).
+ * 
+ * @author Ross Weinstein
+ *
+ */
 
-	public LostHoldController() {
-		super();
-	}
+public class LostHoldController extends PlaceHoldController {
 
 	@Override
 	public void displayHolds() {
-		this.displayPatronsWith(" with lost textbook holds ", super.getManage().getAllPatronsWithLostHolds());
+		this.displayPatronsWith(" with lost textbook holds ", super.queryDB().getAllPatronsWithLostHolds());
 	}
 
 	@Override
@@ -24,13 +28,13 @@ public class LostHoldController extends PlaceHoldController {
 
 		Patron offendingPatron = super.queryDB().locatePatronInDB();
 
-		if (offendingPatron == null) {
+		if (super.unableToFindPatron(offendingPatron)) {
 			return false;
 		}
 
 		Copy lostCopy = super.queryDB().locateCopyInDB();
 
-		if (lostCopy == null) {
+		if (super.unableToFindCopy(lostCopy)) {
 			return false;
 		}
 

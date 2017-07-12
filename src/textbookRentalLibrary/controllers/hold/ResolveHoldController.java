@@ -7,6 +7,13 @@ import model.patron.Patron;
 import model.patron.hold.Hold;
 import textbookRentalLibrary.menus.MenuBuilder;
 
+/**
+ * This controller is responsible for resolving previously placed holds.
+ * 
+ * @author Ross Weinstein
+ *
+ */
+
 public class ResolveHoldController extends HoldController {
 
 	public ResolveHoldController() {
@@ -35,7 +42,7 @@ public class ResolveHoldController extends HoldController {
 				if (selectsValidHold(resolveMenu, selection)) {
 
 					if (resolveHoldConfirmation()) {
-						super.getManage().resolvedHold(offendingPatron, offendingPatron.getAllHolds().get(selection - 1));
+						offendingPatron.resolvedHold(offendingPatron.getAllHolds().get(selection - 1));
 					}
 
 				} else {

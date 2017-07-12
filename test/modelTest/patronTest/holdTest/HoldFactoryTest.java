@@ -6,13 +6,13 @@ import org.junit.Test;
 
 import database.FakeDB;
 import model.copy.Copy;
-import model.patron.hold.CopyDamagedHold;
+import model.patron.hold.DamagedHold;
 import model.patron.hold.Hold;
 import model.patron.hold.HoldFactory;
 import model.patron.hold.HoldType;
 import model.patron.hold.LostHold;
 import model.patron.hold.OverdueHold;
-import model.patron.hold.UnshelvedCopyHold;
+import model.patron.hold.UnshelvedHold;
 
 public class HoldFactoryTest {
 
@@ -35,7 +35,7 @@ public class HoldFactoryTest {
 		
 		Hold unshelved = HoldFactory.createHold(HoldType.UNSHELVED, 10, unshelvedCopy);
 		
-		assertTrue(unshelved instanceof UnshelvedCopyHold);
+		assertTrue(unshelved instanceof UnshelvedHold);
 		assertTrue(unshelved.getFineAmount() == 10);
 		assertTrue(unshelved.getHoldCopy().equals(unshelvedCopy));
 	}
@@ -47,7 +47,7 @@ public class HoldFactoryTest {
 		
 		Hold damage = HoldFactory.createHold(HoldType.DAMAGED, 10, damagedCopy);
 		
-		assertTrue(damage instanceof CopyDamagedHold);
+		assertTrue(damage instanceof DamagedHold);
 		assertTrue(damage.getFineAmount() == 10);
 		assertTrue(damage.getHoldCopy().equals(damagedCopy));
 	}

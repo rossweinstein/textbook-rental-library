@@ -4,6 +4,14 @@ import model.copy.Copy;
 import model.patron.Patron;
 import model.patron.hold.HoldType;
 
+/**
+ * This controller interacts with our UnshelvedCopyHold class to mark a recently
+ * returned by unshelved Copy as hold on the offending Patron's record.
+ * 
+ * @author Ross Weinstein
+ *
+ */
+
 public class UnshelvedHoldController extends PlaceHoldController {
 	
 	public UnshelvedHoldController() {
@@ -12,7 +20,7 @@ public class UnshelvedHoldController extends PlaceHoldController {
 	
 	@Override
 	public void displayHolds() {
-		this.displayPatronsWith(" with unshelved holds ", super.getManage().getAllPatronsWithUnshelvedHolds());
+		this.displayPatronsWith(" with unshelved holds ", super.queryDB().getAllPatronsWithUnshelvedHolds());
 		
 	}
 
@@ -25,13 +33,13 @@ public class UnshelvedHoldController extends PlaceHoldController {
 		
 		Copy unshelvedCopy = super.queryDB().locateCopyInDB();
 		
-		if (unshelvedCopy == null) {
+		if (super.unableToFindCopy(unshelvedCopy)) {
 			return false;
 		}
 		
 		Patron offendingPatron = unshelvedCopy.getLastPersonToCheckOut();
 		
-		if (offendingPatron == null) {
+		if (super.unableToFindPatron(offendingPatron)) {
 			return false;
 		}
 		

@@ -10,9 +10,9 @@ import model.copy.Copy;
  *
  */
 
-public class UnshelvedCopyHold extends Hold {
+public class UnshelvedHold extends Hold {
 
-	public UnshelvedCopyHold(int fineAmount, Copy copy) {
+	public UnshelvedHold(int fineAmount, Copy copy) {
 		super(fineAmount, copy);
 	}
 
@@ -25,11 +25,11 @@ public class UnshelvedCopyHold extends Hold {
 		}
 
 		// null check and type check
-		if (o == null || !(o instanceof UnshelvedCopyHold)) {
+		if (o == null || !(o instanceof UnshelvedHold)) {
 			return false;
 		}
 		// cast and comparisons
-		UnshelvedCopyHold otherUnshelvedCopy = (UnshelvedCopyHold) o;
+		UnshelvedHold otherUnshelvedCopy = (UnshelvedHold) o;
 		return super.getFineAmount() == otherUnshelvedCopy.getFineAmount()
 				&& super.getHoldCopy().equals(otherUnshelvedCopy.getHoldCopy());
 	}

@@ -1,38 +1,51 @@
 package textbookRentalLibrary.controllers.hold;
 
-import model.Manager;
+import model.copy.Copy;
+import model.patron.Patron;
 import textbookRentalLibrary.controllers.DatabaseController;
 import textbookRentalLibrary.userInput.InputHelper;
 
+/**
+ * The basic tools needed for all the individual hold controllers such as
+ * querying the database, receiving input, and being able to validate that the
+ * hold was processed.
+ * 
+ * @author Ross Weinstein
+ *
+ */
+
 public abstract class HoldController {
-	
+
 	private InputHelper input;
 	private DatabaseController db;
-	private Manager manage;
-	
+
 	public HoldController() {
 		this.input = new InputHelper();
 		this.db = new DatabaseController();
-		this.manage = new Manager();
 	}
 
 	protected InputHelper getInput() {
 		return input;
 	}
-	
+
 	protected DatabaseController queryDB() {
 		return this.db;
 	}
-	
-	protected Manager getManage() {
-		return this.manage;
+
+	protected int getHoldTotal() {
+		return this.db.getAllPatronsWithHolds().stream().map(patron -> patron.getAllHolds().size()).mapToInt(i -> i)
+				.sum();
 	}
-	
-	public int getHoldTotal() {
-		return this.db.getAllPatronsWithHolds().stream().map(patron -> patron.getAllHolds().size()).mapToInt(i -> i).sum();
-	}
-	
+
 	protected boolean holdsUpdatedCorrectly(int tally) {
 		return this.getHoldTotal() == tally;
+	}
+
+	protected boolean unableToFindPatron(Patron thePatron) {
+		return thePatron == null;
+	}
+
+	protected boolean unableToFindCopy(Copy theCopy) {
+		return theCopy == null;
 	}
 }

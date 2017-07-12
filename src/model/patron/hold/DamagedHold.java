@@ -9,9 +9,9 @@ import model.copy.Copy;
  * @author Ross Weinstein
  *
  */
-public class CopyDamagedHold extends Hold {
+public class DamagedHold extends Hold {
 
-	public CopyDamagedHold(int fineAmount, Copy copy) {
+	public DamagedHold(int fineAmount, Copy copy) {
 		super(fineAmount, copy);
 	}
 
@@ -24,11 +24,11 @@ public class CopyDamagedHold extends Hold {
 		}
 
 		// null check and type check
-		if (o == null || !(o instanceof CopyDamagedHold)) {
+		if (o == null || !(o instanceof DamagedHold)) {
 			return false;
 		}
 		// cast and comparisons
-		CopyDamagedHold otherDamagedCopy = (CopyDamagedHold) o;
+		DamagedHold otherDamagedCopy = (DamagedHold) o;
 		return super.getFineAmount() == otherDamagedCopy.getFineAmount()
 				&& super.getHoldCopy().equals(otherDamagedCopy.getHoldCopy());
 	}
