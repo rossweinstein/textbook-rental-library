@@ -23,33 +23,8 @@ public class ContactInfo {
 		this.localAddress = new Address();
 		this.permanentAddress = new Address();
 	}
-
-	@Override
-	public String toString() {
-		return "Name: " + this.firstName + " " + this.lastName + "\nTelephone Number: "
-				+ this.getFormattedTelephoneNumber() + "\nLocal Address:\n" + this.localAddress.toString()
-				+ "\nPermanent Address:\n" + this.permanentAddress.toString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		// self check
-		if (this == obj) {
-			return true;
-		}
-
-		// null check and type check
-		if (obj == null || !(obj instanceof ContactInfo)) {
-			return false;
-		}
-
-		// cast and comparisons
-		ContactInfo otherContact = (ContactInfo) obj;
-		return this.firstName.equals(otherContact.firstName) && this.lastName.equals(otherContact.lastName)
-				&& this.phoneNumber.equals(otherContact.phoneNumber)
-				&& this.localAddress.equals(otherContact.localAddress)
-				&& this.permanentAddress.equals(otherContact.permanentAddress);
-	}
+	
+	/***** GETTERS / SETTERS *******************************/
 
 	public String getFirstName() {
 		return firstName;
@@ -92,11 +67,11 @@ public class ContactInfo {
 			this.phoneNumber = phoneNumber;
 		}
 	}
-
+	
 	private boolean validPhoneNumber(String number) {
 		return number.length() == 10 && number.chars().allMatch(Character::isDigit);
 	}
-
+	
 	public Address getLocalAddress() {
 		return localAddress;
 	}
@@ -118,6 +93,39 @@ public class ContactInfo {
 				&& this.localAddress != null && this.permanentAddress != null;
 	}
 
+	
+	/***** OVERRIDE METHODS *******************************/
+	
+	@Override
+	public String toString() {
+		return "Name: " + this.firstName + " " + this.lastName + "\nTelephone Number: "
+				+ this.getFormattedTelephoneNumber() + "\nLocal Address:\n" + this.localAddress.toString()
+				+ "\nPermanent Address:\n" + this.permanentAddress.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// self check
+		if (this == obj) {
+			return true;
+		}
+
+		// null check and type check
+		if (obj == null || !(obj instanceof ContactInfo)) {
+			return false;
+		}
+
+		// cast and comparisons
+		ContactInfo otherContact = (ContactInfo) obj;
+		return this.firstName.equals(otherContact.firstName) && this.lastName.equals(otherContact.lastName)
+				&& this.phoneNumber.equals(otherContact.phoneNumber)
+				&& this.localAddress.equals(otherContact.localAddress)
+				&& this.permanentAddress.equals(otherContact.permanentAddress);
+	}
+
+	
+	/***** LOCAL/PERMANENT ADDRESS METHODS *******************************/
+	
 	public void setPermanentAsLocalAddress() {
 		this.setPermanentAddress(this.localAddress);
 	}
@@ -127,24 +135,27 @@ public class ContactInfo {
 	}
 
 	public String getAddresses() {
-
-		String addresses = "";
-
-		if (this.bothAddressesAreBlank()) {
-			addresses = "This Patron Currently Has No Addresses On File";
-
-		} else if (this.onlyOneAddressIsProvided()) {
-
-			Address address = !this.localAddress.isNotFilledOut() ? this.localAddress : this.permanentAddress;
-			addresses = "Address:\n" + address.toString();
-
-		} else {
-
-			addresses = "Local Address:\n" + this.localAddress.toString() + "\n\nPermanent Address" + "\n"
-					+ this.permanentAddress.toString();
-		}
-
-		return addresses;
+		return atLeastOneAddressProvided() ? retrieveAddress() : "This Patron Currently Has No Addresses On File";
+	}
+	
+	/***** CONTACT ADDRESSES HELPER METHODS ******************************/
+	
+	private boolean atLeastOneAddressProvided() {
+		return !this.localAddress.isNotFilledOut() || !this.permanentAddress.isNotFilledOut();
+	}
+	
+	private String retrieveAddress() {
+		return this.onlyOneAddressIsProvided() ? this.getListedAddress() : this.getBothAddresses();
+	}
+	
+	private String getListedAddress() {
+		Address address = !this.localAddress.isNotFilledOut() ? this.localAddress : this.permanentAddress;
+		return "Address:\n" + address.toString();
+	}
+	
+	private String getBothAddresses() {
+		return "Local Address:\n" + this.localAddress.toString() + "\n\nPermanent Address" + "\n"
+				+ this.permanentAddress.toString();
 	}
 
 	private boolean onlyOneAddressIsProvided() {
@@ -159,7 +170,4 @@ public class ContactInfo {
 		return this.localAddress.isNotFilledOut() || this.permanentAddress.isNotFilledOut();
 	}
 
-	private boolean bothAddressesAreBlank() {
-		return this.localAddress.isNotFilledOut() && this.permanentAddress.isNotFilledOut();
-	}
 }
