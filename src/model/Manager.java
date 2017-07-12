@@ -22,6 +22,10 @@ public class Manager {
 	public List<Patron> getAllPatronsInTRL() {
 		return FakeDB.getAllPatrons();
 	}
+	
+	public List<Copy> getAllCopiesInTRL() {
+		return FakeDB.getAllCopies();
+	}
 
 	public List<Patron> getAllPatronsWithHolds() {
 		return this.getAllPatronsInTRL().stream().filter(patron -> !patron.hasNoHoldsOnRecord())

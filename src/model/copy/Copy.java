@@ -101,19 +101,27 @@ public class Copy {
 	}
 
 	public String checkedOutBy() {
-		if (this.outTo == null) {
+		if (this.copyIsCurrentlyAvailable()) {
 			return "Copy is Currently Available";
 		} else {
-			return this.outTo.toString();
+			return this.outTo.getPatronID();
 		}
+	}
+
+	private boolean copyIsCurrentlyAvailable() {
+		return this.outTo == null;
 	}
 	
 	private String showDueDate() {
-		if (this.dueDate == null) {
+		if (this.copyIsNotCurrentlyCheckedOut()) {
 			return "N/A";
 		} else {
 			return this.dueDate.format(DateTimeFormatter.ISO_DATE);
 		}
+	}
+
+	private boolean copyIsNotCurrentlyCheckedOut() {
+		return this.dueDate == null;
 	}
 	
 	public void checkedOut() {
@@ -125,6 +133,6 @@ public class Copy {
 	}
 	
 	public boolean isOverdue() {
-		return  this.dueDate == null ? false : !this.dueDate.isAfter(LocalDateTime.now());
+		return  copyIsNotCurrentlyCheckedOut() ? false : !this.dueDate.isAfter(LocalDateTime.now());
 	}
 }

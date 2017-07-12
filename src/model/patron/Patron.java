@@ -23,12 +23,14 @@ public class Patron {
 
 	private ContactInfo contactInfo;
 	private String patronID;
+	private PatronType type;
 	private ArrayList<Copy> copiesOut;
 	private List<Hold> currentHolds;
 
-	public Patron(String id, ContactInfo contactInfo) {
+	public Patron(String id, ContactInfo contactInfo, PatronType status) {
 		this.patronID = id;
 		this.contactInfo = contactInfo;
+		this.type = status;
 		this.copiesOut = new ArrayList<>();
 		this.currentHolds = new ArrayList<>();
 	}
@@ -55,6 +57,10 @@ public class Patron {
 		return this.currentHolds;
 	}
 
+	public PatronType getStatus() {
+		return this.type;
+	}
+
 	/***** OVERRIDES ********************************************/
 
 	@Override
@@ -72,7 +78,8 @@ public class Patron {
 
 		// cast and comparisons
 		Patron otherPatron = (Patron) o;
-		return this.patronID.equals(otherPatron.patronID) && this.contactInfo.equals(otherPatron.contactInfo);
+		return this.patronID.equals(otherPatron.patronID) && this.contactInfo.equals(otherPatron.contactInfo)
+				&& this.type.equals(otherPatron.type);
 	}
 
 	@Override
@@ -80,18 +87,21 @@ public class Patron {
 		int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.patronID == null) ? 0 : this.patronID.hashCode());
-		result = prime * result + ((this.contactInfo.getLastName() == null) ? 0 : this.contactInfo.getLastName().hashCode());
+		result = prime * result
+				+ ((this.contactInfo.getLastName() == null) ? 0 : this.contactInfo.getLastName().hashCode());
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "ID: " + this.patronID + "\nName: " + this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() +
-				"\nPhone Numeber: " + this.contactInfo.getFormattedTelephoneNumber() + "\n\n" + this.contactInfo.getAddresses();
+		return "ID: " + this.patronID + "\nType: " + this.type.toString() + "\nName: "
+				+ this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName() + "\nPhone Numeber: "
+				+ this.contactInfo.getFormattedTelephoneNumber() + "\n\n" + this.contactInfo.getAddresses();
 	}
-	
+
 	public String showPatronIDAndName() {
-		return "ID: " + this.patronID + " | Name: " + this.contactInfo.getFirstName() + " " + this.contactInfo.getLastName();
+		return "ID: " + this.patronID + " | Name: " + this.contactInfo.getFirstName() + " "
+				+ this.contactInfo.getLastName();
 	}
 
 	// checks to see if the Patron has any books currently checked out; If they
@@ -202,5 +212,5 @@ public class Patron {
 
 		return this.currentHolds.remove(holdCopy);
 	}
-	
+
 }

@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.PatronType;
 import model.patron.patronInfo.Address;
 import model.patron.patronInfo.ContactInfo;
 
@@ -49,7 +50,7 @@ public class CopyTest {
 
 		rossContact.setPermanentAddress(permanentAddress);
 
-		return new Patron("P2", rossContact);
+		return new Patron("P2", rossContact, PatronType.STUDENT);
 
 	}
 	
@@ -147,7 +148,7 @@ public class CopyTest {
 		
 		this.firstPatron.checkCopyOut(this.bookOne);
 		
-		assertTrue(this.bookOne.checkedOutBy().equals(this.firstPatron.toString()));
+		assertTrue(this.bookOne.checkedOutBy().equals(this.firstPatron.getPatronID()));
 	}
 	
 	@Test

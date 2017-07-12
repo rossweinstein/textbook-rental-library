@@ -103,7 +103,7 @@ public class ContactInfo {
 
 	public boolean allContactInfoSet() {
 		return !this.firstName.isEmpty() && !this.lastName.isEmpty() && !this.phoneNumber.isEmpty()
-				&& this.localAddress != null && this.permanentAddress != null;
+				&& !this.localAddress.isEmpty() && !this.permanentAddress.isEmpty();
 	}
 
 	public void setPermanentAsLocalAddress() {

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.PatronType;
 import model.patron.patronInfo.Address;
 import model.patron.patronInfo.ContactInfo;
 
@@ -73,7 +74,7 @@ public class FakeDB {
 
 		ericContact.setPermanentAsLocalAddress();
 
-		return new Patron("P1", ericContact);
+		return new Patron("P1", ericContact, PatronType.FACULTY);
 	}
 
 	private static Patron createPatronRoss() {
@@ -99,7 +100,7 @@ public class FakeDB {
 
 		rossContact.setPermanentAddress(permanentAddress);
 
-		return new Patron("P2", rossContact);
+		return new Patron("P2", rossContact, PatronType.STUDENT);
 	}
 
 	private static Patron createPatronMowlid() {
@@ -125,7 +126,7 @@ public class FakeDB {
 
 		mowlidContact.setPermanentAddress(permanentAddress);
 
-		return new Patron("P3", mowlidContact);
+		return new Patron("P3", mowlidContact, PatronType.STUDENT);
 	}
 
 	private static Patron createPatronNeera() {
@@ -145,6 +146,6 @@ public class FakeDB {
 
 		neeraContact.setPermanentAsLocalAddress();
 
-		return new Patron("P4", neeraContact);
+		return new Patron("P4", neeraContact, PatronType.STUDENT);
 	}
 }

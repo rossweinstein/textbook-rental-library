@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.PatronType;
 import model.patron.hold.HoldType;
 import model.patron.patronInfo.Address;
 import model.patron.patronInfo.ContactInfo;
@@ -51,7 +52,7 @@ public class PatronTest {
 		
 		rossContact.setPermanentAddress(permanentAddress);
 
-		return new Patron("P2", rossContact);
+		return new Patron("P2", rossContact, PatronType.STUDENT);
 
 	}
 	
@@ -69,7 +70,7 @@ public class PatronTest {
 
 		ericContact.setPermanentAsLocalAddress();
 
-		return new Patron("P1", ericContact);
+		return new Patron("P1", ericContact, PatronType.FACULTY);
 	}
 	
 	@Test

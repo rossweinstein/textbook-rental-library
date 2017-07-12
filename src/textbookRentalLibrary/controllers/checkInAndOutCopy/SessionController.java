@@ -40,6 +40,7 @@ public class SessionController {
 			if (this.input.askBinaryQuestion(
 					"\nIs this the wrong patron or do they have incorrect information? (patron/info)", "patron",
 					"info")) {
+				System.out.println("\n--ALERT--\nInform the patron to see a manager to resolve any issues with their Patron ID");
 				return false;
 			} else {
 				CommandLineMenu patronInfoUpdate = new PatronInfoUpdateMenu(patron);

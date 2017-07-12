@@ -3,8 +3,10 @@ package textbookRentalLibrary.controllers;
 import java.util.List;
 
 import model.Manager;
+import model.copy.Copy;
 import model.patron.Patron;
 import textbookRentalLibrary.controllers.hold.*;
+
 /**
  * This class controls all the functions that a manager can do: See all records,
  * see all records with holds, mark holds, generate overdue notices
@@ -23,53 +25,67 @@ public class ManagerialFunctionsController {
 	/********** DISPLAY FUNCTIONS **************************************/
 
 	public void displayAllPatrons() {
-		
+
 		List<Patron> allPatrons = this.manage.getAllPatronsInTRL();
 		String message = "ALL PATRONS";
-		
-		if (allPatrons.size() == 0) {
-			System.out.println("There are currently no patrons in the database");
+
+		this.displayResults(allPatrons, message, "in the database");
+	}
+
+	public void displayAllCopies() {
+
+		List<Copy> allCopies = this.manage.getAllCopiesInTRL();
+
+		if (allCopies.size() == 0) {
+			System.out.println("There are currently no copies in the database");
 		} else {
-			this.displaySelectedPatrons(allPatrons, message);
+
+			System.out.println("--DISPLAY: ALL COPIES--");
+			System.out.println("..." + allCopies.size() + " Copies found...\n");
+
+			for (int i = 0; i < allCopies.size(); i++) {
+				System.out.println((i + 1) + ": " + allCopies.get(i).getCopyID() + " | " + allCopies.get(i).getTitle());
+			}
 		}
 	}
 
 	public void displayAllPatronsWithHolds() {
-		
+
 		List<Patron> patronsWithHolds = this.manage.getAllPatronsWithHolds();
 		String message = "PATRONS WITH HOLDS";
-		
-		if (patronsWithHolds.size() == 0) {
-			System.out.println("There are currently no patrons with holds");
-		} else {
-			this.displaySelectedPatrons(patronsWithHolds, message);
-		}
+
+		this.displayResults(patronsWithHolds, message, "with holds");
 	}
-	
+
 	public void displayPatronsWithUnreturnedTextbooks() {
-		
+
 		List<Patron> patronsWithUnreturnedTextbooks = this.manage.getAllPatronsWithUnreturnedTextBooks();
 		String message = "PATRONS WITH UNRETURNED BOOKS";
-		
-		if (patronsWithUnreturnedTextbooks.size() == 0) {
-			System.out.println("There are currently no patrons with unreturned textbooks");
+
+		this.displayResults(patronsWithUnreturnedTextbooks, message, "with unreturned textbooks");
+	}
+
+	public void displayResults(List<Patron> results, String message, String holdType) {
+
+		if (results.size() == 0) {
+			System.out.println("There are currently no patrons " + holdType);
 		} else {
-			this.displaySelectedPatrons(patronsWithUnreturnedTextbooks, message);
+			this.displaySelectedPatrons(results, message);
 		}
 	}
-	
+
 	private void displaySelectedPatrons(List<Patron> selectedPatrons, String title) {
-		
+
 		System.out.println("--DISPLAY: " + title + "--");
 		System.out.println("..." + selectedPatrons.size() + " Patrons found...\n");
-		
+
 		for (int i = 0; i < selectedPatrons.size(); i++) {
 			System.out.println((i + 1) + ": " + selectedPatrons.get(i).showPatronIDAndName());
 		}
 	}
-	
+
 	/********** GENERATE HOLD NOTICES ********************************/
-	
+
 	public void generateHoldNotices() {
 		if (this.manage.canGenerateHoldNotices()) {
 			System.out.println("Overdue notices generated...\n");
@@ -77,11 +93,11 @@ public class ManagerialFunctionsController {
 			System.out.println("There are no holds in the system.");
 		}
 	}
-	
+
 	/********** RESOLVE HOLD ***************************************/
 
 	public void resolvePatronHold() {
-		
+
 		ResolveHoldController resolve = new ResolveHoldController();
 		resolve.resolvePatronHold();
 	}
@@ -137,11 +153,11 @@ public class ManagerialFunctionsController {
 	}
 
 	/********** HELPER METHODS **************************************/
-	
+
 	private void displayHolds(PlaceHoldController theHolds) {
 		theHolds.displayHolds();
 	}
-	
+
 	private boolean markHolds(PlaceHoldController theHold) {
 		return theHold.markHold();
 	}
