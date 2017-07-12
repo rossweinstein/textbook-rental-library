@@ -1,12 +1,16 @@
 package textbookRentalLibrary.controllers;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import database.FakeDB;
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.hold.Hold;
 import textbookRentalLibrary.userInput.InputHelper;
 
 /**
@@ -27,6 +31,8 @@ public class DatabaseController {
 		this.input = new InputHelper();
 	}
 	
+	/********** GENERAL DATABASE QUERIES **************************************/
+	
 	public List<Copy> getAllCopiesInTRL() {
 		return FakeDB.getAllCopies();
 	}
@@ -44,7 +50,61 @@ public class DatabaseController {
 		return this.getAllPatronsInTRL().stream().filter(patron -> !patron.hasNoHoldsOnRecord())
 				.collect(Collectors.toList());
 	}
+	
+	/********** GET PATRONS WITH SPECIFIC HOLDS QUERIES **************************/
+	
+	public List<Patron> getAllPatronsWithMiscHolds() {
+		return this.getSpecificHold("found");
+	}
+	
+	public List<Patron> getAllPatronsWithLostHolds() {
+		return this.getSpecificHold("LOST");
+	}
+	
+	public List<Patron> getAllPatronsWithDamageHolds() {
+		return this.getSpecificHold("DAMAGED");
+	}
+	
+	public List<Patron> getAllPatronsWithUnshelvedHolds() {
+		return this.getSpecificHold("UNSHELVED");
+	}
+	
+	public List<Patron> getAllPatronsWithOverdueHolds() {
+		return this.getSpecificHold("OVERDUE");
+	}
+	
+	private List<Patron> getSpecificHold(String holdType) {
 
+		List<Patron> matchingPatrons = new ArrayList<>();
+		
+		for (Patron eachPatron : this.getAllPatronsInTRL()) {
+
+			if (hasHoldOfSpecificType(holdType, eachPatron)) {
+				matchingPatrons.add(eachPatron);
+			}
+		}
+		return matchingPatrons;
+	}
+
+	private boolean hasHoldOfSpecificType(String holdType, Patron eachPatron) {
+		
+		String regex = ".*\\b" + holdType + "\\b.*";
+		Pattern regexPattern = Pattern.compile(regex);
+		
+		for (Hold eachHold : eachPatron.getAllHolds()) {
+
+			Matcher match = regexPattern.matcher(eachHold.getHoldMessage());
+
+			if (match.find()) {
+
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	/********** SEARCH DATABASE **************************/
 
 	public Patron locatePatronInDB() {
 
@@ -59,6 +119,7 @@ public class DatabaseController {
 			if (possiblePatron != null) {
 				thePatron = possiblePatron;
 				locatingPatron = true;
+				
 			} else {
 
 				if (!this.enterAnotherIDNumber()) {
@@ -83,6 +144,7 @@ public class DatabaseController {
 			if (possibleCopy != null) {
 				theCopy = possibleCopy;
 				locatingCopy = true;
+				
 			} else {
 
 				if (!this.enterAnotherIDNumber()) {
