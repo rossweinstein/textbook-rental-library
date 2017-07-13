@@ -38,18 +38,20 @@ public class CheckInController extends SessionController implements TRLSession {
 
 		boolean endSession = false;
 		while (!endSession) {
-
-			if (patronHasNoMoreCopiesOut(thePatron)) {
-				endSession = true;
-
-			} else {
-
-				super.showCopiesOutToPatron(thePatron);
-				this.checkInTextbookCopy(thePatron);
-				endSession = !super.userInput().askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
-			}
+			
+			endSession = patronHasNoMoreCopiesOut(thePatron) ? true : checkInSession(thePatron);
+			
 		}
+		
 		this.printExitSessionMessage(thePatron);
+	}
+
+	private boolean checkInSession(Patron thePatron) {
+		boolean endSession;
+		super.showCopiesOutToPatron(thePatron);
+		this.checkInTextbookCopy(thePatron);
+		endSession = !super.userInput().askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
+		return endSession;
 	}
 
 	private void checkInTextbookCopy(Patron thePatron) {
