@@ -93,7 +93,7 @@ public class TextbookRentalLibraryMainMenu extends TRLMenu {
 		System.out.println();
 		
 		try {
-			BufferedReader in = new BufferedReader(new FileReader("HelpMenu.txt"));
+			BufferedReader in = new BufferedReader(new FileReader("HOWTO.txt"));
 			String line;
 
 			line = in.readLine();

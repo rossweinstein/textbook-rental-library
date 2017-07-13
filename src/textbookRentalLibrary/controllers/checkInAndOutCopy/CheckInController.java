@@ -40,7 +40,6 @@ public class CheckInController extends SessionController implements TRLSession {
 		while (!endSession) {
 
 			if (patronHasNoMoreCopiesOut(thePatron)) {
-				System.out.println("All copies checked back in");
 				endSession = true;
 
 			} else {
@@ -71,7 +70,7 @@ public class CheckInController extends SessionController implements TRLSession {
 
 	private void handleReturn(Copy theCopy) {
 		this.displayBookJustCheckedIn(theCopy);
-		this.copyIsDamaged();
+		this.copyIsDamaged(theCopy);
 	}
 
 	/********** ENCAPSULATED CONDITIONALS *************/
@@ -109,7 +108,7 @@ public class CheckInController extends SessionController implements TRLSession {
 	private void printExitSessionMessage(Patron thePatron) {
 
 		if (patronHasNoMoreCopiesOut(thePatron)) {
-			System.out.println("All copies checked back in");
+			System.out.println("Patron currently has no copies checked out");
 		} else {
 			super.showCopiesOutToPatron(thePatron);
 		}
@@ -117,13 +116,16 @@ public class CheckInController extends SessionController implements TRLSession {
 
 	/********** COPY IS DAMAGED HELPER **************************************/
 
-	private void copyIsDamaged() {
+	private void copyIsDamaged(Copy theCopy) {
 
 		boolean isBookDamaged = super.userInput().askBinaryQuestion("Is Copy Damaged? (y/n)", "y", "n");
 
 		if (isBookDamaged) {
+			
+			int fineAmount = super.userInput().askForInteger("Fine Amount: ");
+			
 			DamageHoldController damage = new DamageHoldController();
-			damage.markHold();
+			damage.markingHold(theCopy.getLastPersonToCheckOut(), theCopy, fineAmount);
 		}
 	}
 }

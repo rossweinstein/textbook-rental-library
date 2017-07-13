@@ -25,16 +25,16 @@ public class DamageHoldController extends PlaceHoldController {
 	}
 
 	private boolean markDamageHold() {
-
-		Patron offendingPatron = super.queryDB().locatePatronInDB();
-
-		if (super.unableToFindPatron(offendingPatron)) {
+		
+		Copy damagedCopy = super.queryDB().locateCopyInDB();
+		
+		if (super.unableToFindCopy(damagedCopy)) {
 			return false;
 		}
-
-		Copy damagedCopy = super.queryDB().locateCopyInDB();
-
-		if (super.unableToFindCopy(damagedCopy)) {
+		
+		Patron offendingPatron = damagedCopy.getLastPersonToCheckOut();
+		
+		if (super.unableToFindPatron(offendingPatron)) {
 			return false;
 		}
 
