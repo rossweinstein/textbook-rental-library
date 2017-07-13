@@ -48,6 +48,10 @@ public class OverdueHoldControllerTest {
 		neera.checkCopyOut(textbook3);
 
 		assertTrue(this.db.getAllPatronsWithUnreturnedTextBooks().size() == 3);
+		
+		ross.checkCopyIn(textbook);
+		mowlid.checkCopyIn(textbook2);
+		neera.checkCopyIn(textbook3);
 	}
 	
 	@Test
@@ -84,5 +88,29 @@ public class OverdueHoldControllerTest {
 		textbook3.setLastPersonToCheckOut(null);
 	}
 	
-
+	@Test
+	public void onlyStudentsGetOverdueHolds() {
+		
+		Patron eric = this.patrons.get(0);
+		Copy textbook = this.copies.get(0);
+		eric.checkCopyOut(textbook);
+		textbook.setDueDate(LocalDateTime.now().minusDays(10));
+		
+		Patron ross = this.patrons.get(1);
+		Copy textbook2 = this.copies.get(1);
+		ross.checkCopyOut(textbook2);
+		textbook2.setDueDate(LocalDateTime.now().minusDays(10));
+		
+		assertTrue(this.overdue.successfulHoldMark(10));
+		assertTrue(this.db.getAllPatronsWithOverdueHolds().size() == 1);
+		assertTrue(this.db.getAllPatronsWithHolds().size() == 1);
+		assertTrue(this.db.getAllPatronsWithUnreturnedTextBooks().size() == 2);
+		
+		eric.checkCopyIn(textbook);
+		textbook.setLastPersonToCheckOut(null);
+		
+		ross.checkCopyIn(textbook2);
+		ross.resolvedHold(ross.getAllHolds().get(0));
+		textbook2.setLastPersonToCheckOut(null);
+	}
 }

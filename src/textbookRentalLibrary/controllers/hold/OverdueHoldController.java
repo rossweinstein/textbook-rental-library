@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import model.copy.Copy;
 import model.patron.Patron;
+import model.patron.PatronType;
 import model.patron.hold.HoldType;
 
 /**
@@ -36,11 +37,13 @@ public class OverdueHoldController extends PlaceHoldController {
 
 		int holdTally = super.queryDB().getHoldTotal();
 		List<Patron> patronsWithUnreturnedBooks = super.queryDB().getAllPatronsWithUnreturnedTextBooks();
+		List<Patron> studentsWithUnreturnedBooks = patronsWithUnreturnedBooks.stream()
+				.filter(patron -> patron.getStatus().equals(PatronType.STUDENT)).collect(Collectors.toList());
 
-		for (Patron eachPatron : patronsWithUnreturnedBooks) {
+		for (Patron eachStudent : studentsWithUnreturnedBooks) {
 
-			List<Copy> overdueCopies = this.findOverdueCopies(eachPatron);
-			holdTally += this.markingHolds(eachPatron, overdueCopies, fineAmount);
+			List<Copy> overdueCopies = this.findOverdueCopies(eachStudent);
+			holdTally += this.markingHolds(eachStudent, overdueCopies, fineAmount);
 		}
 		return this.holdsUpdatedCorrectly(holdTally);
 	}

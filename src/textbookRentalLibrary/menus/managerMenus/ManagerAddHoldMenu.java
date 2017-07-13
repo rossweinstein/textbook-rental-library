@@ -21,8 +21,8 @@ public class ManagerAddHoldMenu extends ManagerMenu {
 	private MenuBuilder miscHolds() {
 		super.buildMenu().setMenuTitle("-----MANAGER: ADD HOLDS MENU-----");
 
-		List<String> options = Arrays.asList("Mark All Unreturned Textbooks As Overdue", "Mark Damage Hold",
-				"Mark Unshelved Hold", "Mark Lost Hold", "Mark Misc Hold", "Exit Hold Menu");
+		List<String> options = Arrays.asList("Mark Overdue Holds", "Mark Damage Hold",
+				"Mark Unshelved Hold", "Mark Lost Hold", "Mark Misc Hold", "Generate Hold Notices", "Exit Hold Menu");
 		super.buildMenu().setMenuItems(options);
 
 		return super.buildMenu();
@@ -52,6 +52,9 @@ public class ManagerAddHoldMenu extends ManagerMenu {
 
 		} else if (selection == 5) {
 			this.markMiscHolds();
+			
+		} else if (selection == 6) {
+			this.generateHoldNotices();
 
 		} else {
 			return false;
@@ -89,6 +92,13 @@ public class ManagerAddHoldMenu extends ManagerMenu {
 		System.out.println();
 		this.managerFunc().markMiscHold();
 		System.out.println();
+	}
+	
+	private void generateHoldNotices() {
+		System.out.println();
+		this.managerFunc().generateHoldNotices();
+		System.out.println();
+		
 	}
 
 }
