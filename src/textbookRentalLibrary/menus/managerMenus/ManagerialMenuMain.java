@@ -21,7 +21,7 @@ public class ManagerialMenuMain extends ManagerMenu {
 	}
 
 	private MenuBuilder managerMainMenu() {
-		super.buildMenu().setMenuTitle("-----MANAGER FUNCTIONS MENU-----");
+		super.buildMenu().setMenuTitle("\n-----MANAGER FUNCTIONS MENU-----");
 
 		List<String> options = Arrays.asList("View Records", "Add Hold", "Resolve Hold", "Buy Books", "Exit Manager Menu");
 		super.buildMenu().setMenuItems(options);
@@ -62,14 +62,12 @@ public class ManagerialMenuMain extends ManagerMenu {
 	/********** SELECTIONS **************************************/
 
 	private void buyTextbook() {
-		System.out.println();
 		BuyBookController buyBook = new BuyBookController();
 		buyBook.startProcess();
 		System.out.println();
 	}
 
 	private void resolvePatronHolds() {
-		System.out.println();
 		super.managerFunc().resolvePatronHold();
 		System.out.println();
 	}

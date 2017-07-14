@@ -81,4 +81,11 @@ public abstract class PlaceHoldController extends HoldController {
 	private boolean holdNotAlreadyPlacedOnPatron(Patron offendingPatron, Hold copyHold) {
 		return !offendingPatron.getAllHolds().contains(copyHold);
 	}
+	
+	/***** ERROR MARKING HOLD **************************/
+	
+	protected boolean cannotMarkHold() {
+		System.out.println("Unable to mark hold due to Patron not being last to check out book");
+		return false;
+	}
 }

@@ -84,7 +84,6 @@ public class TextbookRentalLibraryMainMenu extends TRLMenu {
 	}
 
 	private void managerFunctions() {
-		System.out.println();
 		this.managerFunc.displayMenu();
 		System.out.println();
 	}

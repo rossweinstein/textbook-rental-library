@@ -87,7 +87,7 @@ public class ManagerController {
 	}
 
 	/********** GENERATE HOLD NOTICES ********************************/
-	
+
 	public boolean canGenerateHoldNotices() {
 		return this.db.getAllPatronsWithHolds().size() > 0;
 	}
@@ -114,8 +114,12 @@ public class ManagerController {
 		this.displayHolds(new OverdueHoldController());
 	}
 
-	public boolean markOverdueHolds() {
-		return this.markHolds(new OverdueHoldController());
+	public void markOverdueHolds() {
+		if (this.markHolds(new OverdueHoldController())) {
+			System.out.println("Overdue holds successful marked");
+		} else {
+			System.out.println("ERROR: Overdue holds not marked");
+		}
 	}
 
 	/********** UNSHELVED HOLDS **************************************/
@@ -124,8 +128,12 @@ public class ManagerController {
 		this.displayHolds(new UnshelvedHoldController());
 	}
 
-	public boolean markUnshelvedHold() {
-		return this.markHolds(new UnshelvedHoldController());
+	public void markUnshelvedHold() {
+		if (this.markHolds(new UnshelvedHoldController())) {
+			System.out.println("Unshelved hold successful marked");
+		} else {
+			System.out.println(this.holdNotMarkedErrorMessage());
+		}
 	}
 
 	/********** DAMAGED HOLDS **************************************/
@@ -134,8 +142,12 @@ public class ManagerController {
 		this.displayHolds(new DamageHoldController());
 	}
 
-	public boolean markDamageHold() {
-		return this.markHolds(new DamageHoldController());
+	public void markDamageHold() {
+		if (this.markHolds(new DamageHoldController())) {
+			System.out.println("Damage hold successful marked");
+		} else {
+			System.out.println(this.holdNotMarkedErrorMessage());
+		}
 	}
 
 	/********** LOST HOLDS **************************************/
@@ -144,8 +156,12 @@ public class ManagerController {
 		this.displayHolds(new LostHoldController());
 	}
 
-	public boolean markLostHold() {
-		return this.markHolds(new LostHoldController());
+	public void markLostHold() {
+		if (this.markHolds(new LostHoldController())) {
+			System.out.println("Lost hold successful marked");
+		} else {
+			System.out.println(this.holdNotMarkedErrorMessage());
+		}
 	}
 
 	/********** MISC HOLDS **************************************/
@@ -166,5 +182,12 @@ public class ManagerController {
 
 	private boolean markHolds(PlaceHoldController theHold) {
 		return theHold.markHold();
+	}
+
+	private String holdNotMarkedErrorMessage() {
+		return "\n-----ERROR: Hold unable to be marked-----\n\nThis could be due to several reasons:"
+				+ "\n1) Patron cannot be found in datbase\n2) Copy cannot be found in database"
+				+ "\n3) Patron was not the last Patron to check out copy"
+				+ "\n\nDouble check PatronID, CopyID, and that Copy is associated with Patron before trying again";
 	}
 }

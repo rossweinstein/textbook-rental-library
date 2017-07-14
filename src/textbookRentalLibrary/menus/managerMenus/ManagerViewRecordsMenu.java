@@ -19,7 +19,7 @@ public class ManagerViewRecordsMenu extends ManagerMenu {
 	}
 
 	private MenuBuilder miscHolds() {
-		super.buildMenu().setMenuTitle("-----MANAGER: VIEW PATRON RECORDS MENU-----");
+		super.buildMenu().setMenuTitle("\n-----MANAGER: VIEW PATRON RECORDS MENU-----");
 
 		List<String> options = Arrays.asList("Display All Copies", "Display All Patron",
 				"Display All Patrons With Holds", this.menuItemFor("Unreturned Books"),

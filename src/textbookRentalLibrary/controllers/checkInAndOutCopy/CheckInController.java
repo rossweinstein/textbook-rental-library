@@ -38,20 +38,17 @@ public class CheckInController extends SessionController implements TRLSession {
 
 		boolean endSession = false;
 		while (!endSession) {
-			
+
 			endSession = patronHasNoMoreCopiesOut(thePatron) ? true : checkInSession(thePatron);
-			
 		}
-		
+
 		this.printExitSessionMessage(thePatron);
 	}
 
 	private boolean checkInSession(Patron thePatron) {
-		boolean endSession;
 		super.showCopiesOutToPatron(thePatron);
 		this.checkInTextbookCopy(thePatron);
-		endSession = !super.userInput().askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
-		return endSession;
+		return !super.userInput().askBinaryQuestion("\nCheck in another book? (y/n)", "y", "n");
 	}
 
 	private void checkInTextbookCopy(Patron thePatron) {
@@ -92,8 +89,8 @@ public class CheckInController extends SessionController implements TRLSession {
 	/********** ALERT PRINT MESSAGES **************************************/
 
 	private void printPatronHasNoCopiesOutAlert(Patron thePatron) {
-		System.out.println("\n" + thePatron.getContactInfo().getFirstName() + " [ID:" + thePatron.getPatronID()
-				+ "]  does not have any copies currently checked out");
+		System.out.println("\n" + thePatron.getContactInfo().getFirstName() + thePatron.getContactInfo().getLastName()
+				+ " (ID:" + thePatron.getPatronID() + ") does not have any copies currently checked out");
 	}
 
 	private void displayCopyIsNotCheckedOutToPatronAlert(Copy theCopy, Patron thePatron) {
@@ -123,11 +120,13 @@ public class CheckInController extends SessionController implements TRLSession {
 		boolean isBookDamaged = super.userInput().askBinaryQuestion("Is Copy Damaged? (y/n)", "y", "n");
 
 		if (isBookDamaged) {
-			
+
 			int fineAmount = super.userInput().askForInteger("Fine Amount: ");
-			
+
 			DamageHoldController damage = new DamageHoldController();
 			damage.markingHold(theCopy.getLastPersonToCheckOut(), theCopy, fineAmount);
+			
+			System.out.println("\nDamage hold has been placed on Patron's account");
 		}
 	}
 }

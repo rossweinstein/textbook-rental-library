@@ -17,14 +17,14 @@ import textbookRentalLibrary.menus.MenuBuilder;
 public class ResolveHoldController extends HoldController {
 
 	public void resolvePatronHold() {
-
+		
 		Patron offendingPatron = super.queryDB().locatePatronInDB();
 
 		boolean resolvingHolds = true;
 		while (resolvingHolds) {
-
+			
 			resolvingHolds = patronFoundWithHolds(offendingPatron) ? attemptToReslveHold(offendingPatron)
-					: printErrorMessage();
+					: noHoldsToResolve(offendingPatron);
 		}
 	}
 	
@@ -34,9 +34,13 @@ public class ResolveHoldController extends HoldController {
 		return offendingPatron != null && !offendingPatron.hasNoHoldsOnRecord();
 	}
 
-	private boolean printErrorMessage() {
-		System.out.println("Patron either cannot be found or has no holds on record.");
+	private boolean noHoldsToResolve(Patron offendingPatron) {
+		System.out.println(this.message(offendingPatron));
 		return false;
+	}
+	
+	private String message(Patron offendingPatron) {
+		return offendingPatron == null ? "Patron could not be located in FakeDB" : "Patron has no holds on record";
 	}
 
 	private boolean attemptToReslveHold(Patron offendingPatron) {
