@@ -63,13 +63,14 @@ public class ManagerController {
 
 		List<Patron> patronsWithUnreturnedTextbooks = this.db.getAllPatronsWithUnreturnedTextBooks();
 		String message = "PATRONS WITH UNRETURNED BOOKS";
-
+		
 		this.displayResults(patronsWithUnreturnedTextbooks, message, "with unreturned textbooks");
 	}
 
 	public void displayResults(List<Patron> results, String message, String holdType) {
 
 		if (results.size() == 0) {
+			this.displayTitle(message);
 			System.out.println("There are currently no patrons " + holdType);
 		} else {
 			this.displaySelectedPatrons(results, message);
@@ -78,12 +79,16 @@ public class ManagerController {
 
 	private void displaySelectedPatrons(List<Patron> selectedPatrons, String title) {
 
-		System.out.println("--DISPLAY: " + title + "--");
+		this.displayTitle(title);
 		System.out.println("..." + selectedPatrons.size() + " Patrons found...\n");
 
 		for (int i = 0; i < selectedPatrons.size(); i++) {
 			System.out.println((i + 1) + ": " + selectedPatrons.get(i).showPatronIDAndName());
 		}
+	}
+	
+	private void displayTitle(String title) {
+		System.out.println("--DISPLAY: " + title + "--");
 	}
 
 	/********** GENERATE HOLD NOTICES ********************************/
@@ -111,7 +116,7 @@ public class ManagerController {
 	/********** OVERDUE HOLDS **************************************/
 
 	public void displayPatronsWithOverdueHolds() {
-		this.displayHolds(new OverdueHoldController());
+		this.displayHolds(new OverdueHoldController(), "OVERDUE HOLDS");
 	}
 
 	public void markOverdueHolds() {
@@ -125,7 +130,7 @@ public class ManagerController {
 	/********** UNSHELVED HOLDS **************************************/
 
 	public void displayPatronsWithUnshelvedHolds() {
-		this.displayHolds(new UnshelvedHoldController());
+		this.displayHolds(new UnshelvedHoldController(), "UNSHELVED HOLDS");
 	}
 
 	public void markUnshelvedHold() {
@@ -139,7 +144,7 @@ public class ManagerController {
 	/********** DAMAGED HOLDS **************************************/
 
 	public void displayPatronsWithDamageHolds() {
-		this.displayHolds(new DamageHoldController());
+		this.displayHolds(new DamageHoldController(), "DAMAGE HOLDS");
 	}
 
 	public void markDamageHold() {
@@ -153,7 +158,7 @@ public class ManagerController {
 	/********** LOST HOLDS **************************************/
 
 	public void displayPatronsWithLostHolds() {
-		this.displayHolds(new LostHoldController());
+		this.displayHolds(new LostHoldController(), "LOST HOLDS");
 	}
 
 	public void markLostHold() {
@@ -167,7 +172,7 @@ public class ManagerController {
 	/********** MISC HOLDS **************************************/
 
 	public void displayPatronsWithMiscHolds() {
-		this.displayHolds(new MiscHoldController());
+		this.displayHolds(new MiscHoldController(), "MISC HOLDS");
 	}
 
 	public boolean markMiscHold() {
@@ -176,7 +181,8 @@ public class ManagerController {
 
 	/********** HELPER METHODS **************************************/
 
-	private void displayHolds(PlaceHoldController theHolds) {
+	private void displayHolds(PlaceHoldController theHolds, String title) {
+		this.displayTitle(title);
 		theHolds.displayHolds();
 	}
 
