@@ -84,7 +84,7 @@ public class Patron {
 	@Override
 	public String toString() {
 		return "ID: " + this.patronID + "\nType: " + this.type.toString() + "\nName: " + this.contactInfo.getFirstName()
-				+ " " + this.contactInfo.getLastName() + "\nPhone Numeber: "
+				+ " " + this.contactInfo.getLastName() + "\nPhone Number: "
 				+ this.contactInfo.getFormattedTelephoneNumber() + "\n\n" + this.contactInfo.getAddresses();
 	}
 

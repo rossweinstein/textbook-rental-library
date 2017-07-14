@@ -71,12 +71,12 @@ public class PatronInfoUpdateMenu extends TRLMenu {
 
 	private void updatePatronsLastName() {
 		String correctName = super.userInput().askForString("\nWhat is the correct spelling of your last name?");
-		patronToModify.getContactInfo().setFirstName(correctName);
+		patronToModify.getContactInfo().setLastName(correctName);
 	}
 
 	private void updatePatronsPhoneNumber() {
 		String correctNumber = super.userInput().askForString("\nWhat is your new phone number?");
-		patronToModify.getContactInfo().setFirstName(correctNumber);
+		patronToModify.getContactInfo().setPhoneNumber(correctNumber);
 	}
 
 	private void updatePatronsLocalAddress() {

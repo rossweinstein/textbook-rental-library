@@ -65,6 +65,7 @@ public class TextbookRentalLibraryMainMenu extends TRLMenu {
 			this.helpMenu();
 
 		} else {
+			System.out.println("\nProgram Ends...");
 			return false;
 
 		}

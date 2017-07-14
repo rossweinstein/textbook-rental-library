@@ -45,11 +45,11 @@ public class PatronTest {
 		rossContact.setLocalAddress(localAddress);
 
 		Address permanentAddress = new Address();
-		permanentAddress.setAddressLineOne("9513 Market Street");
+		permanentAddress.setAddressLineOne("513 York Ave");
 		permanentAddress.setAddressLineTwo("Unit 203");
 		permanentAddress.setCity("St. Paul");
 		permanentAddress.setState("MN");
-		permanentAddress.setZipCode("55115");
+		permanentAddress.setZipCode("55119");
 
 		rossContact.setPermanentAddress(permanentAddress);
 

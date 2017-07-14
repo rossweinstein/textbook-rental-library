@@ -89,7 +89,7 @@ public class CheckInController extends SessionController implements TRLSession {
 	/********** ALERT PRINT MESSAGES **************************************/
 
 	private void printPatronHasNoCopiesOutAlert(Patron thePatron) {
-		System.out.println("\n" + thePatron.getContactInfo().getFirstName() + thePatron.getContactInfo().getLastName()
+		System.out.println("\n" + thePatron.getContactInfo().getFirstName() + " " + thePatron.getContactInfo().getLastName()
 				+ " (ID:" + thePatron.getPatronID() + ") does not have any copies currently checked out");
 	}
 
