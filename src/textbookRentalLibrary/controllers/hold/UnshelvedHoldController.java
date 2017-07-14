@@ -22,7 +22,7 @@ public class UnshelvedHoldController extends PlaceHoldController {
 
 	@Override
 	public boolean markHold() {
-		return super.confirmHoldForType("Unshelved") ? this.markUnshelvedHold() : super.cannotMarkHold();
+		return super.confirmHoldForType("Unshelved") ? this.markUnshelvedHold() : false;
 	}
 	
 	private boolean markUnshelvedHold() {

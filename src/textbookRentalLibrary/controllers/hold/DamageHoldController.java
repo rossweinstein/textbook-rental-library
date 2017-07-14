@@ -21,7 +21,7 @@ public class DamageHoldController extends PlaceHoldController {
 
 	@Override
 	public boolean markHold() {
-		return super.confirmHoldForType("Damage") ? this.markDamageHold() : super.cannotMarkHold();
+		return super.confirmHoldForType("Damage") ? this.markDamageHold() : false;
 	}
 
 	private boolean markDamageHold() {
